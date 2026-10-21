@@ -34,7 +34,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visi
 .mode-switcher .view-switch button{min-height:30px;padding:5px 13px;border-radius:999px;border:0;background:transparent;color:#7f9cb0;font-size:11px;font-weight:700;cursor:pointer}
 .mode-switcher .view-switch button[aria-pressed="true"]{background:#e8b86a;color:#1a1206;box-shadow:0 1px 4px #0006}
 .mode-switcher .view-switch button[aria-pressed="false"]:hover{color:#dbe9f2}
-@media(max-width:1180px){.view-switch{position:static;transform:none;order:-2;margin:0 2px 6px auto}.mode-switcher::after{content:"";order:-1;flex-basis:100%;height:0}}
+@media(max-width:1400px){.view-switch{position:static;transform:none;order:-2;margin:0 2px 6px auto}.mode-switcher::after{content:"";order:-1;flex-basis:100%;height:0}}
 .eng-project-main p.eng-disclaimer{font-size:10px;color:#7f9fb2;margin-top:3px}
 /* Presenter view: keep headings, controls, KPIs, charts and results; hide explanatory small print. */
 body.presenter .eng-note:not(#wmsScenarioNote):not(#engSharedNotice),
@@ -172,7 +172,124 @@ body.presenter .eng-card{padding:18px 21px}
 #wmsLiveWrap:fullscreen .wms-live-grid>.eng-card:last-child{max-height:calc(100vh - 110px)}
 #wmsLiveWrap:fullscreen .live-card .eng-note{display:none}
 @media(max-width:700px){.live-viewer,body:not(.presenter) .live-viewer{height:320px}.live-actions-sep{display:none}}
-</style></head><body><nav class="mode-switcher" role="tablist" aria-label="Warehouse demonstration mode"><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true">Traditional vs. P800R</button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false">Warehouse Optimizer</button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false">3D Product Experience</button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false">WMS Integration Lab</button><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
+/* ---- Tab 5: Order Journey film ---- */
+.nav-sep{width:1px;height:26px;background:#2a4458;margin:0 6px}
+.mode-switcher .journey-tab{display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;border:1px solid #7a5cff66;background:linear-gradient(100deg,#2a1d55,#123247);color:#f3eaff;font-weight:800;font-size:12px;letter-spacing:.2px;min-height:40px;cursor:pointer;box-shadow:0 0 0 0 #9b7bff55;transition:box-shadow .3s}
+.mode-switcher .journey-tab:hover{box-shadow:0 0 18px 0 #9b7bff55}
+.mode-switcher .journey-tab i{font-style:normal;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#b69cff;color:#170d33;font-size:9px}
+.mode-switcher .journey-tab small{font-size:8.5px;font-weight:800;letter-spacing:1.3px;color:#b9a7ff;border:1px solid #6b55c4;border-radius:5px;padding:2px 5px}
+.mode-switcher .journey-tab[aria-pressed="true"]{background:linear-gradient(100deg,#4b33a3,#155e74);border-color:#c5b2ff;box-shadow:0 0 22px 0 #9b7bff66}
+body.journey-mode .eng-project,body.journey-mode .eng-tour{display:none!important}
+body.journey-mode{background:#020409}
+.journey{max-width:1880px;margin:0 auto;padding:12px 24px 30px;color:#dbe7f2}
+.jr-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin:0 0 12px}
+.jr-kicker{font-size:10px;font-weight:800;letter-spacing:2.2px;color:#b69cff}
+.jr-head h1{font-size:clamp(26px,3.2vw,44px);letter-spacing:-1.2px;margin:6px 0 4px;color:#fff}
+.jr-head p{margin:0;font-size:13px;color:#9fb3c6;max-width:760px}
+.jr-head-actions{display:flex;gap:8px}
+.jr-btn{min-height:42px;padding:10px 18px;border-radius:10px;border:1px solid #3a4c63;background:#0d1724;color:#e7f1fa;font-weight:700;font-size:12px;cursor:pointer}
+.jr-btn.primary{background:linear-gradient(100deg,#b69cff,#5fe3e8);color:#0b0820;border:0}
+.jr-btn.big{font-size:15px;padding:14px 26px;min-height:52px;border-radius:12px}
+.jr-stage{position:relative;width:auto;aspect-ratio:16/9;max-width:100%;height:min(calc((100vw - 48px) * 9 / 16),calc(100vh - 225px));min-height:220px;margin:0 auto;background:#000;border-radius:14px;overflow:hidden;border:1px solid #1d2a3a;box-shadow:0 30px 80px #000a}
+.jr-canvas,.jr-canvas canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+.jr-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,#0007 100%)}
+.jr-chapter{position:absolute;left:3%;bottom:15%;max-width:min(560px,60%);pointer-events:none;transition:opacity .5s,transform .5s}
+.jr-chapter.swap{opacity:0;transform:translateY(8px)}
+.jr-chapter span{font:800 11px ui-monospace,Consolas,monospace;letter-spacing:2px;color:#b69cff}
+.jr-chapter h2{font-size:clamp(22px,2.6vw,40px);margin:6px 0 6px;color:#fff;letter-spacing:-.8px;text-shadow:0 2px 18px #000}
+.jr-chapter p{margin:0;font-size:clamp(12px,1.05vw,16px);line-height:1.55;color:#dfe9f2;text-shadow:0 1px 10px #000;background:#05080fa6;padding:9px 12px;border-radius:9px;border-left:3px solid #5fe3e8}
+.jr-log{position:absolute;right:2%;top:4%;width:min(430px,40%);display:flex;flex-direction:column;gap:5px;pointer-events:none}
+.jr-log div{font:11px/1.45 ui-monospace,Consolas,monospace;color:#cfe8ee;background:#04101acc;border:1px solid #1f4152;border-radius:7px;padding:6px 9px;animation:jr-in .45s ease-out}
+.jr-log div b{color:#5fe3e8;font-weight:700;margin-right:6px}
+.jr-log div.ok b{color:#a5fb75}
+.jr-log div:not(:last-child){opacity:.62}
+@keyframes jr-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.jr-kpis{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px;width:min(880px,86%);animation:jr-in .8s ease-out}
+.jr-kpis>div{background:#050b14d9;border:1px solid #33507a;border-radius:14px;padding:18px 16px;text-align:center;backdrop-filter:blur(4px)}
+.jr-kpis strong{display:block;font-size:clamp(22px,2.6vw,38px);color:#fff;letter-spacing:-1px}
+.jr-kpis span{display:block;font-size:11px;color:#a9bed0;margin-top:6px;line-height:1.45}
+.jr-kpis .jr-end{grid-column:1/-1;background:transparent;border:0;font-size:13px;color:#cbd8e5;padding:4px}
+.jr-poster{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at center,#0b1830cc,#000e 75%)}
+.jr-poster h2{font-size:clamp(20px,2.4vw,34px);margin:10px 0 18px;color:#fff;letter-spacing:-.6px}
+.jr-poster p{font-size:12px;color:#8ea4b8;margin-top:14px}
+.jr-poster[hidden]{display:none}
+.jr-controls{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:12px 16px;background:linear-gradient(transparent,#000d 55%);opacity:1;transition:opacity .4s}
+.jr-stage.playing.idle .jr-controls{opacity:0}
+.jr-ctl{width:40px;height:40px;border-radius:50%;border:1px solid #ffffff33;background:#ffffff14;color:#fff;font-size:15px;cursor:pointer;flex:none}
+.jr-scrub{position:relative;flex:1;height:8px;border-radius:5px;background:#ffffff26;cursor:pointer}
+.jr-scrub-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:5px;background:linear-gradient(90deg,#b69cff,#5fe3e8)}
+.jr-marks i{position:absolute;top:-3px;width:2px;height:14px;background:#ffffffaa;border-radius:1px}
+.jr-time{font:12px ui-monospace,Consolas,monospace;color:#dfe9f2;white-space:nowrap}
+.jr-speed{display:flex;gap:2px}
+.jr-speed button{border:1px solid #ffffff33;background:transparent;color:#cfdbe6;border-radius:6px;font-size:11px;padding:5px 7px;cursor:pointer}
+.jr-speed button[aria-pressed="true"]{background:#5fe3e8;color:#041018;border-color:#5fe3e8}
+.jr-chapters{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:6px;margin:12px 0}
+.jr-chapters button{text-align:left;border:1px solid #1f3346;background:#08111d;color:#aec2d4;border-radius:9px;padding:9px 10px;font-size:11px;cursor:pointer;min-height:52px}
+.jr-chapters button b{display:block;font:800 10px ui-monospace,Consolas,monospace;color:#7d6bd6;margin-bottom:3px}
+.jr-chapters button.active{border-color:#b69cff;background:#170f33;color:#fff}
+.jr-note{font-size:11px;color:#71869a;line-height:1.6}
+#jrStage:fullscreen{max-height:none;height:100vh;width:100vw;border-radius:0;border:0}
+#jrStage:-webkit-full-screen{max-height:none;border-radius:0;border:0;width:100%;height:100%}
+@media(max-width:1400px){.jr-stage{height:min(calc((100vw - 48px) * 9 / 16),calc(100vh - 285px))}.jr-head p{display:none}.jr-head h1{font-size:30px}.jr-head-actions .jr-btn{min-height:38px;padding:8px 13px}}
+@media(max-width:1180px){.nav-sep{display:none}.jr-chapters{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.jr-stage{height:auto;width:100%}.jr-chapter p{display:none}.jr-chapter{bottom:24%}.jr-chapter h2{font-size:20px}.journey{padding:12px 14px 24px}.jr-log{display:none}.jr-chapter{left:4%;bottom:22%;max-width:92%}.jr-kpis{grid-template-columns:repeat(2,1fr)}.jr-speed{display:none}.jr-stage{border-radius:10px}.mode-switcher .journey-tab{width:100%;justify-content:center}}
+.jr-btn.rec{background:#c83a3a;border-color:#ff6b6b;color:#fff;animation:jr-pulse 1.2s ease-in-out infinite}
+@keyframes jr-pulse{50%{box-shadow:0 0 0 6px #ff4a4a33}}
+.jr-rec-status{margin:-4px 0 10px;font:700 12px ui-monospace,Consolas,monospace;color:#ffb4b4}
+.jr-stage.recording .jr-controls{opacity:.35;pointer-events:none}
+/* ---- AR ---- */
+.jr-btn.ar-btn{background:#13233a;border-color:#3e6fa8}
+.ar-qr-dialog{border:1px solid #33507a;border-radius:16px;background:#070d16;color:#dbe7f2;padding:0;max-width:min(760px,94vw);width:760px}
+.ar-qr-dialog::backdrop{background:#000b}
+.ar-qr-inner{padding:22px 24px;position:relative}
+.ar-qr-inner h2{margin:6px 0 14px;font-size:24px;color:#fff}
+.ar-qr-grid{display:grid;grid-template-columns:240px 1fr;gap:20px;align-items:start}
+.ar-qr-box{background:#fff;border-radius:12px;padding:8px;aspect-ratio:1;display:grid;place-items:center}
+.ar-qr-box svg{width:100%;height:100%}
+.ar-qr-empty{color:#334;font-size:12px;text-align:center;padding:10px}
+.ar-steps{margin:0 0 10px;padding-left:18px;font-size:13px;line-height:1.7;color:#c3d3e2}
+.ar-url{font:11px ui-monospace,Consolas,monospace;color:#8fb0c4;word-break:break-all}
+.ar-x{position:absolute;right:12px;top:10px;width:36px;height:36px;border-radius:50%;border:1px solid #ffffff33;background:#ffffff12;color:#fff;font-size:20px;cursor:pointer}
+body.ar-mode>*:not(#arApp):not(dialog){display:none!important}
+body.ar-mode{overflow:hidden;background:#000}
+.ar-app{position:fixed;inset:0;z-index:50;background:#05080d;color:#e8f0f6;font-family:system-ui,-apple-system,Segoe UI,sans-serif;overflow:hidden;touch-action:none}
+.ar-app[hidden]{display:none}
+.ar-app video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ar-app video[hidden]{display:none}
+.ar-app.xr{background:transparent}
+.ar-app.no-cam{background:radial-gradient(ellipse at 50% 35%,#16253a,#04070c 75%)}
+.ar-canvas,.ar-canvas canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ar-top{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;background:linear-gradient(#000a,transparent);z-index:3}
+.ar-top b{font-size:15px}
+.ar-top .ar-x{position:static}
+.ar-chip{margin-left:8px;font:800 9px ui-monospace,Consolas,monospace;letter-spacing:1.2px;color:#120a2a;background:#b69cff;border-radius:6px;padding:3px 6px;vertical-align:2px}
+.ar-hint{position:absolute;left:50%;top:calc(64px + env(safe-area-inset-top));transform:translateX(-50%);background:#05080fd9;border:1px solid #5fe3e866;color:#dff;padding:8px 14px;border-radius:20px;font-size:13px;z-index:3;white-space:nowrap;max-width:92vw;overflow:hidden;text-overflow:ellipsis}
+.ar-start{position:absolute;inset:0;display:grid;place-items:center;padding:20px;z-index:4;background:radial-gradient(ellipse at 50% 30%,#1a2c48,#03060b 70%)}
+.ar-start[hidden]{display:none}
+.ar-start-card{max-width:460px;text-align:center;display:flex;flex-direction:column;gap:10px}
+.ar-start-card h1{font-size:26px;line-height:1.2;margin:4px 0;color:#fff}
+.ar-start-card p{font-size:14px;line-height:1.55;color:#b9cada;margin:0 0 6px}
+.ar-start-card .jr-btn{width:100%}
+.ar-start-card .jr-btn[hidden]{display:none}
+.ar-small{font-size:12px!important;color:#8ea4b8!important}
+.ar-sheet{position:absolute;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:3;background:#05080fe0;border:1px solid #2a4458;border-radius:16px;padding:12px 14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);max-width:640px;margin:0 auto;display:none}
+.ar-app.running .ar-sheet{display:block}
+.ar-sheet-head{display:flex;gap:10px;align-items:baseline}
+.ar-sheet-head span{font:800 11px ui-monospace,Consolas,monospace;color:#b69cff}
+.ar-sheet-head b{font-size:17px;color:#fff}
+.ar-sheet p{margin:6px 0;font-size:13px;line-height:1.45;color:#d5e2ec}
+.ar-sheet .ar-event{font:11.5px ui-monospace,Consolas,monospace;color:#7fe7ea;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ar-progress{height:4px;border-radius:3px;background:#ffffff22;margin:8px 0;overflow:hidden}
+.ar-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b69cff,#5fe3e8)}
+.ar-row{display:flex;gap:6px;align-items:center}
+.ar-row button{min-width:44px;min-height:40px;border-radius:10px;border:1px solid #ffffff2a;background:#ffffff12;color:#fff;font-size:16px;cursor:pointer}
+.ar-row button[hidden]{display:none}
+.ar-time{flex:1;text-align:center;font:12px ui-monospace,Consolas,monospace;color:#cfdbe6}
+.ar-scales{margin-top:8px}
+.ar-scales button{flex:1;font-size:12px;font-weight:700}
+.ar-scales button[aria-pressed="true"]{background:#5fe3e8;color:#041018;border-color:#5fe3e8}
+@media(max-width:700px){.ar-qr-grid{grid-template-columns:1fr}.ar-qr-box{max-width:240px;margin:0 auto}}
+</style></head><body><nav class="mode-switcher" role="tablist" aria-label="Warehouse demonstration mode"><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true">Traditional vs. P800R</button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false">Warehouse Optimizer</button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false">3D Product Experience</button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false">WMS Integration Lab</button><span class="nav-sep" aria-hidden="true"></span><button id="journeyTab" class="journey-tab" type="button" aria-pressed="false" aria-controls="journeyMode"><i aria-hidden="true">▶</i>Order Journey<small>3D FILM</small></button><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
 <section id="engTour" class="eng-tour engineering" hidden aria-label="Guided engineering demonstration"><div class="eng-title-row"><span id="engTourStep" class="eng-kicker">STEP 1 / 7</span><span id="engTourTime" class="eng-tour-badge">0 / 105 s</span></div><h2 id="engTourTitle"></h2><p id="engTourText"></p><div class="eng-tour-progress"><div id="engTourProgress"></div></div><div class="eng-toolbar"><button class="btn" id="engTourPrevious">← Previous</button><button class="btn" id="engTourPause">Pause</button><button class="btn primary" id="engTourNext">Next →</button><button class="btn" id="engTourReset">Reset tour</button><button class="btn" id="engTourExit">Exit tour</button></div><p class="eng-note">Uses current customer requirements; resets the mock lab at the integration step. Previous revisits evidence without rewinding data. Reset starts a fresh walkthrough. You can skip steps; no automatic deployment or external requests occur.</p></section>
 
 <div class="wrap mode-panel" id="workflowMode" role="tabpanel" aria-labelledby="workflowTab">
@@ -292,6 +409,21 @@ Orders also retains an internal canonical payload fingerprint for idempotency.</
  <footer class="creator-footer"><span>Created by <strong>Chenzhuo Tong</strong></span><a class="creator-link" href="https://www.linkedin.com/in/chenzhuo-tong/"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52C22 2.68 21.31 2 20.45 2zM7.93 18.75H4.98V9.2h2.95v9.55zM6.46 7.9a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42zm12.29 10.85H15.8v-4.64c0-1.1-.02-2.51-1.53-2.51-1.54 0-1.77 1.2-1.77 2.43v4.72H9.55V9.2h2.83v1.3h.04c.39-.74 1.36-1.52 2.79-1.52 2.98 0 3.54 1.96 3.54 4.5v5.27z"/></svg><span>Connect with me on LinkedIn ↗</span></a></footer>
 </section>
 
+<section id="journeyMode" class="journey" hidden aria-label="Order journey 3D film">
+ <div class="jr-head"><div><span class="jr-kicker">05 · ORDER JOURNEY · 3D FILM</span><h1>One order, dock to dock.</h1><p>Follow order SO-1042 through a goods-to-person warehouse — from the inbound trailer to the outbound trailer — in about 90 seconds.</p></div><div class="jr-head-actions"><button id="jrPlayBig" class="jr-btn primary">▶ Play film</button><button id="jrFull" class="jr-btn">⛶ Fullscreen</button><button id="jrRecord" class="jr-btn" title="Plays the film once and downloads a 1920×1080 video">⬇ Save as video</button></div></div><p class="jr-rec-status" id="jrRecStatus" role="status" hidden></p>
+ <div class="jr-stage" id="jrStage">
+  <div class="jr-canvas" id="jrCanvas"></div>
+  <div class="jr-vignette"></div>
+  <div class="jr-chapter" id="jrChapter"><span id="jrChapNo">00 / 08</span><h2 id="jrChapTitle">Demo Distribution Center</h2><p id="jrChapText"></p></div>
+  <div class="jr-log" id="jrLog" aria-live="polite"></div>
+  <div class="jr-kpis" id="jrKpis" hidden></div>
+  <div class="jr-poster" id="jrPoster"><div><span class="jr-kicker">ORDER JOURNEY</span><h2>Inbound → storage → pick &amp; put → pack → ship</h2><button id="jrPosterPlay" class="jr-btn primary big">▶ Play film · 1:32</button><p id="jrLoading">The 3D warehouse is built in your browser — no video file, no network.</p></div></div>
+  <div class="jr-controls" id="jrControls"><button id="jrPlay" class="jr-ctl" aria-label="Play">▶</button><button id="jrRestart" class="jr-ctl" aria-label="Restart">↺</button><div class="jr-scrub" id="jrScrub" role="slider" aria-label="Film position" tabindex="0"><div class="jr-scrub-fill" id="jrFill"></div><div class="jr-marks" id="jrMarks"></div></div><span class="jr-time" id="jrTime">0:00 / 1:32</span><div class="jr-speed"><button data-jr-speed="1" aria-pressed="true">1×</button><button data-jr-speed="1.5" aria-pressed="false">1.5×</button><button data-jr-speed="2" aria-pressed="false">2×</button></div><button id="jrFull2" class="jr-ctl" aria-label="Fullscreen">⛶</button></div>
+ </div>
+ <div class="jr-chapters" id="jrChapters"></div>
+ <p class="jr-note">Illustrative film rendered live with Three.js. The site layout, IDs and timings are fictional and compressed for storytelling; it is not an official Geek+ facility or performance claim. Pause the film to orbit the camera freely.</p>
+ <footer class="creator-footer"><span>Created by <strong>Chenzhuo Tong</strong></span><a class="creator-link" href="https://www.linkedin.com/in/chenzhuo-tong/" target="_blank" rel="noopener">Connect with me on LinkedIn ↗</a></footer>
+</section>
 <dialog class="dialog" id="results" aria-labelledby="resultTitle"><div class="result-inner"><div class="result-top"><div><div class="result-kicker" id="resultKicker"></div><h2 id="resultTitle"></h2></div><button class="close-btn" id="closeResults" aria-label="Close comparison results">×</button></div>
  <div class="result-metrics"><div class="result-metric"><strong id="timeBenefit"></strong><span id="timeBenefitLabel"></span></div><div class="result-metric"><strong id="walkingBenefit"></strong><span>HUMAN STORAGE TRAVEL REMOVED · 100%</span></div><div class="result-metric"><strong id="ratioBenefit"></strong><span id="ratioLabel"></span></div></div>
  <div class="result-chart"><div class="chart-row"><div class="chart-caption"><span>Traditional · order at station</span><b id="resultManual"></b></div><div class="result-track"><div class="manual-fill" id="resultMBar"></div></div></div><div class="chart-row"><div class="chart-caption"><span>Geek+ fleet · order at station</span><b id="resultAuto"></b></div><div class="result-track"><div class="auto-fill" id="resultABar"></div></div></div></div><p class="result-explanation" id="resultExplanation"></p>
@@ -4402,7 +4534,7 @@ if(u>=17.2){sub="confirmed";items=[2,2,2]}else if(u>=.4){k=Math.min(2,Math.floor
 if(c<.6)sub="guide";else if(c<1.6){sub="reach";reach=an((c-.6)/1)}else if(c<2.4){sub="retrieve";reach=1-an((c-1.6)/.8);items[k]=1}else if(c<3.2){sub="turn";turn=an((c-2.4)/.8);items[k]=1}else if(c<4){sub="put";turn=1;put=an((c-3.2)/.8);items[k]=1}else if(c<4.6){sub="place";turn=1;put=1-an((c-4)/.6);items[k]=2}else{sub="back";turn=1-an((c-4.6)/1);items[k]=2}}
 Object.assign(o,{t,docked:!0,guide:u>=.4,confirmed:sub==="confirmed",reach,picked:items.some(x=>x>0),pickState:k<0?sub:sub+k,pc:{k,sub,c,reach,turn,put,cy:k<0?null:PCY[k]},items,done:!1});return o}
 var PICK_LABELS={confirmed:"Confirmed · 3 items put away, shelf released"};PCY.forEach((y,k)=>{let n=`${k+1}/3`;Object.assign(PICK_LABELS,{["guide"+k]:`Pick-to-light ${n} · Projector lights bin ${y.bn}`,["reach"+k]:`Human pick ${n} · Reach into lit bin ${y.bn}`,["retrieve"+k]:`Human pick ${n} · Item retrieved from ${y.bn}`,["turn"+k]:`Put-to-light ${n} · Turn ${y.side>0?"left":"right"} — tote ${y.tn} is lit`,["put"+k]:`Put-to-light ${n} · Place the item into tote ${y.tn}`,["place"+k]:`Put-to-light ${n} · Press the lit button — ${y.tn} confirmed`,["back"+k]:`Put-to-light ${n} · Turn back to the shelf${k<2?" for the next pick":""}`})});
-var ru=["Approach \xB7 Empty travel","Align \xB7 Face the station before lifting","Lift \xB7 Engage and raise the shelf","Transport \xB7 Approach from the robot side","Pick stop \xB7 Light guides, human picks","Return & lower \xB7 Complete the cycle"],ou={docked:"Docked \xB7 Shelf centered, robot stopped",guide:"Guidance \xB7 Pick one item from the lit bin",reach:"Human pick \xB7 Operator reaches for the item",retrieve:"Human pick \xB7 Item retrieved, hand clears",confirmed:"Confirmed \xB7 Pick complete, ready to return"};Object.assign(ou,PICK_LABELS);(()=>{"use strict";let i=L=>document.getElementById(L),t=(L,V)=>i(L).textContent=V,e=window.matchMedia("(prefers-reduced-motion: reduce)").matches,n=null,s=!1,r=!1,o=!0,a=0,l=0,c=0,h=90,u=!1,d=!1,p=!1,g=0,x=-1,m=[0,1,2,3].map(L=>i("productPin"+L)),f=[["Published specification + illustration","A small lift. A whole shelf.","The v6.0 brochure lists a maximum lift of 60 mm and a minimum lifting time of 4 seconds. The model illustrates contact, lifting and shelf transport; the internal mechanism is not official CAD."],["Published navigation + general engineering","Localize. Plan. Move.","The v6.0 specification lists inertia + QR code navigation. At a systems level, localization, route planning and obstacle detection work together. Sensor shapes and positions here are illustrative; this viewer does not run a navigation or safety controller."],["Published envelope + illustrative construction","The load rides on a compact base.","The v6.0 envelope is 1,090 \xD7 830 \xD7 195 mm, with an 800 kg maximum payload. The low chassis carries the shelf while the drive wheels move the platform. Wheel geometry, materials and structural internals here are approximate."],["General systems engineering","One task. A coordinated fleet.","Geek+ describes RMS as robot scheduling and WES as task logic. A typical workflow assigns a shelf task, plans transport and coordinates station access and return. This model shows one task; the Warehouse Optimizer tab explores independent, illustrative fleet policies."]];function A(L){let V=f[L];t("productDetailType",V[0]),t("productDetailTitle",V[1]),t("productDetailText",V[2]);for(let W=0;W<4;W++)i("productInfo"+W).setAttribute("aria-pressed",String(L===W)),m[W].setAttribute("aria-pressed",String(L===W));h=60}for(let L=0;L<4;L++)i("productInfo"+L).onclick=()=>A(L),m[L].onclick=()=>A(L);function E(){i("productPlay").textContent=g>=PT?"\u21BB Replay":g>0?"\u25B6 Continue":"\u25B6 Play",i("productPlay").disabled=!n||s||u,i("productPause").disabled=!n||s||!u,i("productAuto").setAttribute("aria-pressed",String(d))}function y(){E();let L=rs(g);t("productTime",`${Math.floor(g)} / ${PT} s`),i("productProgress").style.width=`${g/PT*100}%`;let V=L.phase+":"+L.pickState;(V!==x||!p||L.done)&&(x=V,t("productStage",p?L.done?"Complete \xB7 Shelf returned, robot clear":L.docked?ou[L.pickState]:ru[L.phase]:"Ready \xB7 Explore the platform"),[...i("productSteps").children].forEach((W,q)=>W.classList.toggle("active",p&&L.phase===q)))}function w(L){u=!1,s=!0,d=!1,a&&cancelAnimationFrame(a),a=0;for(let V of["productLift","productPlay","productPause","productReset","productAuto","productCamera","productCameraReset"])i(V).disabled=!0;if(i("productFallback").hidden=!1,t("productFallbackText",L),t("productStatus","Illustrated view"),t("productGestureHint","Technical hotspots and product references remain available below."),m.forEach(V=>V.hidden=!0),n){try{n.dispose()}catch{}n=null}for(let V of i("productViewer").querySelectorAll("canvas"))V.remove()}function T(L,V=!1){!n||s||(i("productCamera").value=L,n.view(L,V),h=90,v())}function P(){if(!(n||s))try{n=su(i("productViewer"),e),i("productFallback").hidden=!0,t("productStatus","Interactive 3D");for(let L of["productLift","productReset","productAuto","productCamera","productCameraReset"])i(L).disabled=!1;n.controls.addEventListener("change",()=>{h=90}),n.controls.addEventListener("start",()=>{d=!1,n.controls.autoRotate=!1,E(),h=90}),n.canvas.addEventListener("webglcontextlost",L=>{L.preventDefault(),w("The graphics context was interrupted. Reload this page to retry 3D, or continue exploring the illustration and specifications.")},{once:!0}),E(),n.pose(rs(g),p)}catch{w("Interactive 3D is unavailable in this browser or graphics mode. This illustrative view, technical hotspots, official video and both warehouse simulations remain available.")}}function D(L){if(a=0,!r||document.hidden||!o||s||!n)return;let V=Math.min(.1,Math.max(0,(L-l)/1e3));if(l=L,u&&(g=Math.min(PT,g+V),g===PT&&(u=!1),h=90,y()),n.controls.autoRotate=d&&!u,L-c>=1e3/30&&(h>0||d||u)){let W=Math.min(.1,Math.max(.001,(L-c)/1e3));c=L;try{n.pose(rs(g),p),h=n.draw(W)?60:Math.max(0,h-1),n.pinPositions().forEach((G,ot)=>{let pt=m[ot];pt.hidden=!G.visible||p,pt.style.left=G.x+"px",pt.style.top=G.y+"px"})}catch{w("The 3D viewer could not finish rendering. The illustrated view and the rest of this website remain available.");return}}a=requestAnimationFrame(D)}function v(){r&&!document.hidden&&o&&!s&&!a&&(l=performance.now(),c=0,a=requestAnimationFrame(D))}function M(){u=!1,E()}function I(L=!1){!n||s||((L||g>=PT)&&(g=0),p=!0,d=!1,u=!0,n.pose(rs(g),p),T(i("productCamera").value==="station"?"station":"workflow"),y(),v())}i("productLift").onclick=()=>I(!0),i("productPlay").onclick=()=>I(),i("productPause").onclick=M,i("productReset").onclick=()=>{M(),g=0,p=!1,d=!1,n.controls.autoRotate=!1,n.pose(rs(0),!1),T("product"),x=-1,y()},i("productAuto").onclick=()=>{d=!d,d&&M(),n.controls.autoRotate=d,E(),h=90,v()},i("productCamera").onchange=()=>T(i("productCamera").value),i("productCameraReset").onclick=()=>T(i("productCamera").value);let k=i("productVideo");i("productVideoPlay").onclick=()=>{M(),d=!1,E(),k.hidden=!1,i("productVideoPlay").hidden=!0;let L=k.play();L&&L.catch&&L.catch(()=>{t("productVideoNote","Use the video\u2019s Play control, or select Watch Official Demo to view the film on Geek+\u2019s website.")})},k.addEventListener("error",()=>{t("productVideoNote","The official video could not load here. Select Watch Official Demo below to view the source on Geek+\u2019s website.")}),k.querySelector("source").addEventListener("error",()=>{t("productVideoNote","The official video is unavailable in this player. Watch Official Demo opens the source page.")}),globalThis.productExperience={seek(L){if(!n)return;M(),g=Math.max(0,Math.min(PT,L)),p=!0,n.pose(rs(g),p),y(),h=90,v()},activate(L){if(r=L,!L){M(),d=!1,E(),k.pause(),a&&cancelAnimationFrame(a),a=0;return}P(),n&&(n.resize(),h=90,v())}},document.addEventListener("visibilitychange",()=>{document.hidden?(M(),d=!1,E(),k.pause(),a&&cancelAnimationFrame(a),a=0):v()}),"IntersectionObserver"in window&&new IntersectionObserver(L=>{o=L[0].isIntersecting,o?(h=90,v()):(M(),a&&cancelAnimationFrame(a),a=0)},{threshold:.05}).observe(i("productViewer")),window.addEventListener("resize",()=>{h=90,v()}),A(0),y()})();globalThis.DEMO3D={Scene:oi,PerspectiveCamera:Me,WebGLRenderer:ga,Mesh:ce,Group:Se,MeshStandardMaterial:ke,HemisphereLight:$s,DirectionalLight:Yi,PointLight:tr,Color:Gt,BoxGeometry:fn,CylinderGeometry:ai,PlaneGeometry:sn,TorusGeometry:qi,SphereGeometry:zn,EdgesGeometry:Fs,LineSegments:Vi,LineBasicMaterial:nn,CanvasTexture:Ls,OrbitControls:ya};})();
+var ru=["Approach \xB7 Empty travel","Align \xB7 Face the station before lifting","Lift \xB7 Engage and raise the shelf","Transport \xB7 Approach from the robot side","Pick stop \xB7 Light guides, human picks","Return & lower \xB7 Complete the cycle"],ou={docked:"Docked \xB7 Shelf centered, robot stopped",guide:"Guidance \xB7 Pick one item from the lit bin",reach:"Human pick \xB7 Operator reaches for the item",retrieve:"Human pick \xB7 Item retrieved, hand clears",confirmed:"Confirmed \xB7 Pick complete, ready to return"};Object.assign(ou,PICK_LABELS);(()=>{"use strict";let i=L=>document.getElementById(L),t=(L,V)=>i(L).textContent=V,e=window.matchMedia("(prefers-reduced-motion: reduce)").matches,n=null,s=!1,r=!1,o=!0,a=0,l=0,c=0,h=90,u=!1,d=!1,p=!1,g=0,x=-1,m=[0,1,2,3].map(L=>i("productPin"+L)),f=[["Published specification + illustration","A small lift. A whole shelf.","The v6.0 brochure lists a maximum lift of 60 mm and a minimum lifting time of 4 seconds. The model illustrates contact, lifting and shelf transport; the internal mechanism is not official CAD."],["Published navigation + general engineering","Localize. Plan. Move.","The v6.0 specification lists inertia + QR code navigation. At a systems level, localization, route planning and obstacle detection work together. Sensor shapes and positions here are illustrative; this viewer does not run a navigation or safety controller."],["Published envelope + illustrative construction","The load rides on a compact base.","The v6.0 envelope is 1,090 \xD7 830 \xD7 195 mm, with an 800 kg maximum payload. The low chassis carries the shelf while the drive wheels move the platform. Wheel geometry, materials and structural internals here are approximate."],["General systems engineering","One task. A coordinated fleet.","Geek+ describes RMS as robot scheduling and WES as task logic. A typical workflow assigns a shelf task, plans transport and coordinates station access and return. This model shows one task; the Warehouse Optimizer tab explores independent, illustrative fleet policies."]];function A(L){let V=f[L];t("productDetailType",V[0]),t("productDetailTitle",V[1]),t("productDetailText",V[2]);for(let W=0;W<4;W++)i("productInfo"+W).setAttribute("aria-pressed",String(L===W)),m[W].setAttribute("aria-pressed",String(L===W));h=60}for(let L=0;L<4;L++)i("productInfo"+L).onclick=()=>A(L),m[L].onclick=()=>A(L);function E(){i("productPlay").textContent=g>=PT?"\u21BB Replay":g>0?"\u25B6 Continue":"\u25B6 Play",i("productPlay").disabled=!n||s||u,i("productPause").disabled=!n||s||!u,i("productAuto").setAttribute("aria-pressed",String(d))}function y(){E();let L=rs(g);t("productTime",`${Math.floor(g)} / ${PT} s`),i("productProgress").style.width=`${g/PT*100}%`;let V=L.phase+":"+L.pickState;(V!==x||!p||L.done)&&(x=V,t("productStage",p?L.done?"Complete \xB7 Shelf returned, robot clear":L.docked?ou[L.pickState]:ru[L.phase]:"Ready \xB7 Explore the platform"),[...i("productSteps").children].forEach((W,q)=>W.classList.toggle("active",p&&L.phase===q)))}function w(L){u=!1,s=!0,d=!1,a&&cancelAnimationFrame(a),a=0;for(let V of["productLift","productPlay","productPause","productReset","productAuto","productCamera","productCameraReset"])i(V).disabled=!0;if(i("productFallback").hidden=!1,t("productFallbackText",L),t("productStatus","Illustrated view"),t("productGestureHint","Technical hotspots and product references remain available below."),m.forEach(V=>V.hidden=!0),n){try{n.dispose()}catch{}n=null}for(let V of i("productViewer").querySelectorAll("canvas"))V.remove()}function T(L,V=!1){!n||s||(i("productCamera").value=L,n.view(L,V),h=90,v())}function P(){if(!(n||s))try{n=su(i("productViewer"),e),i("productFallback").hidden=!0,t("productStatus","Interactive 3D");for(let L of["productLift","productReset","productAuto","productCamera","productCameraReset"])i(L).disabled=!1;n.controls.addEventListener("change",()=>{h=90}),n.controls.addEventListener("start",()=>{d=!1,n.controls.autoRotate=!1,E(),h=90}),n.canvas.addEventListener("webglcontextlost",L=>{L.preventDefault(),w("The graphics context was interrupted. Reload this page to retry 3D, or continue exploring the illustration and specifications.")},{once:!0}),E(),n.pose(rs(g),p)}catch{w("Interactive 3D is unavailable in this browser or graphics mode. This illustrative view, technical hotspots, official video and both warehouse simulations remain available.")}}function D(L){if(a=0,!r||document.hidden||!o||s||!n)return;let V=Math.min(.1,Math.max(0,(L-l)/1e3));if(l=L,u&&(g=Math.min(PT,g+V),g===PT&&(u=!1),h=90,y()),n.controls.autoRotate=d&&!u,L-c>=1e3/30&&(h>0||d||u)){let W=Math.min(.1,Math.max(.001,(L-c)/1e3));c=L;try{n.pose(rs(g),p),h=n.draw(W)?60:Math.max(0,h-1),n.pinPositions().forEach((G,ot)=>{let pt=m[ot];pt.hidden=!G.visible||p,pt.style.left=G.x+"px",pt.style.top=G.y+"px"})}catch{w("The 3D viewer could not finish rendering. The illustrated view and the rest of this website remain available.");return}}a=requestAnimationFrame(D)}function v(){r&&!document.hidden&&o&&!s&&!a&&(l=performance.now(),c=0,a=requestAnimationFrame(D))}function M(){u=!1,E()}function I(L=!1){!n||s||((L||g>=PT)&&(g=0),p=!0,d=!1,u=!0,n.pose(rs(g),p),T(i("productCamera").value==="station"?"station":"workflow"),y(),v())}i("productLift").onclick=()=>I(!0),i("productPlay").onclick=()=>I(),i("productPause").onclick=M,i("productReset").onclick=()=>{M(),g=0,p=!1,d=!1,n.controls.autoRotate=!1,n.pose(rs(0),!1),T("product"),x=-1,y()},i("productAuto").onclick=()=>{d=!d,d&&M(),n.controls.autoRotate=d,E(),h=90,v()},i("productCamera").onchange=()=>T(i("productCamera").value),i("productCameraReset").onclick=()=>T(i("productCamera").value);let k=i("productVideo");i("productVideoPlay").onclick=()=>{M(),d=!1,E(),k.hidden=!1,i("productVideoPlay").hidden=!0;let L=k.play();L&&L.catch&&L.catch(()=>{t("productVideoNote","Use the video\u2019s Play control, or select Watch Official Demo to view the film on Geek+\u2019s website.")})},k.addEventListener("error",()=>{t("productVideoNote","The official video could not load here. Select Watch Official Demo below to view the source on Geek+\u2019s website.")}),k.querySelector("source").addEventListener("error",()=>{t("productVideoNote","The official video is unavailable in this player. Watch Official Demo opens the source page.")}),globalThis.productExperience={seek(L){if(!n)return;M(),g=Math.max(0,Math.min(PT,L)),p=!0,n.pose(rs(g),p),y(),h=90,v()},activate(L){if(r=L,!L){M(),d=!1,E(),k.pause(),a&&cancelAnimationFrame(a),a=0;return}P(),n&&(n.resize(),h=90,v())}},document.addEventListener("visibilitychange",()=>{document.hidden?(M(),d=!1,E(),k.pause(),a&&cancelAnimationFrame(a),a=0):v()}),"IntersectionObserver"in window&&new IntersectionObserver(L=>{o=L[0].isIntersecting,o?(h=90,v()):(M(),a&&cancelAnimationFrame(a),a=0)},{threshold:.05}).observe(i("productViewer")),window.addEventListener("resize",()=>{h=90,v()}),A(0),y()})();globalThis.DEMO3D={Scene:oi,PerspectiveCamera:Me,WebGLRenderer:ga,Mesh:ce,Group:Se,MeshStandardMaterial:ke,HemisphereLight:$s,DirectionalLight:Yi,PointLight:tr,Color:Gt,BoxGeometry:fn,CylinderGeometry:ai,PlaneGeometry:sn,TorusGeometry:qi,SphereGeometry:zn,EdgesGeometry:Fs,LineSegments:Vi,LineBasicMaterial:nn,CanvasTexture:Ls,OrbitControls:ya,InstancedMesh:Ds,Object3D:pe,Fog:Ps,SpotLight:Qs,MeshBasicMaterial:wn,Quaternion:qe,Vector3:C,TubeGeometry:Ys,CatmullRomCurve3:Gi,RoomEnvironment:va,PMREMGenerator:ns,ExtrudeGeometry:qs,Shape:Wi,ACESFilmicToneMapping:Ao,SRGBColorSpace:we,DoubleSide:Ze,PCFSoftShadowMap:xo,Plane:Xe};})();
 
 </script><script>
 /* MiniSQL — a small, read-only SQL engine that runs in the browser over the mock tables.
@@ -5480,7 +5612,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   for (const b of document.querySelectorAll('[data-wms-speed]')) b.addEventListener('click', () => {
     speed = Number(b.dataset.wmsSpeed); document.querySelectorAll('[data-wms-speed]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); setStatus();
   });
-  for (const id of ['workflowTab', 'optimizerTab', 'productTab']) $(id).addEventListener('click', () => playing && pause('Paused — left the lab'));
+  for (const id of ['workflowTab', 'optimizerTab', 'productTab', 'journeyTab']) $(id).addEventListener('click', () => playing && pause('Paused — left the lab'));
   document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
   document.addEventListener('wms:render', checkAutoPause);
   document.addEventListener('wms:reset', () => { pause(); seenLogs = 0; });
@@ -5713,6 +5845,1060 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   }
   document.addEventListener('wms:render', () => { dirty = true; if (open) loop(); });
   document.addEventListener('wms:reset', () => { vt = 0; dirty = true; if (open) loop(); });
+})();
+
+</script><script>
+/* Tab 5 — Order Journey: a scrubbable 3D film of one order moving dock to dock.
+   Everything on screen is a pure function of film time t, so pausing, scrubbing and replaying are exact. */
+(() => {
+  'use strict';
+  const T = globalThis.DEMO3D, $ = id => document.getElementById(id);
+  if (!T) return;
+  const DUR = 92;
+  const ease = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
+  const span = (t, a, b) => Math.min(1, Math.max(0, (t - a) / (b - a)));
+  const lerp = (a, b, u) => a + (b - a) * u;
+  const V = (x, y, z) => new T.Vector3(x, y, z);
+
+  /* ---------------- story data ---------------- */
+  const CHAPTERS = [
+    [0, 'Demo Distribution Center', 'A fictional goods-to-person site: inbound dock → receiving → P800R storage → pick & put → pack → ship.'],
+    [7, 'Inbound', 'Trailer TRL-4471 backs into dock W2. The ASN told the WMS what is arriving before the doors open.'],
+    [17, 'Receive & put away', 'The carton is scanned against the ASN and decanted into P800R shelf S-17 — a light shows which bin.'],
+    [29, 'Order release', 'Order SO-1042 arrives by API. The WMS hands a task to the robot management system (RMS).'],
+    [36, 'Goods to person', 'R-07 slides under shelf S-17, lifts it and carries the whole shelf to Station 2 — turning it so face B meets the picker. The picker never walks.'],
+    [49, 'Pick & put', 'Projector light marks bin B-02. The picker takes one item, turns, and puts it into the lit put-wall tote.'],
+    [61, 'Pack', 'The completed tote rides the conveyor to packing; the item is packed, weighed and labelled.'],
+    [70, 'Ship', 'The carton is loaded at dock E2. The WMS receives SHIPPED — order closed, dock to dock.'],
+    [82, 'The whole system', 'Robots, stations, conveyors and software, sized together.']
+  ];
+  const LOG = [
+    [9.6, 'YARD', 'TRL-4471 at dock W2 · ASN-88213 · 12 cartons'],
+    [15.2, 'WMS', 'LPN-0098 pallet scanned at receiving'],
+    [19.8, 'WMS', 'ASN_RECEIVED · SKU-HERO ×24 · carton C-551'],
+    [22.6, 'RMS', 'PUTAWAY_CONFIRMED · SKU-HERO → S-17 / B-02', 1],
+    [28.8, 'RMS', 'SHELF_STORED · S-17 @ grid G-10-05'],
+    [30.2, 'API', 'POST /orders · SO-1042 · 202 Accepted'],
+    [34.6, 'RMS', 'TASK_DISPATCHED · T-3307 · R-07 → S-17 → Station 2'],
+    [45.2, 'RMS', 'SHELF_ROTATE · S-17 180° · present face B'],
+    [47.6, 'RMS', 'SHELF_ARRIVED · S-17 @ Station 2'],
+    [52.0, 'STN', 'PICK_CONFIRMED · SKU-HERO ×1 from B-02', 1],
+    [54.6, 'STN', 'PUT_CONFIRMED · put-wall tote L-05 → SO-1042', 1],
+    [55.3, 'API', 'POST /wms/callbacks/pick-confirmation · 200'],
+    [61.0, 'WCS', 'TOTE_RELEASED · L-05 → pack line 2'],
+    [67.6, 'WMS', 'PACKED · 1 carton · 0.42 kg'],
+    [68.8, 'WMS', 'LABEL_PRINTED · carrier label attached'],
+    [77.6, 'WMS', 'LOADED · dock E2 · TRL-5520'],
+    [80.6, 'WMS', 'SHIPPED · SO-1042 ✓', 1]
+  ];
+
+  /* ---------------- materials & helpers ---------------- */
+  const MATS = new Map();
+  function M(color, rough = .7, metal = .05, extra = {}) {
+    const key = [color, rough, metal, JSON.stringify(extra)].join('|');
+    if (!MATS.has(key)) MATS.set(key, new T.MeshStandardMaterial({ color, roughness: rough, metalness: metal, ...extra }));
+    return MATS.get(key);
+  }
+  const GEO = { box: new T.BoxGeometry(1, 1, 1), cyl: new T.CylinderGeometry(.5, .5, 1, 20), cyl8: new T.CylinderGeometry(.5, .5, 1, 8), sph: new T.SphereGeometry(.5, 18, 12) };
+  function box(p, w, h, d, x, y, z, m, cast = true) { const o = new T.Mesh(GEO.box, m); o.scale.set(w, h, d); o.position.set(x, y, z); o.castShadow = cast; o.receiveShadow = true; p.add(o); return o; }
+  function cyl(p, r, h, x, y, z, m, axis = 'y', g = GEO.cyl) { const o = new T.Mesh(g, m); o.scale.set(r * 2, h, r * 2); if (axis === 'x') o.rotation.z = Math.PI / 2; if (axis === 'z') o.rotation.x = Math.PI / 2; o.position.set(x, y, z); o.castShadow = true; o.receiveShadow = true; p.add(o); return o; }
+  function canvasTex(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h); const t = new T.CanvasTexture(c); t.colorSpace = T.SRGBColorSpace; t.anisotropy = 4; return t; }
+  function label(text, w, h, { fg = '#e8f3fa', bg = null, font = 700, px = 64, border = null, two = false } = {}) {
+    const W = 1024, H = Math.max(64, Math.round(W * h / w));
+    const tex = canvasTex(W, H, (g) => { if (bg) { g.fillStyle = bg; g.fillRect(0, 0, W, H); } if (border) { g.strokeStyle = border; g.lineWidth = 10; g.strokeRect(5, 5, W - 10, H - 10); } g.fillStyle = fg; g.font = `${font} ${Math.min(px * 4, H * .62)}px system-ui, -apple-system, Segoe UI, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, W / 2, H / 2 + 2, W - 40); });
+    const mat = new T.MeshBasicMaterial({ map: tex, transparent: !bg, toneMapped: false }), geo = new T.PlaneGeometry(w, h);
+    if (!two) return new T.Mesh(geo, mat);
+    const g = new T.Group(), a = new T.Mesh(geo, mat), b = new T.Mesh(geo, mat); b.rotation.y = Math.PI; g.add(a, b); g.material = mat; return g;
+  }
+  function floorText(p, text, x, z, w, h, color = '#e9c35a', rot = 0) { const m = label(text, w, h, { fg: color, font: 800 }); m.rotation.x = -Math.PI / 2; m.rotation.z = rot; m.position.set(x, .02, z); m.material.opacity = .85; p.add(m); return m; }
+  const DUM = new T.Object3D(), COL = new T.Color();
+  class Inst {
+    constructor(parent, geo, mat, max, cast = true) { this.m = new T.InstancedMesh(geo, mat, max); this.m.count = 0; this.m.castShadow = cast; this.m.receiveShadow = true; this.max = max; parent.add(this.m); }
+    add(x, y, z, sx = 1, sy = 1, sz = 1, ry = 0, color) {
+      if (this.m.count >= this.max) return -1;
+      DUM.position.set(x, y, z); DUM.rotation.set(0, ry, 0); DUM.scale.set(sx, sy, sz); DUM.updateMatrix();
+      const i = this.m.count++; this.m.setMatrixAt(i, DUM.matrix); if (color !== undefined) this.m.setColorAt(i, COL.set(color)); return i;
+    }
+    done() { this.m.instanceMatrix.needsUpdate = true; if (this.m.instanceColor) this.m.instanceColor.needsUpdate = true; this.m.computeBoundingSphere?.(); }
+  }
+  function polyLen(pts) { let L = 0; for (let i = 1; i < pts.length; i++) L += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); return L; }
+  function along(pts, u) {
+    const L = polyLen(pts); let d = Math.max(0, Math.min(1, u)) * L;
+    for (let i = 1; i < pts.length; i++) { const a = pts[i - 1], b = pts[i], s = Math.hypot(b[0] - a[0], b[1] - a[1]); if (d <= s || i === pts.length - 1) { const f = s ? Math.min(1, d / s) : 1; return { x: lerp(a[0], b[0], f), z: lerp(a[1], b[1], f), hx: b[0] - a[0], hz: b[1] - a[1] }; } d -= s; }
+    return { x: pts[0][0], z: pts[0][1], hx: 1, hz: 0 };
+  }
+  /* travel along a path with eased start/stop over [a,b] */
+  const travel = (pts, t, a, b) => along(pts, ease(span(t, a, b)));
+  const heading = (hx, hz) => Math.atan2(hx, hz);
+
+  /* ---------------- palette ---------------- */
+  const C = {
+    floor: '#3c4651', yard: '#24282d', wall: '#2b3540', wallIn: '#33404c', steel: '#8a9aa6', dark: '#1c242c', yellow: '#e2b33c', green: '#53b97a', teal: '#3ee6ec',
+    shelf: '#9aabb7', board: '#5a6c79', robot: '#1e2830', plate: '#c7d1d8', carton: '#b8875a', pallet: '#9a7a4f', rackUp: '#2f63a8', rackBeam: '#e3792b', glass: '#9fd8ff'
+  };
+
+  /* ---------------- world ---------------- */
+  // Storage grid geometry
+  const G = (() => {
+    const cols = [], rows = [], P = 1.25;
+    let x = -19.5; for (let c = 0; c < 24; c++) { cols.push(x); x += P + (c % 8 === 7 ? 1.9 : 0); }
+    let z = -15.5; for (let r = 0; r < 12; r++) { rows.push(z); z += P + (r % 2 === 1 ? 1.9 : 0); }
+    const xW = cols[0] - 1.6, xE = cols[cols.length - 1] + 1.7, zN = rows[0] - 1.6, zS = rows[rows.length - 1] + 1.6;
+    const aisleOf = r => r % 2 === 0 ? rows[r] - P / 2 - .95 : rows[r] + P / 2 + .95;
+    return { cols, rows, P, xW, xE, zN, zS, aisleOf };
+  })();
+  const STATIONS = [-8, 0, 8].map(z => ({ z, dock: [15.6, z] }));
+  const HERO_SLOT = { c: 13, r: 7 };
+  const heroSlot = () => [G.cols[HERO_SLOT.c], G.rows[HERO_SLOT.r]];
+  const PORT = [-24.6, -5];
+  // Ambient shelf-to-station loops (5 per outer station, staggered so arrivals never overlap)
+  const AMB = [];
+  [[2, 1], [5, 4], [9, 2], [11, 6], [17, 3], [20, 10], [7, 9], [15, 11], [3, 8], [22, 5]].forEach(([c, r], i) => AMB.push({ c, r, st: i % 2 ? 2 : 0, off: (i >> 1) * 10.8 + (i % 2) * 5.4 }));
+  const PERIOD = 54;
+  function slotPathToStation(c, r, st) {
+    const sx = G.cols[c], sz = G.rows[r], za = G.aisleOf(r), S = STATIONS[st];
+    return [[sx, sz], [sx, za], [G.xE, za], [G.xE, S.z], [S.dock[0], S.z]];
+  }
+
+  function makeRobot(color = C.teal) {
+    const g = new T.Group();
+    box(g, .83, .16, 1.09, 0, .1, 0, M(C.robot, .45, .35));
+    box(g, .85, .035, 1.11, 0, .12, 0, M(color, .3, .1, { emissive: color, emissiveIntensity: .5 }), false);
+    const lift = cyl(g, .33, .03, 0, .2, 0, M(C.plate, .3, .7));
+    box(g, .2, .012, .05, 0, .186, .47, M('#0b0f13', .5, .2), false);
+    for (const sx of [-1, 1]) cyl(g, .07, .06, sx * .3, .07, .36, M('#0d1116', .8), 'x', GEO.cyl8);
+    const led = new T.Mesh(GEO.sph, M(color, .3, 0, { emissive: color, emissiveIntensity: 1.6 })); led.scale.setScalar(.05); led.position.set(0, .15, .55); g.add(led);
+    g.userData.lift = lift; return g;
+  }
+  function makeShelf(tag, hero = false) {
+    const g = new T.Group(), fm = M(C.shelf, .45, .6);
+    for (const [dx, dz] of [[-.47, -.47], [.47, -.47], [-.47, .47], [.47, .47]]) box(g, .045, 1.8, .045, dx, 1.0, dz, fm);
+    [.45, .9, 1.35, 1.8].forEach((h, i) => { box(g, 1.0, .025, 1.0, 0, h, 0, M(C.board, .7, .2)); for (let k = 0; k < 4; k++) if (!(hero && i === 1 && k === 2)) box(g, .4, .19, .4, k & 1 ? .235 : -.235, h + .11, k & 2 ? .235 : -.235, M(['#2e79a3', '#d58b3c', '#4f9a66', '#8b68b8'][(i + k + (hero ? 1 : 0)) % 4], .75)); });
+    const lb = label(tag, .5, .14, { fg: '#0b1218', bg: hero ? '#e7c45c' : '#d8e1e7' }); lb.position.set(0, 1.92, .51); g.add(lb);
+    return g;
+  }
+  function makePerson(vest = '#e8b86a', shirt = '#5aa3c8') {
+    const g = new T.Group();
+    for (const sx of [-.1, .1]) box(g, .13, .82, .15, sx, .41, 0, M('#2c3a52', .8));
+    const torso = box(g, .38, .56, .22, 0, 1.13, 0, M(shirt, .8)); box(g, .4, .4, .235, 0, 1.17, 0, M(vest, .7, 0, { emissive: vest, emissiveIntensity: .08 }));
+    const head = new T.Mesh(GEO.sph, M('#e2bf9c', .8)); head.scale.setScalar(.22); head.position.set(0, 1.58, 0); g.add(head);
+    const hat = new T.Mesh(GEO.sph, M('#f4f6f8', .5)); hat.scale.set(.24, .12, .24); hat.position.set(0, 1.66, 0); g.add(hat);
+    const armR = new T.Group(); armR.position.set(.24, 1.36, 0); g.add(armR); box(armR, .1, .6, .1, 0, -.28, 0, M(shirt, .8)); const hand = new T.Mesh(GEO.sph, M('#e2bf9c', .8)); hand.scale.setScalar(.09); hand.position.set(0, -.6, 0); armR.add(hand);
+    const armL = new T.Group(); armL.position.set(-.24, 1.36, 0); g.add(armL); box(armL, .1, .6, .1, 0, -.28, 0, M(shirt, .8));
+    g.userData = { armR, armL, torso }; g.traverse(o => { if (o.isMesh) o.castShadow = true; });
+    return g;
+  }
+  function makeTruck(color = '#d9dde2', cab = true, cabColor = '#2f5f8f') {
+    const g = new T.Group();
+    // trailer: rear at x=0, extends to -13.6
+    const tr = new T.Group(); g.add(tr);
+    const sk = M(color, .6, .2); box(tr, 13.6, 2.7, .05, -6.8, 2.75, 1.225, sk); box(tr, 13.6, 2.7, .05, -6.8, 2.75, -1.225, sk); box(tr, .05, 2.7, 2.5, -13.58, 2.75, 0, sk); box(tr, 13.6, .06, 2.5, -6.8, 1.42, 0, M('#6a5a48', .9)); box(tr, 13.6, .05, 2.5, -6.8, 4.08, 0, sk);
+    box(tr, 13.7, .12, 2.52, -6.8, 1.35, 0, M('#3a4047', .6, .4));
+    box(tr, 13.6, .25, 2.52, -6.8, 4.12, 0, M('#bfc5cc', .5, .3));
+    box(tr, .02, 2.6, 2.4, -13.0, 2.75, 1.26, M('#2f5f8f', .5), false);
+    const logo = label('DEMO FREIGHT', 6, .9, { fg: '#2f5f8f', font: 900 }); logo.position.set(-6.8, 3.0, 1.262); tr.add(logo); const logo2 = logo.clone(); logo2.position.z = -1.262; logo2.rotation.y = Math.PI; tr.add(logo2);
+    const doorL = box(tr, .05, 2.6, 1.22, .03, 2.75, -.62, M('#c9cfd6', .5, .3)), doorR = box(tr, .05, 2.6, 1.22, .03, 2.75, .62, M('#c9cfd6', .5, .3));
+    for (const ax of [-11.2, -10.0, -8.8]) for (const s of [-1, 1]) cyl(tr, .5, .32, ax, .5, s * 1.05, M('#111417', .9), 'z');
+    box(tr, .3, .6, 2.3, -1, .95, 0, M('#2a2f34', .7, .4));
+    if (cab) {
+      const cb = new T.Group(); cb.position.set(-14.4, 0, 0); g.add(cb);
+      box(cb, 2.3, 2.5, 2.45, -1.6, 2.15, 0, M(cabColor, .4, .4));
+      box(cb, .05, 1.0, 2.1, -2.77, 2.7, 0, M('#0e1a26', .1, .8, { emissive: '#0b1520', emissiveIntensity: .4 }));
+      box(cb, 3.6, .5, 2.4, -1.2, .95, 0, M('#22272c', .6, .5));
+      box(cb, .1, .8, 1.8, -2.82, 1.5, 0, M('#9aa4ad', .3, .8));
+      for (const ax of [-2.2, -.2, .8]) for (const s of [-1, 1]) cyl(cb, .52, .34, ax, .52, s * 1.08, M('#111417', .9), 'z');
+      for (const s of [-1, 1]) { const hl = new T.Mesh(GEO.sph, M('#fff6d8', .2, 0, { emissive: '#fff2c0', emissiveIntensity: 2 })); hl.scale.set(.06, .16, .26); hl.position.set(-2.82, 1.2, s * .85); cb.add(hl); }
+    }
+    g.userData = { doorL, doorR };
+    return g;
+  }
+  function makeForklift() {
+    const g = new T.Group(), y = M('#e7b52c', .5, .2), dk = M('#22272c', .7, .4);
+    box(g, 2.0, .7, 1.1, 0, .65, 0, y); box(g, .7, .9, 1.1, .75, 1.05, 0, M('#3a3f45', .6, .5));
+    for (const [dx, dz] of [[-.75, -.5], [-.75, .5], [.55, -.5], [.55, .5]]) box(g, .06, 1.4, .06, dx, 1.7, dz, dk);
+    box(g, 1.4, .06, 1.1, -.1, 2.4, 0, dk);
+    for (const s of [-1, 1]) { cyl(g, .3, .22, -.55, .3, s * .5, M('#111417', .9), 'z'); cyl(g, .25, .2, .6, .25, s * .5, M('#111417', .9), 'z'); }
+    const mast = new T.Group(); mast.position.set(-1.1, 0, 0); g.add(mast);
+    for (const s of [-1, 1]) box(mast, .1, 2.6, .1, 0, 1.4, s * .35, dk);
+    const car = new T.Group(); mast.add(car); box(car, .08, .5, .9, -.06, .45, 0, dk);
+    for (const s of [-1, 1]) box(car, 1.1, .05, .12, -.62, .2, s * .3, M('#9aa4ad', .4, .7));
+    const drv = makePerson('#e8b86a', '#40506a'); drv.scale.setScalar(.9); drv.position.set(.1, .55, 0); drv.rotation.y = -Math.PI / 2; g.add(drv);
+    g.userData = { car }; return g;
+  }
+  function makePallet(parent, x, y, z, cartons, seed = 1, cartonInst) {
+    box(parent, 1.2, .14, 1.0, x, y + .07, z, M(C.pallet, .9));
+    let s = seed; const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    for (let k = 0; k < cartons; k++) { const lx = (k % 2) * .58 - .29, lz = (Math.floor(k / 2) % 2) * .48 - .24, ly = Math.floor(k / 4) * .38; cartonInst.add(x + lx, y + .14 + ly + .19, z + lz, .56, .36, .46, (rnd() - .5) * .08, ['#b8875a', '#a77a50', '#c49466'][k % 3]); }
+  }
+  function makeConveyor(parent, x0, z0, x1, z1, h = .82) {
+    const len = Math.hypot(x1 - x0, z1 - z0), ang = Math.atan2(x1 - x0, z1 - z0), g = new T.Group(); g.position.set((x0 + x1) / 2, 0, (z0 + z1) / 2); g.rotation.y = ang; parent.add(g);
+    for (const s of [-1, 1]) box(g, .06, .12, len, s * .33, h, 0, M('#6f7f8b', .4, .6));
+    box(g, .62, .03, len, 0, h - .02, 0, M('#2a3138', .6, .3), false);
+    const n = Math.floor(len / .25); const rollers = new Inst(g, GEO.cyl8, M('#aab6bf', .3, .8), n, false); for (let i = 0; i < n; i++) { DUM.rotation.set(0, 0, Math.PI / 2); rollers.add(0, h + .005, -len / 2 + i * .25 + .12, .07, .6, .07); }
+    // fix roller orientation (instanced add() resets rotation) — rollers lie across the belt
+    for (let i = 0; i < rollers.m.count; i++) { DUM.position.set(0, h + .005, -len / 2 + i * .25 + .12); DUM.rotation.set(0, 0, Math.PI / 2); DUM.scale.set(.07, .6, .07); DUM.updateMatrix(); rollers.m.setMatrixAt(i, DUM.matrix); }
+    rollers.done();
+    for (let d = -len / 2 + .3; d <= len / 2; d += 2.2) for (const s of [-1, 1]) box(g, .05, h, .05, s * .3, h / 2, d, M('#505c66', .5, .5));
+    return g;
+  }
+
+  function buildWorld(scene) {
+    const W = {};
+    // ground & building shell
+    const floorTex = canvasTex(1024, 1024, (g, w, h) => { g.fillStyle = '#7f8a94'; g.fillRect(0, 0, w, h); for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${Math.random() < .5 ? 255 : 0},${Math.random() < .5 ? 255 : 0},255,${Math.random() * .03})`; g.fillRect(Math.random() * w, Math.random() * h, 2, 2); } g.strokeStyle = 'rgba(30,36,42,.35)'; g.lineWidth = 2; for (let i = 0; i <= 8; i++) { g.beginPath(); g.moveTo(i * 128, 0); g.lineTo(i * 128, h); g.stroke(); g.beginPath(); g.moveTo(0, i * 128); g.lineTo(w, i * 128); g.stroke(); } });
+    floorTex.wrapS = floorTex.wrapT = 1000; floorTex.repeat.set(11, 6);
+    const floor = new T.Mesh(new T.PlaneGeometry(88, 46), new T.MeshStandardMaterial({ map: floorTex, color: '#9aa5ae', roughness: .85, metalness: .05 })); floor.rotation.x = -Math.PI / 2; floor.position.set(0, 0, -1); floor.receiveShadow = true; scene.add(floor);
+    for (const sx of [-1, 1]) { const yard = new T.Mesh(new T.PlaneGeometry(40, 70), M(C.yard, .95)); yard.rotation.x = -Math.PI / 2; yard.position.set(sx * 64, -.01, -1); yard.receiveShadow = true; scene.add(yard); }
+    const ground = new T.Mesh(new T.PlaneGeometry(400, 400), M('#11161b', 1)); ground.rotation.x = -Math.PI / 2; ground.position.y = -.03; scene.add(ground); W.ground = ground;
+    // yard markings
+    const lines = new Inst(scene, GEO.box, M('#d9dde2', .6, 0, { emissive: '#d9dde2', emissiveIntensity: .05 }), 80, false);
+    for (const sx of [-1, 1]) for (let z = -19; z <= 19; z += 4.5) lines.add(sx * 60, .012, z, 30, .01, .14);
+    lines.done();
+    // walls: north full, west/east with dock doors, low south kerb
+    const wallM = M(C.wallIn, .85, .05), H = 10.5;
+    box(scene, 88, H, .3, 0, H / 2, -24.15, wallM);
+    const W_DOORS = [-15, -5, 5, 15], E_DOORS = [-9, -1, 7, 15];
+    function sideWall(x, doors) {
+      const zs = [-24, ...doors.flatMap(z => [z - 1.7, z + 1.7]), 22]; for (let i = 0; i < zs.length; i += 2) box(scene, .3, H, zs[i + 1] - zs[i], x, H / 2, (zs[i] + zs[i + 1]) / 2, wallM);
+      const doorsObj = doors.map(z => {
+        box(scene, .32, H - 4.2, 3.4, x, 4.2 + (H - 4.2) / 2, z, wallM);
+        const panel = box(scene, .12, 3.9, 3.3, x + (x < 0 ? -.05 : .05), 2.15, z, M('#6c7a86', .5, .4));
+        box(scene, .5, .08, 3.6, x + (x < 0 ? -.3 : .3), 4.25, z, M('#1a1f24', .8));
+        for (const s of [-1, 1]) box(scene, .5, 3.9, .25, x + (x < 0 ? -.3 : .3), 2.0, z + s * 1.75, M('#14181c', .9));
+        box(scene, 2.2, .06, 2.4, x + (x < 0 ? 1.15 : -1.15), .03, z, M('#3d454d', .5, .6));
+        const lamp = new T.Mesh(GEO.sph, M('#ff4a3a', .3, 0, { emissive: '#ff3b2a', emissiveIntensity: 2 })); lamp.scale.setScalar(.08); lamp.position.set(x + (x < 0 ? .25 : -.25), 4.0, z - 2.0); scene.add(lamp);
+        const lab = label((x < 0 ? 'W' : 'E') + (doors.indexOf(z) + 1), 1.1, .55, { fg: '#0a0f14', bg: '#e2b33c', two: true }); lab.position.set(x + (x < 0 ? .2 : -.2), 4.7, z); lab.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2; scene.add(lab);
+        return { panel, lamp, z };
+      });
+      return doorsObj;
+    }
+    W.westDoors = sideWall(-44, W_DOORS); W.eastDoors = sideWall(44, E_DOORS);
+    box(scene, 88, .8, .3, 0, .4, 22.15, wallM);
+    // roof trusses + high-bay lights (cut-away roof)
+    const truss = new Inst(scene, GEO.box, M('#4c5966', .6, .5), 400, false), lights = new Inst(scene, (() => { const pg = new T.PlaneGeometry(1, 1); pg.rotateX(Math.PI / 2); return pg; })(), M('#fffbe8', .3, 0, { emissive: '#fff6d2', emissiveIntensity: 1.6 }), 200, false);
+    for (let x = -40; x <= 40; x += 8) { truss.add(x, H + .2, -1, .25, .35, 46); truss.add(x, H - .9, -1, .2, .2, 46); for (let z = -22; z <= 20; z += 3) truss.add(x, H - .35, z, .08, 1.1, .08); for (let z = -18; z <= 18; z += 6) lights.add(x + 4, H - 1.4, z, 1.2, .08, .5); }
+    truss.done(); lights.done(); W.truss = truss.m; W.lights = lights.m;
+    // columns
+    const colI = new Inst(scene, GEO.box, M('#566572', .5, .5), 60);
+    for (let x = -32; x <= 32; x += 16) for (const z of [-23.6, 21.6]) colI.add(x, H / 2, z, .4, H, .4);
+    for (const z of [-12, 12]) colI.add(-34, H / 2, z, .4, H, .4), colI.add(34, H / 2, z, .4, H, .4);
+    colI.done();
+
+    // floor paint: zones & walkways
+    const paint = new Inst(scene, GEO.box, M(C.yellow, .6, 0, { emissive: C.yellow, emissiveIntensity: .08 }), 300, false), walk = new Inst(scene, GEO.box, M(C.green, .7, 0), 100, false);
+    const rect = (inst, x0, z0, x1, z1, w = .12) => { inst.add((x0 + x1) / 2, .011, z0, x1 - x0, .01, w); inst.add((x0 + x1) / 2, .011, z1, x1 - x0, .01, w); inst.add(x0, .011, (z0 + z1) / 2, w, .01, z1 - z0); inst.add(x1, .011, (z0 + z1) / 2, w, .01, z1 - z0); };
+    rect(paint, -43, -20, -29, 18); rect(paint, -28.5, -9, -22.5, -1); rect(paint, G.xW - .8, G.zN - 1.2, G.xE + .8, G.zS + .8); rect(paint, 14.2, -12, 23, 12); rect(paint, 24, -12, 31.5, 12); rect(paint, 32, -14, 43, 18);
+    for (let z = -16; z <= 14; z += 3.4) paint.add(-36, .011, z, 12, .01, .08);
+    walk.add(0, .011, 18.2, 86, .01, 1.4); walk.add(-1, .011, 16.9, 84, .01, .08); walk.add(-1, .011, 19.5, 84, .01, .08);
+    paint.done(); walk.done();
+    floorText(scene, 'RECEIVING', -36, 15.6, 9, 1.4); floorText(scene, 'P800R STORAGE · ROBOTS ONLY', -3, G.zS + 2.1, 16, 1.2);
+    floorText(scene, 'PICK & PUT', 18.6, 11, 6.5, 1.1); floorText(scene, 'PACK', 27.8, 11, 4, 1.1); floorText(scene, 'SHIPPING', 37.5, 17, 8, 1.4); floorText(scene, 'DECANT', -25.5, -.2, 4.4, .8);
+    // hanging zone signs
+    [['01 INBOUND', -40, -18], ['02 RECEIVING', -35, 0], ['03 STORAGE', -14, -19], ['04 PICK & PUT', 18.5, -14], ['05 PACK', 27.8, -14], ['06 SHIPPING', 38, -16]].forEach(([txt, x, z]) => { const s = label(txt, 6, 1.2, { fg: '#0b1218', bg: '#e8f0f5', two: true }); s.position.set(x, 7.6, z); scene.add(s); box(scene, .03, 2.4, .03, x - 2.6, 9.2, z, M('#556', .5, .5), false); box(scene, .03, 2.4, .03, x + 2.6, 9.2, z, M('#556', .5, .5), false); });
+
+    // ---- storage grid: shelves (instanced), QR markers, fence, chargers ----
+    const leg = new Inst(scene, GEO.box, M(C.shelf, .45, .6), 1200), board = new Inst(scene, GEO.box, M(C.board, .7, .2), 1200), tote = new Inst(scene, GEO.box, M('#ffffff', .75, .05), 5200), qr = new Inst(scene, GEO.box, M('#151a1f', .6), 2200, false);
+    const TOTES = ['#2e79a3', '#d58b3c', '#4f9a66', '#8b68b8', '#3a8fb0', '#c76d4a'];
+    const skip = new Set([`${HERO_SLOT.c},${HERO_SLOT.r}`, ...AMB.map(a => `${a.c},${a.r}`)]);
+    let k = 0;
+    G.cols.forEach((x, c) => G.rows.forEach((z, r) => {
+      qr.add(x, .006, z, .18, .004, .18);
+      if (skip.has(`${c},${r}`) || (c * 7 + r * 3) % 29 === 0) return;
+      for (const [dx, dz] of [[-.47, -.47], [.47, -.47], [-.47, .47], [.47, .47]]) leg.add(x + dx, 1.0, z + dz, .045, 1.8, .045);
+      [.45, .9, 1.35, 1.8].forEach((h, i) => { board.add(x, h, z, 1.0, .025, 1.0); for (let q = 0; q < 4; q++) if ((k++ * 13 + i) % 6) tote.add(x + (q & 1 ? .235 : -.235), h + .11, z + (q & 2 ? .235 : -.235), .4, .19, .4, 0, TOTES[(c * 3 + r + i * 2 + q) % TOTES.length]); });
+    }));
+    for (let x = G.xW; x <= G.xE + 3; x += 1.25) for (const z of [G.zN, G.zS, ...G.rows.map((_, r) => G.aisleOf(r))]) qr.add(x, .006, z, .18, .004, .18);
+    leg.done(); board.done(); tote.done(); qr.done();
+    // safety fence around the robot zone
+    const fence = new Inst(scene, GEO.box, M('#e2b33c', .5, .3), 400), mesh = new Inst(scene, GEO.box, M('#c9b26a', .6, .2, { transparent: true, opacity: .28 }), 200, false);
+    const fx0 = G.xW - 1.4, fx1 = G.xE + 1.2, fz0 = G.zN - 3.4, fz1 = G.zS + 1.0;
+    const fenceRun = (x0, z0, x1, z1) => { const L = Math.hypot(x1 - x0, z1 - z0), n = Math.ceil(L / 2.4); for (let i = 0; i <= n; i++) fence.add(lerp(x0, x1, i / n), .9, lerp(z0, z1, i / n), .06, 1.8, .06); mesh.add((x0 + x1) / 2, .95, (z0 + z1) / 2, x0 === x1 ? .02 : L, 1.6, x0 === x1 ? L : .02); fence.add((x0 + x1) / 2, 1.8, (z0 + z1) / 2, x0 === x1 ? .05 : L, .05, x0 === x1 ? L : .05); };
+    fenceRun(fx0, fz0, fx1, fz0); fenceRun(fx0, fz1, fx1, fz1); fenceRun(fx0, fz0, fx0, -7); fenceRun(fx0, -3, fx0, fz1);
+    fence.done(); mesh.done();
+    // chargers along the north side
+    W.chargeLeds = [];
+    for (let i = 0; i < 8; i++) { const x = -16 + i * 3.2, z = G.zN - 2.2; box(scene, .5, .7, .25, x, .35, z - .7, M('#2a333c', .5, .4)); box(scene, .9, .02, 1.3, x, .012, z, M('#264a3e', .8)); const led = new T.Mesh(GEO.box, M('#5bff9e', .3, 0, { emissive: '#5bff9e', emissiveIntensity: 1.5 })); led.scale.set(.3, .05, .02); led.position.set(x, .55, z - .57); scene.add(led); W.chargeLeds.push(led); if (i % 3 !== 1) { const rb = makeRobot('#5bff9e'); rb.position.set(x, 0, z); scene.add(rb); } }
+
+    // ---- inbound: trucks, pallets, forklifts, reserve racking ----
+    W.cartons = new Inst(scene, GEO.box, M('#ffffff', .8), 900);
+    W.truckIn = makeTruck('#dfe3e7', true, '#2f5f8f'); W.truckIn.rotation.y = 0; scene.add(W.truckIn);
+    // pallets inside the inbound trailer (move with the truck)
+    W.trailerCargo = new T.Group(); W.truckIn.add(W.trailerCargo);
+    const cargoCartons = new Inst(W.trailerCargo, GEO.box, M('#ffffff', .8), 120);
+    for (let i = 1; i < 5; i++) makePallet(W.trailerCargo, -1.2 - i * 1.4, 1.42, 0, 8, i + 3, cargoCartons);
+    cargoCartons.done();
+    [[-15, '#d4d8dc', '#7a2f2f'], [5, '#cfd5da', '#2f6f4f']].forEach(([z, c, cc]) => { const tk = makeTruck(c, true, cc); tk.position.set(-45.4, 0, z); tk.rotation.y = 0; scene.add(tk); });
+    W.palletHero = new T.Group(); scene.add(W.palletHero); box(W.palletHero, 1.2, .14, 1.0, 0, .07, 0, M(C.pallet, .9));
+    const heroPalletCartons = new Inst(W.palletHero, GEO.box, M('#ffffff', .8), 12); for (let q = 0; q < 7; q++) heroPalletCartons.add((q % 2) * .58 - .29, .14 + Math.floor(q / 4) * .38 + .19, (Math.floor(q / 2) % 2) * .48 - .24, .56, .36, .46, 0, ['#b8875a', '#a77a50', '#c49466'][q % 3]); heroPalletCartons.done();
+    W.heroCarton = new T.Group(); scene.add(W.heroCarton); box(W.heroCarton, .56, .36, .46, 0, 0, 0, M('#c99a62', .75)); box(W.heroCarton, .57, .05, .1, 0, .16, 0, M('#e7c45c', .4, 0, { emissive: '#e7b84a', emissiveIntensity: .8 }), false);
+    const lbl = label('C-551', .3, .12, { fg: '#0a0f14', bg: '#f4f4ee' }); lbl.position.set(0, 0, .231); W.heroCarton.add(lbl);
+    // staging lanes with pallets
+    for (let i = 0; i < 9; i++) { const z = -15 + i * 3.4; if (Math.abs(z - -5) < 1.5) continue; for (let j = 0; j < 3; j++) if ((i + j) % 4) makePallet(scene, -40 + j * 1.6, 0, z, 4 + ((i * 3 + j) % 5), i * 7 + j, W.cartons); }
+    W.fork = makeForklift(); scene.add(W.fork); W.fork2 = makeForklift(); scene.add(W.fork2);
+    W.forkPallet = new T.Group(); W.fork2.userData.car.add(W.forkPallet); W.forkPallet.position.set(-.65, .12, 0); box(W.forkPallet, 1.2, .14, 1.0, 0, .07, 0, M(C.pallet, .9)); const fpc = new Inst(W.forkPallet, GEO.box, M('#ffffff', .8), 8); for (let q = 0; q < 6; q++) fpc.add((q % 2) * .58 - .29, .33 + Math.floor(q / 4) * .38, (Math.floor(q / 2) % 2) * .48 - .24, .56, .36, .46, 0, '#b8875a'); fpc.done();
+    // reserve pallet racking (north wall) — selective racks, 3 levels
+    const up = new Inst(scene, GEO.box, M(C.rackUp, .5, .4), 200), beam = new Inst(scene, GEO.box, M(C.rackBeam, .5, .3), 300), deck = new Inst(scene, GEO.box, M(C.pallet, .9), 200);
+    for (let bay = 0; bay < 7; bay++) { const x = -42 + bay * 2.8; for (const dz of [0, 1.1]) for (const dx of [0, 2.7]) up.add(x + dx, 3.2, -22.9 + dz, .1, 6.4, .1); for (const h of [1.6, 3.2, 4.8]) for (const dz of [0, 1.1]) beam.add(x + 1.35, h, -22.9 + dz, 2.7, .14, .07); for (const h of [0, 1.6, 3.2, 4.8]) for (const q of [0, 1]) { const px = x + .7 + q * 1.3, pz = -22.35; deck.add(px, h + .07 + .02, pz, 1.2, .14, 1.0); if ((bay + q + h) % 3 !== 0) for (let s = 0; s < 4; s++) W.cartons.add(px + (s % 2) * .56 - .28, h + .35 + Math.floor(s / 2) * .37, pz, .54, .35, .9, 0, ['#b8875a', '#a77a50', '#c49466'][(s + bay) % 3]); } }
+    up.done(); beam.done(); deck.done();
+    // receiving / decant stations
+    W.decant = makePerson('#e8b86a', '#5d8fb8'); scene.add(W.decant); W.decant.position.set(-27.6, 0, -6.6); W.decant.rotation.y = Math.PI / 2;
+    for (const [z, hero] of [[-5, true], [-8.4, false]]) { box(scene, 1.6, .06, .8, -27.6, .92, z, M('#c4ccd2', .35, .7)); for (const dx of [-.7, .7]) for (const dz of [-.33, .33]) box(scene, .05, .9, .05, -27.6 + dx, .45, z + dz, M('#7d8a94', .4, .6)); box(scene, .5, .35, .05, -28.2, 1.3, z - .3, M('#13202c', .3, .2, { emissive: '#0d3042', emissiveIntensity: .8 })); if (!hero) { const sh = makeShelf('S-41'); sh.position.set(-24.6, .04, z); scene.add(sh); const rb = makeRobot(); rb.position.set(-24.6, 0, z); scene.add(rb); } }
+    W.scanBeam = new T.Mesh(GEO.box, new T.MeshBasicMaterial({ color: '#ff3b3b', transparent: true, opacity: .8, toneMapped: false })); W.scanBeam.scale.set(.012, .012, .7); scene.add(W.scanBeam);
+    W.binGlow = new T.Mesh(new T.PlaneGeometry(.46, .24), new T.MeshBasicMaterial({ color: '#7dffb0', transparent: true, opacity: .85, toneMapped: false })); scene.add(W.binGlow);
+
+    // ---- control room (mezzanine) + video wall ----
+    const cr = new T.Group(); cr.position.set(1, 0, -21.6); scene.add(cr);
+    box(cr, 12, .3, 4.6, 0, 4.1, 0, M('#46525e', .6, .4)); for (const dx of [-5.8, 5.8]) for (const dz of [-2.1, 2.1]) box(cr, .25, 4.1, .25, dx, 2.05, dz, M('#5a6773', .5, .5));
+    box(cr, 12, 2.6, .06, 0, 5.55, 2.3, M(C.glass, .05, .3, { transparent: true, opacity: .22 }), false); box(cr, 12, .1, .1, 0, 6.85, 2.3, M('#5a6773', .5, .5));
+    for (let i = 0; i < 4; i++) { box(cr, 1.6, .06, .7, -4.2 + i * 2.8, 4.95, 1.2, M('#2c353e', .5, .3)); box(cr, .7, .45, .04, -4.2 + i * 2.8, 5.35, 1.45, M('#0d2a3c', .3, .2, { emissive: '#11466a', emissiveIntensity: .9 })); const op = makePerson('#5fe3e8', '#3a4d64'); op.scale.setScalar(.95); op.position.set(-4.2 + i * 2.8, 4.25, .45); op.rotation.y = 0; cr.add(op); }
+    for (let s = 0; s < 10; s++) box(cr, .9, .12, .35, 6.6 + s * .0, .06 + s * .41, 2.6 - s * .38 + 2, M('#5a6773', .5, .5));
+    W.wallCanvas = document.createElement('canvas'); W.wallCanvas.width = 1600; W.wallCanvas.height = 600; W.wallTex = new T.CanvasTexture(W.wallCanvas); W.wallTex.colorSpace = T.SRGBColorSpace;
+    const vw = new T.Mesh(new T.PlaneGeometry(10, 3.75), new T.MeshBasicMaterial({ map: W.wallTex, toneMapped: false })); vw.position.set(1, 8.6, -23.95); scene.add(vw); box(scene, 10.4, 4.1, .1, 1, 8.6, -24.02, M('#0b0f14', .5, .3));
+    W.packet = new T.Mesh(GEO.sph, new T.MeshBasicMaterial({ color: '#b69cff', toneMapped: false })); W.packet.scale.setScalar(.5); scene.add(W.packet);
+    W.packetHalo = new T.Mesh(GEO.sph, new T.MeshBasicMaterial({ color: '#b69cff', transparent: true, opacity: .25, toneMapped: false })); W.packetHalo.scale.setScalar(1.3); scene.add(W.packetHalo);
+    W.packetTrail = []; for (let i = 0; i < 14; i++) { const p = new T.Mesh(GEO.sph, new T.MeshBasicMaterial({ color: '#5fe3e8', transparent: true, opacity: .5 * (1 - i / 14), toneMapped: false })); p.scale.setScalar(.32 * (1 - i / 18)); scene.add(p); W.packetTrail.push(p); }
+
+    // ---- workstations with put walls ----
+    W.stations = STATIONS.map((S, si) => {
+      const g = new T.Group(); g.position.set(0, 0, S.z); scene.add(g);
+      const post = M('#d6dde2', .4, .4);
+      for (const dz of [-.85, .85]) box(g, .14, 2.3, .16, 16.45, 1.15, dz, post);
+      box(g, .5, .26, 1.9, 16.5, 2.3, 0, M('#151b21', .5, .3)); const hl = label('Geek+  ·  STATION ' + (si + 1), 1.8, .2, { fg: '#e8f3fa', two: true }); hl.position.set(16.76, 2.3, 0); hl.rotation.y = Math.PI / 2; g.add(hl);
+      const proj = box(g, .2, .12, .22, 16.6, 2.12, 0, M('#0c1116', .4, .4));
+      box(g, 1.5, .02, 1.5, 15.6, .011, 0, M('#16384a', .9), false);
+      box(g, .9, .9, .6, 17.6, .45, 1.7, M('#2a333c', .5, .4)); // operator platform cabinet
+      const hmi = box(g, .05, .34, .5, 17.0, 1.35, .95, M('#0d2a3c', .3, .2, { emissive: '#14507a', emissiveIntensity: 1 })); hmi.rotation.y = -.5;
+      const picker = makePerson('#e8b86a', ['#5aa3c8', '#7b8fd4', '#5ab39a'][si]); picker.position.set(17.65, 0, 0); picker.rotation.y = -Math.PI / 2; g.add(picker);
+      // put walls (north & south of the picker), 3 x 3 cubbies each with a light module
+      const mods = {}, pw = M('#93a5b1', .5, .5);
+      for (const side of [-1, 1]) {
+        const z = side * 1.35;
+        for (const dx of [-.62, .62]) for (const dz of [-.18, .18]) box(g, .04, 1.65, .04, 17.75 + dx, .82, z + dz, pw);
+        for (const h of [.6, .95, 1.3, 1.65]) box(g, 1.28, .02, .38, 17.75, h, z, pw);
+        for (let row = 0; row < 3; row++) for (let col = 0; col < 3; col++) {
+          const x = 17.35 + col * .4, y = .6 + row * .35, name = (side < 0 ? 'L-' : 'R-') + String((2 - row) * 3 + col + 1).padStart(2, '0');
+          const tm = new T.MeshStandardMaterial({ color: ['#2e79a3', '#4f9a66', '#d58b3c'][(row + col) % 3], roughness: .7 }); box(g, .34, .16, .3, x, y + .09, z, tm);
+          const mm = new T.MeshStandardMaterial({ color: '#2a3a46', emissive: '#000000', roughness: .4 }); box(g, .3, .035, .02, x, y - .01, z - side * .19, mm, false);
+          mods[name] = { tm, mm, pos: V(x, y + .22, S.z + z) };
+        }
+        const head = label(side < 0 ? 'PUT WALL · L' : 'PUT WALL · R', 1.2, .16, { fg: '#a5fb75', bg: '#10222c', two: true }); head.position.set(17.75, 1.85, z); g.add(head);
+      }
+      const beamM = new T.MeshBasicMaterial({ color: '#8cffc0', transparent: true, opacity: .0, toneMapped: false, depthWrite: false });
+      const beam = new T.Mesh(new T.CylinderGeometry(.02, .26, 1, 18, 1, true), beamM); g.add(beam);
+      const glow = new T.Mesh(new T.PlaneGeometry(.46, .26), new T.MeshBasicMaterial({ color: '#8cffc0', transparent: true, opacity: 0, toneMapped: false })); glow.rotation.y = Math.PI / 2; g.add(glow);
+      const light = new T.PointLight('#8cffc0', 0, 3, 1.6); g.add(light);
+      return { g, picker, mods, beam, glow, light, proj, z: S.z };
+    });
+
+    // ---- conveyors, packing, outbound ----
+    STATIONS.forEach(S => { makeConveyor(scene, 19.0, S.z - 2.2, 25.4, S.z - 2.2); makeConveyor(scene, 28.9, S.z - 1.0, 43.6, S.z - 1.0); });
+    W.packers = STATIONS.map((S, i) => {
+      box(scene, 2.4, .06, .9, 27.4, .92, S.z - 1.0, M('#c4ccd2', .35, .6)); for (const dx of [-1.1, 1.1]) for (const dz of [-.38, .38]) box(scene, .05, .9, .05, 27.4 + dx, .45, S.z - 1.0 + dz, M('#7d8a94', .4, .6));
+      box(scene, .5, .4, .4, 28.3, 1.15, S.z - 1.25, M('#e8ecef', .4, .2)); box(scene, .3, .02, .12, 28.3, 1.36, S.z - 1.05, M('#f8f8f2', .6), false);
+      box(scene, .9, 1.1, .5, 25.9, .55, S.z - 1.4, M(C.carton, .8)); box(scene, .45, .35, .04, 26.6, 1.3, S.z - 1.5, M('#0d2a3c', .3, .2, { emissive: '#14507a', emissiveIntensity: 1 }));
+      const pk = makePerson('#e8b86a', ['#7a9a5a', '#5a7aa8', '#a86a5a'][i]); pk.position.set(27.4, 0, S.z - .15); pk.rotation.y = Math.PI; scene.add(pk); return pk;
+    });
+    W.printerLed = new T.Mesh(GEO.box, M('#5fe3e8', .3, 0, { emissive: '#5fe3e8', emissiveIntensity: 0 })); W.printerLed.scale.set(.08, .03, .02); W.printerLed.position.set(28.1, 1.28, -1.04); scene.add(W.printerLed);
+    // extendable conveyors into trailers + outbound trailers
+    W.truckOut = makeTruck('#e3e6ea', true, '#4b3f8f'); W.truckOut.rotation.y = Math.PI; scene.add(W.truckOut);
+    W.outCargo = new T.Group(); W.truckOut.add(W.outCargo); const oc = new Inst(W.outCargo, GEO.box, M('#ffffff', .8), 80); for (let i = 0; i < 40; i++) oc.add(-8 - (i % 8) * .5, 1.6 + Math.floor(i / 16) * .4, ((Math.floor(i / 8) % 2) - .5) * 1.0, .45, .36, .4, 0, ['#b8875a', '#a77a50', '#c49466'][i % 3]); oc.done();
+    [[-9, '#d4d8dc', '#2f6f6f'], [15, '#cfd5da', '#7a5f2f']].forEach(([z, c, cc]) => { const tk = makeTruck(c, true, cc); tk.position.set(45.4, 0, z); tk.rotation.y = Math.PI; scene.add(tk); });
+    W.flowCartons = new Inst(scene, GEO.box, M('#ffffff', .8), 40); // animated, rebuilt per frame
+    W.flowTotes = new Inst(scene, GEO.box, M('#ffffff', .7), 30);
+    W.cartons.done();
+
+    // ---- hero actors ----
+    W.heroShelf = makeShelf('S-17', true); scene.add(W.heroShelf);
+    W.heroRobot = makeRobot('#b69cff'); scene.add(W.heroRobot);
+    const tag = label('R-07', .7, .24, { fg: '#120a2a', bg: '#b69cff' }); tag.position.set(0, .45, 0); tag.rotation.x = -Math.PI / 2; W.heroRobot.add(tag);
+    W.heroItem = new T.Mesh(GEO.box, M('#f2c94c', .35, .2, { emissive: '#f2b52c', emissiveIntensity: .9 })); W.heroItem.scale.set(.16, .12, .14); W.heroItem.castShadow = true; scene.add(W.heroItem);
+    W.heroTote = new T.Group(); box(W.heroTote, .34, .16, .3, 0, 0, 0, M('#2e79a3', .7)); scene.add(W.heroTote);
+    W.shipCarton = new T.Group(); box(W.shipCarton, .42, .3, .34, 0, 0, 0, M('#c99a62', .75)); const sl = label('SO-1042', .26, .1, { fg: '#0a0f14', bg: '#ffffff' }); sl.position.set(0, .151, 0); sl.rotation.x = -Math.PI / 2; W.shipCarton.add(sl); W.shipLabel = sl; scene.add(W.shipCarton);
+    W.heroRing = new T.Mesh(new T.TorusGeometry(.75, .045, 8, 48), new T.MeshBasicMaterial({ color: '#b69cff', toneMapped: false, transparent: true, opacity: .9 })); W.heroRing.rotation.x = -Math.PI / 2; scene.add(W.heroRing);
+    // ambient robots + their shelves
+    W.amb = AMB.map((a, i) => { const sh = makeShelf('S-' + String(20 + i * 3)); const rb = makeRobot(); scene.add(sh, rb); return { ...a, sh, rb, path: slotPathToStation(a.c, a.r, a.st) }; });
+    W.roam = Array.from({ length: 5 }, (_, i) => { const rb = makeRobot(); scene.add(rb); return rb; });
+    W.roamPath = [[G.xW, G.zN], [G.xE, G.zN], [G.xE, G.zS], [G.xW, G.zS], [G.xW, G.zN]];
+    // a few extra people for life
+    const sup = makePerson('#5fe3e8', '#2d3d55'); sup.position.set(-31, 0, 8); sup.rotation.y = -1.2; scene.add(sup);
+    const rw = makePerson('#e8b86a', '#6b5a8a'); rw.position.set(-38.5, 0, -8.8); rw.rotation.y = 1.8; scene.add(rw);
+    const sw = makePerson('#e8b86a', '#4a6a5a'); sw.position.set(38, 0, 3.5); sw.rotation.y = -2.3; scene.add(sw);
+    return W;
+  }
+
+  /* ---------------- video wall ---------------- */
+  function drawWall(W, t) {
+    const st = t < 30 ? 0 : t < 34.6 ? 1 : t < 52 ? 2 : t < 61 ? 3 : t < 77.6 ? 4 : t < 80.6 ? 5 : 6;
+    const key = String(st); if (key === W.wallState) return; W.wallState = key;
+    const g = W.wallCanvas.getContext('2d'), w = 1600, h = 600;
+    g.fillStyle = '#06101b'; g.fillRect(0, 0, w, h);
+    g.fillStyle = '#5fe3e8'; g.font = '800 40px system-ui'; g.fillText('DEMO DC · WMS ⇄ RMS', 50, 70);
+    g.fillStyle = '#7f98ab'; g.font = '600 26px system-ui'; g.fillText('Fleet 24 P800R · 3 stations · inbound W2 · outbound E2', 50, 112);
+    const steps = ['ORDER RECEIVED', 'TASK DISPATCHED', 'SHELF AT STATION', 'PICKED & PUT', 'PACKED', 'LOADED', 'SHIPPED'];
+    g.font = '800 56px system-ui'; g.fillStyle = st ? '#ffffff' : '#7f98ab'; g.fillText(st ? 'SO-1042' : 'Awaiting orders…', 50, 205);
+    steps.forEach((s, i) => { const x = 50 + i * 216, on = st > 0 && i < st; g.fillStyle = on ? (i === st - 1 ? '#b69cff' : '#2f6f5f') : '#16222f'; g.fillRect(x, 260, 200, 90); g.fillStyle = on ? '#ffffff' : '#56708a'; g.font = '700 21px system-ui'; s.split(' ').forEach((wd, j) => g.fillText(wd, x + 14, 296 + j * 26)); });
+    g.fillStyle = '#9fb3c6'; g.font = '600 28px system-ui';
+    [['Orders / h', '1,240'], ['Lines / h', '452'], ['Robots busy', '19 / 24'], ['Station wait', '6.2 s']].forEach(([k, v], i) => { g.fillStyle = '#7f98ab'; g.fillText(k, 50 + i * 380, 430); g.fillStyle = '#ffffff'; g.font = '800 54px system-ui'; g.fillText(v, 50 + i * 380, 500); g.font = '600 28px system-ui'; });
+    W.wallTex.needsUpdate = true;
+  }
+
+  /* ---------------- per-frame state ---------------- */
+  const HERO_TO_SLOT = () => { const [sx, sz] = heroSlot(), za = G.aisleOf(HERO_SLOT.r); return [PORT, [G.xW, PORT[1]], [G.xW, za], [sx, za], [sx, sz]]; };
+  const HERO_TO_ST = () => { const [sx, sz] = heroSlot(), za = G.aisleOf(HERO_SLOT.r); return [[sx, sz], [sx, za], [G.xE, za], [G.xE, 0], [STATIONS[1].dock[0], 0]]; };
+  const BIN = V(.24, .9 + .22, .0); // hero bin B-02 (shelf-local, on the station-facing side)
+  function heroPose(t) {
+    let p, lift = 0;
+    if (t < 24) { p = { x: PORT[0], z: PORT[1], hx: 1, hz: 0 }; lift = span(t, 23, 24); }
+    else if (t < 28.4) { p = travel(HERO_TO_SLOT(), t, 24, 28.4); lift = 1; }
+    else if (t < 36.4) { p = travel(HERO_TO_SLOT(), 1, 0, 1); lift = t < 35.8 ? 1 - span(t, 28.4, 29) : span(t, 35.8, 36.4); }
+    else if (t < 47.2) { p = travel(HERO_TO_ST(), t, 36.4, 47.2); lift = 1; }
+    else if (t < 57.6) { p = travel(HERO_TO_ST(), 1, 0, 1); lift = 1; }
+    else if (t < 69) { p = travel([...HERO_TO_ST()].reverse(), t, 57.6, 69); lift = 1; }
+    else { p = travel([...HERO_TO_ST()].reverse(), 1, 0, 1); lift = 1 - span(t, 69, 69.6); }
+    return { p, lift };
+  }
+  const shelfYaw = t => Math.PI * ease(span(t, 44.2, 46.2));
+  const BIN_LOCAL = V(-.235, .99, .235);
+  function placeRobotShelf(rb, sh, p, lift) { rb.position.set(p.x, 0, p.z); if (Math.hypot(p.hx, p.hz) > 1e-4) rb.rotation.y = heading(p.hx, p.hz); rb.userData.lift.position.y = .2 + lift * .06; if (sh) sh.position.set(p.x, .04 + lift * .06, p.z); }
+  function arc(a, b, u, hgt = .6) { const p = a.clone().lerp(b, u); p.y += Math.sin(Math.PI * u) * hgt; return p; }
+
+  function update(W, t) {
+    // --- inbound truck & door W2 ---
+    const truckX = lerp(-70, -44.2, ease(span(t, 6.5, 12.5)));
+    W.truckIn.position.set(truckX, 0, -5); W.truckIn.userData.doorL.visible = W.truckIn.userData.doorR.visible = t < 12.4 || t > 88;
+    const dW = W.westDoors[1]; dW.panel.position.y = 2.15 + 3.6 * ease(span(t, 11.6, 13.2)) - 3.6 * ease(span(t, 88, 90)); dW.panel.scale.y = 3.9; dW.lamp.material.emissive.set(t > 12.5 && t < 88 ? '#3bff6a' : '#ff3b2a');
+    // forklift (hero pallet out of the trailer)
+    const fA = [-35.5, -5], fB = [-42.6, -5], fC = [-36.4, -5];
+    let fx, lift = 0; if (t < 13.2) fx = fA[0]; else if (t < 15) fx = lerp(fA[0], fB[0], ease(span(t, 13.2, 15))); else if (t < 15.6) { fx = fB[0]; lift = span(t, 15, 15.6); } else if (t < 17.2) { fx = lerp(fB[0], fC[0], ease(span(t, 15.6, 17.2))); lift = 1; } else { fx = fC[0]; lift = 1 - span(t, 17.2, 17.6); }
+    W.fork.position.set(fx, 0, -5); W.fork.rotation.y = 0; W.fork.userData.car.position.y = lift * .28;
+    const carried = t >= 15 && t < 17.6, palletX = carried ? fx - 1.75 : t < 15 ? -44.35 - .4 : fC[0] - 1.75;
+    const palletY = carried ? .12 + lift * .28 : t < 15 ? 1.42 : .0;
+    W.palletHero.position.set(t < 15 ? truckX - 1.6 + 1.6 : palletX, t < 15 ? palletY : palletY, -5);
+    if (t < 15) W.palletHero.position.x = truckX - 1.55;
+    // ambient forklift loop in receiving
+    { const loop = [[-41, 12], [-31, 12], [-31, -14], [-41, -14], [-41, 12]], u = ((t * .045) % 1), p = along(loop, u); W.fork2.position.set(p.x, 0, p.z); W.fork2.rotation.y = heading(p.hx, p.hz) - Math.PI / 2; W.fork2.userData.car.position.y = .3; }
+    // hero carton: on pallet → decant table
+    const cTop = W.palletHero.position.clone().add(V(.29, .14 + .38 + .19, .24));
+    const table = V(-27.6, .92 + .19, -5.0);
+    W.heroCarton.position.copy(t < 17.8 ? cTop : arc(cTop, table, ease(span(t, 17.8, 19.4)), .9));
+    W.heroCarton.rotation.y = t < 17.8 ? 0 : ease(span(t, 17.8, 19.4)) * Math.PI / 2;
+    W.decant.rotation.y = Math.PI / 2 + (t > 17.6 && t < 19.6 ? -.9 * Math.sin(Math.PI * span(t, 17.6, 19.6)) : 0);
+    W.decant.userData.armR.rotation.x = (t > 20.8 && t < 22.6) ? -1.1 * Math.sin(Math.PI * span(t, 20.8, 22.6)) : 0;
+    // scanner beam
+    const scanOn = t > 19.3 && t < 20.4; W.scanBeam.visible = scanOn; W.scanBeam.position.set(-27.6 + .25 * Math.sin(t * 20), 1.32, -5.0);
+    // --- hero shelf + robot ---
+    const { p: hp, lift: hl } = heroPose(t);
+    placeRobotShelf(W.heroRobot, W.heroShelf, hp, hl); W.heroShelf.rotation.y = shelfYaw(t); W.heroShelf.updateMatrixWorld(true);
+    W.heroRing.position.set(hp.x, .03, hp.z); W.heroRing.material.opacity = (t > 23 && t < 48) || (t > 57.6 && t < 70) ? .55 + .35 * Math.sin(t * 5) : 0;
+    // decant bin light + item into shelf
+    const shelfBin = W.heroShelf.localToWorld(BIN_LOCAL.clone());
+    const tableItem = table.clone().add(V(0, .12, 0));
+    W.binGlow.visible = t > 20.6 && t < 22.8; W.binGlow.position.set(shelfBin.x - .27, shelfBin.y + .02, shelfBin.z); W.binGlow.rotation.y = -Math.PI / 2; W.binGlow.material.opacity = .55 + .35 * Math.sin(t * 10);
+    // --- order release packet ---
+    const pv = t > 31 && t < 34.8; W.packet.visible = W.packetHalo.visible = pv; W.packetTrail.forEach(p => p.visible = pv);
+    if (pv) { const [sx, sz] = heroSlot(), a = V(1, 8.6, -23.6), b = V(sx, 1.0, sz); const at = u => { const p = a.clone().lerp(b, u); p.y += Math.sin(Math.PI * u) * 7; return p; }; const u = ease(span(t, 31, 34.6)); W.packet.position.copy(at(u)); W.packetHalo.position.copy(W.packet.position); W.packetHalo.scale.setScalar(1.1 + .3 * Math.sin(t * 12)); W.packetTrail.forEach((p, i) => p.position.copy(at(Math.max(0, u - i * .018)))); }
+    // --- station 2: pick-to-light & put-to-light ---
+    const S2 = W.stations[1], pick = W.stations[1].picker;
+    const binWorld = shelfBin.clone();
+    const beamOn = t > 49.4 && t < 52.2; S2.beam.material.opacity = beamOn ? .16 + .06 * Math.sin(t * 9) : 0; S2.glow.material.opacity = beamOn ? .75 : 0; S2.light.intensity = beamOn ? 2.4 : 0;
+    { const from = V(16.6, 2.06, 0), to = V(binWorld.x + .2, binWorld.y, binWorld.z - S2.z); const mid = from.clone().add(to).multiplyScalar(.5), L = from.distanceTo(to); S2.beam.position.copy(mid); S2.beam.scale.set(1, L, 1); S2.beam.quaternion.setFromUnitVectors(V(0, -1, 0), to.clone().sub(from).normalize()); S2.glow.position.set(binWorld.x + .27, binWorld.y + .02, binWorld.z - S2.z); S2.light.position.set(binWorld.x + .3, binWorld.y + .2, 0); }
+    let yaw = -Math.PI / 2, reach = 0;
+    if (t > 50.4 && t < 51.9) reach = Math.sin(Math.PI * span(t, 50.4, 51.9));
+    if (t >= 52 && t < 56.4) yaw = -Math.PI / 2 - (Math.PI / 2) * ease(span(t, 52, 53)) + (Math.PI / 2) * ease(span(t, 55.4, 56.4));
+    if (t > 53 && t < 54.6) reach = Math.sin(Math.PI * span(t, 53, 54.6));
+    pick.rotation.y = yaw; pick.userData.armR.rotation.x = -1.35 * reach;
+    const tgt = S2.mods['L-05'];
+    for (const nm in S2.mods) { const md = S2.mods[nm]; md.mm.emissive.set('#000000'); md.tm.emissive.set('#000000'); }
+    if (t > 52 && t < 56.2) { const conf = t >= 54.6, col = conf ? '#7dff8a' : '#40d6ff'; tgt.mm.emissive.set(col); tgt.mm.emissiveIntensity = conf ? 2.2 : 1.2 + .8 * Math.abs(Math.sin(t * 7)); tgt.tm.emissive.set(col); tgt.tm.emissiveIntensity = conf ? .5 : .3; }
+    // ambient stations 1 & 3: lights and picker turns synced with ambient docking windows
+    [0, 2].forEach(si => { const st = W.stations[si]; let busy = 0; W.amb.forEach(a => { if (a.st !== si) return; const ph = ((t - a.off) % PERIOD + PERIOD) % PERIOD, L = polyLen(a.path) / 1.7; if (ph > 1.2 + L && ph < 1.2 + L + 8) busy = (ph - 1.2 - L) / 8; }); st.picker.rotation.y = -Math.PI / 2 + (busy > .45 && busy < .85 ? (si === 0 ? -1 : 1) * Math.PI / 2 * Math.sin(Math.PI * (busy - .45) / .4) : 0); st.beam.material.opacity = busy > .05 && busy < .4 ? .12 : 0; st.light.intensity = busy > .05 && busy < .4 ? 1.8 : 0; st.glow.material.opacity = 0; const md = st.mods[si === 0 ? 'R-02' : 'L-08']; md.mm.emissive.set(busy > .45 && busy < .85 ? '#40d6ff' : '#000000'); md.mm.emissiveIntensity = 1.6; });
+    // --- hero item path ---
+    const handOf = p => { p.updateMatrixWorld(true); return p.userData.armR.localToWorld(V(0, -.62, 0)); };
+    const toteSpot = tgt.pos.clone().add(V(0, -.04, 0));
+    let item = null;
+    if (t < 20.6) item = null;
+    else if (t < 21) item = tableItem;
+    else if (t < 22.4) item = arc(tableItem, shelfBin, ease(span(t, 21, 22.4)), .5);
+    else if (t < 50.8) item = shelfBin;
+    else if (t < 51.6) item = binWorld.clone().lerp(handOf(pick), ease(span(t, 50.8, 51.6)));
+    else if (t < 53.8) item = handOf(pick);
+    else if (t < 54.4) item = handOf(pick).lerp(toteSpot, ease(span(t, 53.8, 54.4)));
+    else if (t < 59) item = toteSpot.clone().add(V(0, .08, 0));
+    W.heroItem.visible = !!item; if (item) W.heroItem.position.copy(item);
+    // hero tote: put wall → takeaway conveyor → pack table
+    const conv0 = V(19.2, .97, -2.2), conv1 = V(25.2, .97, -2.2), packSpot = V(26.6, 1.03, -1.0);
+    let tp = null;
+    if (t >= 58.6 && t < 60.4) tp = arc(V(tgt.pos.x, tgt.pos.y - .13, tgt.pos.z), conv0, ease(span(t, 58.6, 60.4)), .3);
+    else if (t >= 60.4 && t < 64.6) tp = conv0.clone().lerp(conv1, span(t, 60.4, 64.6));
+    else if (t >= 64.6 && t < 65.6) tp = arc(conv1, packSpot, ease(span(t, 64.6, 65.6)), .25);
+    else if (t >= 65.6 && t < 69.5) tp = packSpot;
+    W.heroTote.visible = !!tp; if (tp) W.heroTote.position.copy(tp);
+    if (t >= 59 && t < 66.2 && tp) { W.heroItem.visible = true; W.heroItem.position.copy(tp.clone().add(V(0, .1, 0))); }
+    // pack: item into shipping carton, label print, outbound conveyor, load
+    const cartonSpot = V(27.6, 1.1, -1.0), outA = V(29.2, .99, -1.0), outB = V(43.4, .99, -1.0), inTrailer = V(46.6, 1.62, -1.0);
+    if (t >= 66.2 && t < 67.2) { W.heroItem.visible = true; W.heroItem.position.copy(arc(packSpot.clone().add(V(0, .1, 0)), cartonSpot, ease(span(t, 66.2, 67.2)), .3)); }
+    let cp = null; if (t >= 65.4 && t < 69.8) cp = cartonSpot; else if (t >= 69.8 && t < 70.6) cp = arc(cartonSpot, outA, ease(span(t, 69.8, 70.6)), .2); else if (t >= 70.6 && t < 76.2) cp = outA.clone().lerp(outB, span(t, 70.6, 76.2)); else if (t >= 76.2 && t < 77.6) cp = arc(outB, inTrailer, ease(span(t, 76.2, 77.6)), .2); else if (t >= 77.6 && t < 82) cp = inTrailer;
+    W.shipCarton.visible = !!cp; if (cp) W.shipCarton.position.copy(cp); W.shipCarton.scale.setScalar(t < 66 ? .3 + .7 * span(t, 65.4, 66) : 1); W.shipLabel.visible = t >= 68.8;
+    W.printerLed.material.emissiveIntensity = t > 67.9 && t < 68.9 ? 2.4 : 0;
+    W.packers[1].userData.armR.rotation.x = (t > 66 && t < 69.2) ? -1.1 * Math.abs(Math.sin(t * 3)) : 0;
+    // outbound truck & door E2
+    W.truckOut.position.set(44.2 + 26 * ease(span(t, 79.6, 84)), 0, -1); W.outCargo.visible = true; W.truckOut.userData.doorL.visible = W.truckOut.userData.doorR.visible = t > 78.6;
+    const dE = W.eastDoors[1]; dE.panel.position.y = 2.15 + 3.6 * (1 - ease(span(t, 78, 79.4))); dE.lamp.material.emissive.set(t < 78 ? '#3bff6a' : '#ff3b2a');
+    // --- ambient robots ---
+    W.amb.forEach(a => {
+      const L = polyLen(a.path), tt = L / 1.7, ph = ((t - a.off) % PERIOD + PERIOD) % PERIOD;
+      let p, lf = 1;
+      if (ph < 1.2) { p = along(a.path, 0); lf = ph / 1.2; } else if (ph < 1.2 + tt) p = along(a.path, ease((ph - 1.2) / tt)); else if (ph < 9.2 + tt) p = along(a.path, 1); else if (ph < 9.2 + 2 * tt) p = along([...a.path].reverse(), ease((ph - 9.2 - tt) / tt)); else { p = along(a.path, 0); lf = Math.max(0, 1 - (ph - 9.2 - 2 * tt) / 1.2); }
+      placeRobotShelf(a.rb, a.sh, p, lf);
+    });
+    W.roam.forEach((rb, i) => { const u = ((t * .012 + i / 5) % 1), p = along(W.roamPath, u); placeRobotShelf(rb, null, p, 0); });
+    W.chargeLeds.forEach((l, i) => l.material.emissiveIntensity = 1 + .8 * Math.sin(t * 2 + i));
+    // flowing totes & cartons on stations 1 & 3 conveyors (periodic)
+    W.flowTotes.m.count = 0; W.flowCartons.m.count = 0;
+    [0, 2].forEach(si => { const z = STATIONS[si].z; for (let k = 0; k < 3; k++) { const u = ((t * .06 + k / 3 + si * .17) % 1); W.flowTotes.add(lerp(19.2, 25.2, u), .97, z - 2.2, .34, .16, .3, 0, ['#2e79a3', '#4f9a66', '#d58b3c'][k]); } for (let k = 0; k < 4; k++) { const u = ((t * .05 + k / 4 + si * .23) % 1); W.flowCartons.add(lerp(29.2, 43.4, u), 1.0, z - 1.0, .42, .3, .34, 0, '#c49466'); } });
+    W.flowTotes.done(); W.flowCartons.done();
+    drawWall(W, t);
+  }
+
+  /* ---------------- camera ---------------- */
+  const KEYS = [
+    [0, [-8, 62, 86], [0, 0, -2]], [5, [-46, 30, 52], [-26, 1, -4]], [8.5, [-74, 10, 18], [-52, 2, -5]], [12, [-60, 6.5, 9], [-46, 2, -5]],
+    [15, [-37, 5.5, 6], [-42, 1.4, -5]], [17.6, [-31, 4.6, 3], [-33, 1, -5]], [19.8, [-27.2, 3.0, -.6], [-27.4, 1.0, -5]], [22.4, [-25.8, 3.3, .4], [-26.1, 1.1, -5]],
+    [26, [-20, 8, 5], [-16, .6, 2]], [29.4, [-4, 15, 14], [heroSlot()[0], 0, heroSlot()[1]]], [31.6, [1, 7.5, -12], [1, 8, -23.6]], [34.6, [heroSlot()[0] + 7, 10, heroSlot()[1] + 9], [heroSlot()[0], .5, heroSlot()[1]]],
+    [37, [heroSlot()[0] + 5, 4.6, heroSlot()[1] + 6], [heroSlot()[0], .6, heroSlot()[1]]],
+    [47.8, [14.5, 4.2, 6.5], [16.6, 1.1, 0]], [50.4, [20.6, 2.9, 2.6], [17.3, 1.25, 0]], [53.4, [20.4, 3.1, -4.2], [17.6, 1.05, -.8]], [57, [21.5, 4.6, 4.6], [18.4, 1, -1]],
+    [60.8, [21.5, 5.5, 4.5], [22, .9, -2.2]], [64.6, [25.0, 3.0, 1.9], [27.1, 1.0, -1.0]], [68.4, [26.0, 2.6, 1.5], [27.6, 1.05, -1.0]],
+    [72, [33, 4.5, 5.5], [35, 1, -1]], [76.4, [38.4, 3.4, 3.2], [46, 1.5, -1]], [80.2, [58, 9, 14], [54, 1.2, -1]],
+    [84.5, [24, 44, 66], [0, 0, -2]], [92, [-2, 76, 100], [0, 0, -2]]
+  ];
+  function catmull(p0, p1, p2, p3, u) { const u2 = u * u, u3 = u2 * u; return .5 * ((2 * p1) + (-p0 + p2) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u2 + (-p0 + 3 * p1 - 3 * p2 + p3) * u3); }
+  function camAt(t) {
+    let i = 0; while (i < KEYS.length - 2 && t > KEYS[i + 1][0]) i++;
+    const k0 = KEYS[Math.max(0, i - 1)], k1 = KEYS[i], k2 = KEYS[i + 1], k3 = KEYS[Math.min(KEYS.length - 1, i + 2)];
+    const u = ease(span(t, k1[0], k2[0])) * .5 + span(t, k1[0], k2[0]) * .5;
+    const pos = [0, 1, 2].map(a => catmull(k0[1][a], k1[1][a], k2[1][a], k3[1][a], u)), look = [0, 1, 2].map(a => catmull(k0[2][a], k1[2][a], k2[2][a], k3[2][a], u));
+    return { pos: V(...pos), look: V(...look) };
+  }
+  // follow-cam windows blend on top of the spline (chase the robot, then the carton)
+  function followAt(W, t) {
+    const chase = (a, b, f) => { if (t <= a - 1.6 || t >= b + 1.6) return null; const w = Math.min(ease(span(t, a - 1.6, a)), 1 - ease(span(t, b, b + 1.6))); const tc = Math.min(b, Math.max(a, t)); const p = f(tc), q = f(Math.max(0, tc - 1.6)); let dx = p.x - q.x, dz = p.z - q.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L; if (L < .05) { dx = 1; dz = 0; } return { w, pos: V(p.x - dx * 5.2 - dz * 1.4, 5.8, p.z - dz * 5.2 + dx * 1.4), look: V(p.x + dx * 2.6, .7, p.z + dz * 2.6) }; };
+    const hero = tt => heroPose(tt).p;
+    return chase(24.2, 28.2, hero) || chase(37, 46.8, hero) || chase(70.8, 76, tt => ({ x: lerp(29.2, 43.4, span(tt, 70.6, 76.2)), z: -1 }));
+  }
+  /* where the story is right now (for the AR beacon) */
+  function heroFocus(W, t) {
+    if (W.shipCarton.visible) return W.shipCarton.position;
+    if (W.heroItem.visible && t > 22.4 && t < 49) return W.heroRobot.position;
+    if (W.heroItem.visible) return W.heroItem.position;
+    if (W.heroTote.visible) return W.heroTote.position;
+    if (t < 17.8) return W.palletHero.position;
+    if (t < 20.6) return W.heroCarton.position;
+    if (t >= 77.6) return W.truckOut.position;
+    return W.heroRobot.position;
+  }
+  globalThis.JourneyCore = { buildWorld, update, heroFocus, CHAPTERS, LOG, DUR, G, STATIONS, M };
+  /* ---------------- runtime ---------------- */
+  let R = null, t = 0, playing = false, speed = 1, raf = 0, last = 0, lastCh = -1, logShown = 0, orbiting = false, idleTimer = 0;
+  const stage = $('jrStage');
+  function init() {
+    if (R) return true;
+    try {
+      const renderer = new T.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      const mobile = matchMedia('(max-width: 700px)').matches;
+      renderer.setPixelRatio(Math.min(mobile ? 1.5 : 2, devicePixelRatio || 1)); renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05; renderer.outputColorSpace = T.SRGBColorSpace;
+      renderer.shadowMap.enabled = !mobile; renderer.shadowMap.type = T.PCFSoftShadowMap;
+      $('jrCanvas').append(renderer.domElement);
+      const scene = new T.Scene(); scene.background = new T.Color('#0b1119'); scene.fog = new T.Fog('#0b1119', 90, 230);
+      const pm = new T.PMREMGenerator(renderer), env = pm.fromScene(new T.RoomEnvironment(), .04); scene.environment = env.texture; scene.environmentIntensity = .38; pm.dispose();
+      scene.add(new T.HemisphereLight('#cfe6ff', '#1a222b', 1.15));
+      const sun = new T.DirectionalLight('#fff4e0', 2.1); sun.position.set(-30, 60, 35); sun.castShadow = !mobile; sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -60, right: 60, top: 40, bottom: -40, near: 10, far: 160 }); sun.shadow.bias = -.0004; sun.shadow.normalBias = .03; scene.add(sun, sun.target);
+      const fill = new T.DirectionalLight('#7fb0ff', .6); fill.position.set(40, 25, -30); scene.add(fill);
+      const camera = new T.PerspectiveCamera(42, 16 / 9, .1, 600);
+      const controls = new T.OrbitControls(camera, renderer.domElement); controls.enabled = false; controls.enableDamping = true; controls.maxPolarAngle = 1.45;
+      const W = buildWorld(scene);
+      R = { renderer, scene, camera, controls, W, pr: renderer.getPixelRatio() };
+      const resize = () => { if (REC) return; const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.fov = w / h < 1.2 ? 55 : 42; camera.updateProjectionMatrix(); render(); };
+      R.resize = resize; new ResizeObserver(resize).observe(stage); resize();
+      controls.addEventListener('change', () => { if (!playing) render(); });
+      renderer.domElement.addEventListener('pointerdown', () => { if (!playing) { orbiting = true; controls.enabled = true; } });
+      return true;
+    } catch (e) { $('jrLoading').textContent = 'This film needs WebGL. Open the page in a recent Chrome, Edge or Safari.'; console.warn(e); return false; }
+  }
+  function render() {
+    if (!R) return; const { W, camera, renderer, scene, controls } = R;
+    update(W, t);
+    if (!orbiting) { const c = camAt(t), f = followAt(W, t); const pos = f ? c.pos.lerp(f.pos, f.w) : c.pos, look = f ? c.look.lerp(f.look, f.w) : c.look; camera.position.copy(pos); camera.lookAt(look); controls.target.copy(look); }
+    else controls.update();
+    const cy = camera.position.y; W.truss.visible = W.lights.visible = cy < 9.4 || cy > 34;
+    renderer.render(scene, camera);
+    ui();
+  }
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  function ui() {
+    $('jrFill').style.width = (t / DUR * 100) + '%'; $('jrTime').textContent = `${fmt(t)} / ${fmt(DUR)}`;
+    let ch = 0; CHAPTERS.forEach((c, i) => { if (t >= c[0]) ch = i; });
+    if (ch !== lastCh) { lastCh = ch; const el = $('jrChapter'); el.classList.add('swap'); setTimeout(() => { $('jrChapNo').textContent = `${String(ch).padStart(2, '0')} / 08`; $('jrChapTitle').textContent = CHAPTERS[ch][1]; $('jrChapText').textContent = CHAPTERS[ch][2]; el.classList.remove('swap'); }, 220); [...$('jrChapters').children].forEach((b, i) => b.classList.toggle('active', i === ch)); }
+    const n = LOG.filter(l => l[0] <= t).length; if (n !== logShown) { logShown = n; $('jrLog').innerHTML = LOG.slice(Math.max(0, n - 5), n).map(l => `<div class="${l[3] ? 'ok' : ''}"><b>${fmt(l[0])} ${l[1]}</b>${l[2]}</div>`).join(''); }
+    const k = $('jrKpis'), show = t >= 84.2; if (show !== !k.hidden) { k.hidden = !show; if (show) k.innerHTML = kpiHtml(); }
+  }
+  function kpiData() {
+    let robots = 7, stations = 2, lph = '452', pay = '3.9 yrs', src = 'demo sizing defaults';
+    try { const c = globalThis.WarehouseEngineering?.design?.state?.comparison; if (c) { robots = c.best.result.robots; stations = c.best.result.stations; lph = Math.round(c.best.result.throughput).toLocaleString(); pay = c.best.finance.payback ? c.best.finance.payback.toFixed(1) + ' yrs' : '—'; src = 'Tab 2 sizing run'; } } catch { /* keep defaults */ }
+    return { cards: [['0 m', 'picker walking per line'], [`${robots} + ${stations}`, 'P800R robots + stations'], [lph, 'lines / h at design rate'], [pay, 'simple payback (illustrative)']], src };
+  }
+  function kpiHtml() {
+    let robots = 7, stations = 2, lph = '452', pay = '3.9 yrs', src = 'demo sizing defaults';
+    try { const c = globalThis.WarehouseEngineering?.design?.state?.comparison; if (c) { robots = c.best.result.robots; stations = c.best.result.stations; lph = Math.round(c.best.result.throughput).toLocaleString(); pay = c.best.finance.payback ? c.best.finance.payback.toFixed(1) + ' yrs' : '—'; src = 'your Tab 2 sizing run'; } } catch { /* keep defaults */ }
+    return `<div><strong>0 m</strong><span>picker walking per line<br>goods come to the person</span></div><div><strong>${robots} + ${stations}</strong><span>P800R robots + stations<br>proposed by the sizing model</span></div><div><strong>${lph}</strong><span>lines / h observed<br>at the design rate</span></div><div><strong>${pay}</strong><span>simple payback<br>illustrative assumptions</span></div><div class="jr-end">Numbers from ${src}. Dock-to-dock in this film is time-compressed. · Created by Chenzhuo Tong</div>`;
+  }
+  function loop(ts) {
+    raf = 0; if (!playing) return;
+    const raw = (ts - last) / 1000, dt = Math.min(.25, raw); last = ts; t = Math.min(DUR, t + dt * speed);
+    render(); adapt(raw); if (t >= DUR) { pause(); return; }
+    raf = requestAnimationFrame(loop);
+  }
+  /* ---------------- Save as video (records in the viewer's own browser) ---------------- */
+  let REC = null;
+  function wrap(g, text, maxW) { const words = text.split(' '), lines = []; let cur = ''; for (const w of words) { const test = cur ? cur + ' ' + w : w; if (g.measureText(test).width > maxW && cur) { lines.push(cur); cur = w; } else cur = test; } if (cur) lines.push(cur); return lines; }
+  function rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+  function drawOverlay(g, Wd, Hd) {
+    const vg = g.createRadialGradient(Wd / 2, Hd / 2, Hd * .45, Wd / 2, Hd / 2, Hd * .95); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.45)'); g.fillStyle = vg; g.fillRect(0, 0, Wd, Hd);
+    let ch = 0; CHAPTERS.forEach((c, i) => { if (t >= c[0]) ch = i; }); const a = Math.min(1, (t - CHAPTERS[ch][0]) / .6);
+    g.save(); g.globalAlpha = a; const x = 64, maxW = 860;
+    g.font = '800 22px ui-monospace, Consolas, monospace'; g.fillStyle = '#b69cff'; g.fillText(`${String(ch).padStart(2, '0')} / 08`, x, Hd - 300);
+    g.font = '800 64px system-ui, -apple-system, Segoe UI, sans-serif'; g.fillStyle = '#ffffff'; g.shadowColor = 'rgba(0,0,0,.7)'; g.shadowBlur = 18; g.fillText(CHAPTERS[ch][1], x, Hd - 232); g.shadowBlur = 0;
+    g.font = '500 28px system-ui, -apple-system, Segoe UI, sans-serif'; const lines = wrap(g, CHAPTERS[ch][2], maxW); const bh = 26 + lines.length * 40;
+    g.fillStyle = 'rgba(5,8,15,.68)'; rr(g, x, Hd - 205, maxW + 40, bh, 14); g.fill(); g.fillStyle = '#5fe3e8'; g.fillRect(x, Hd - 205, 5, bh);
+    g.fillStyle = '#e6eef5'; lines.forEach((l, i) => g.fillText(l, x + 24, Hd - 205 + 46 + i * 40)); g.restore();
+    const shown = LOG.filter(l => l[0] <= t).slice(-5); g.font = '20px ui-monospace, Consolas, monospace';
+    shown.forEach((l, i) => { const y = 48 + i * 50, w = 760, xx = Wd - w - 48, fresh = i === shown.length - 1; g.globalAlpha = fresh ? Math.min(1, (t - l[0]) / .45) : .62; g.fillStyle = 'rgba(4,16,26,.82)'; rr(g, xx, y, w, 40, 9); g.fill(); g.strokeStyle = '#1f4152'; g.lineWidth = 2; g.stroke(); g.fillStyle = l[3] ? '#a5fb75' : '#5fe3e8'; const tag = `${fmt(l[0])} ${l[1]}`; g.fillText(tag, xx + 14, y + 27); g.fillStyle = '#cfe8ee'; g.fillText(l[2], xx + 14 + g.measureText(tag + '  ').width, y + 27); });
+    g.globalAlpha = 1;
+    if (t >= 84.2) { const k = kpiData(), ka = Math.min(1, (t - 84.2) / .8), cw = 330, gap = 22, tw = cw * 4 + gap * 3, x0 = (Wd - tw) / 2, y0 = Hd / 2 - 110; g.globalAlpha = ka; k.cards.forEach(([v, l], i) => { const xx = x0 + i * (cw + gap); g.fillStyle = 'rgba(5,11,20,.88)'; rr(g, xx, y0, cw, 170, 18); g.fill(); g.strokeStyle = '#33507a'; g.lineWidth = 2; g.stroke(); g.textAlign = 'center'; g.fillStyle = '#fff'; g.font = '800 60px system-ui, sans-serif'; g.fillText(v, xx + cw / 2, y0 + 92); g.fillStyle = '#a9bed0'; g.font = '500 22px system-ui, sans-serif'; g.fillText(l, xx + cw / 2, y0 + 136); g.textAlign = 'left'; }); g.textAlign = 'center'; g.fillStyle = '#cbd8e5'; g.font = '500 22px system-ui, sans-serif'; g.fillText(`Numbers from ${k.src}. Dock-to-dock is time-compressed. · Created by Chenzhuo Tong`, Wd / 2, y0 + 220); g.textAlign = 'left'; g.globalAlpha = 1; }
+    g.font = '600 18px system-ui, sans-serif'; g.fillStyle = 'rgba(220,230,240,.7)'; g.textAlign = 'right'; g.fillText('Order Journey · P800R goods-to-person · Chenzhuo Tong', Wd - 48, Hd - 40); g.font = '500 15px system-ui, sans-serif'; g.fillStyle = 'rgba(200,210,220,.5)'; g.fillText('Illustrative 3D film — fictional site, not an official Geek+ facility', Wd - 48, Hd - 16); g.textAlign = 'left';
+  }
+  function pickMime() { const c = ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1.4D401F', 'video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=avc1', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm', 'video/mp4']; return c.find(m => { try { return MediaRecorder.isTypeSupported(m); } catch { return false; } }) || ''; }
+  function setRecUi(text, on) { const b = $('jrRecord'); b.textContent = on ? '■ Stop recording' : '⬇ Save as video'; b.classList.toggle('rec', on); const st = $('jrRecStatus'); st.hidden = !text; st.textContent = text || ''; stage.classList.toggle('recording', on); }
+  function startRecording() {
+    if (REC) { stopRecording(true); return; }
+    if (typeof MediaRecorder === 'undefined' || !HTMLCanvasElement.prototype.captureStream) { setRecUi('This browser cannot record video. Use desktop Chrome, Edge or Safari.', false); return; }
+    if (!init()) return;
+    const mime = pickMime(), Wd = 1920, Hd = 1080, comp = document.createElement('canvas'); comp.width = Wd; comp.height = Hd; const g = comp.getContext('2d');
+    const stream = comp.captureStream(30); let rec;
+    try { rec = new MediaRecorder(stream, mime ? { mimeType: mime, videoBitsPerSecond: 14e6 } : { videoBitsPerSecond: 14e6 }); } catch (e) { setRecUi('Recording is not available here: ' + e.message, false); return; }
+    const chunks = []; rec.ondataavailable = e => e.data && e.data.size && chunks.push(e.data);
+    rec.onstop = () => {
+      const type = rec.mimeType || mime || 'video/webm', ext = type.includes('mp4') ? 'mp4' : 'webm', blob = new Blob(chunks, { type });
+      if (REC && REC.cancelled) { setRecUi('Recording cancelled.', false); } else { const url = URL.createObjectURL(blob), a = document.createElement('a'); a.href = url; a.download = `order-journey-SO-1042.${ext}`; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000); setRecUi(`Saved order-journey-SO-1042.${ext} (${(blob.size / 1048576).toFixed(1)} MB) — check your Downloads folder.${ext === 'webm' ? ' Tip: .webm plays in Chrome/VLC; PowerPoint on Windows plays it too.' : ''}`, false); }
+      REC = null; R.renderer.setPixelRatio(R.pr); R.resize();
+    };
+    pause(); seek(0); orbiting = false; R.controls.enabled = false;
+    R.renderer.setPixelRatio(1); R.renderer.setSize(Wd, Hd, false); R.camera.aspect = Wd / Hd; R.camera.fov = 42; R.camera.updateProjectionMatrix();
+    REC = { rec, g, comp, Wd, Hd, last: performance.now(), raf: 0, cancelled: false, hiddenAt: 0 };
+    rec.start(1000); setRecUi('● REC 0:00 / 1:32 — keep this tab visible until the download starts', true);
+    const step = ts => {
+      if (!REC) return; REC.raf = requestAnimationFrame(step);
+      if (document.hidden) return;
+      const dt = Math.min(.1, (ts - REC.last) / 1000); REC.last = ts; t = Math.min(DUR, t + dt);
+      render(); g.drawImage(R.renderer.domElement, 0, 0, Wd, Hd); drawOverlay(g, Wd, Hd);
+      $('jrRecStatus').textContent = `● REC ${fmt(t)} / ${fmt(DUR)} — keep this tab visible until the download starts`;
+      if (t >= DUR) { cancelAnimationFrame(REC.raf); setTimeout(() => REC && REC.rec.state !== 'inactive' && REC.rec.stop(), 400); }
+    };
+    REC.raf = requestAnimationFrame(step);
+  }
+  function stopRecording(cancel) { if (!REC) return; REC.cancelled = !!cancel; cancelAnimationFrame(REC.raf); if (REC.rec.state !== 'inactive') REC.rec.stop(); }
+  document.addEventListener('visibilitychange', () => { if (!REC) return; if (document.hidden) { try { REC.rec.pause(); } catch { /* ignore */ } } else { REC.last = performance.now(); try { REC.rec.resume(); } catch { /* ignore */ } } });
+
+  /* Adaptive quality: if the first ~40 frames average over 45 ms, drop shadows and pixel ratio. */
+  let fN = 0, fSum = 0, degraded = false;
+  function adapt(raw) {
+    if (degraded || !R || raw <= 0 || raw > 1) return; fN++; fSum += raw;
+    if (fN >= 40) { if (fSum / fN > .045) { degraded = true; R.renderer.shadowMap.enabled = false; R.renderer.setPixelRatio(1); R.scene.traverse(o => { const ms = Array.isArray(o.material) ? o.material : o.material ? [o.material] : []; ms.forEach(m => m.needsUpdate = true); }); const w = stage.clientWidth, h = stage.clientHeight; R.renderer.setSize(w, h, false); } fN = fSum = 0; if (!degraded) fN = -1e9; }
+  }
+  function play() { if (REC || !init()) return; $('jrPoster').hidden = true; if (t >= DUR) t = 0; orbiting = false; R.controls.enabled = false; playing = true; stage.classList.add('playing'); $('jrPlay').textContent = '⏸'; $('jrPlayBig').textContent = '⏸ Pause film'; last = performance.now(); if (!raf) raf = requestAnimationFrame(loop); poke(); }
+  function pause() { playing = false; stage.classList.remove('playing', 'idle'); $('jrPlay').textContent = '▶'; $('jrPlayBig').textContent = t >= DUR ? '↻ Replay film' : '▶ Play film'; if (raf) cancelAnimationFrame(raf); raf = 0; render(); }
+  function seek(s) { if (!init()) return; if (REC && s !== 0) return; $('jrPoster').hidden = true; t = Math.max(0, Math.min(DUR, s)); orbiting = false; R.controls.enabled = false; lastCh = -1; logShown = -1; render(); }
+  function poke() { stage.classList.remove('idle'); clearTimeout(idleTimer); idleTimer = setTimeout(() => playing && stage.classList.add('idle'), 2500); }
+  stage.addEventListener('pointermove', poke);
+  $('jrPlay').onclick = () => playing ? pause() : play();
+  $('jrPlayBig').onclick = () => playing ? pause() : play();
+  $('jrPosterPlay').onclick = play;
+  $('jrRestart').onclick = () => { seek(0); play(); };
+  for (const b of document.querySelectorAll('[data-jr-speed]')) b.onclick = () => { speed = Number(b.dataset.jrSpeed); document.querySelectorAll('[data-jr-speed]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); };
+  const scrub = $('jrScrub'); let dragging = false;
+  const scrubTo = e => { const r = scrub.getBoundingClientRect(); seek((e.clientX - r.left) / r.width * DUR); };
+  scrub.addEventListener('pointerdown', e => { dragging = true; scrub.setPointerCapture(e.pointerId); scrubTo(e); });
+  scrub.addEventListener('pointermove', e => dragging && scrubTo(e));
+  scrub.addEventListener('pointerup', () => { dragging = false; });
+  scrub.addEventListener('keydown', e => { if (e.key === 'ArrowRight') seek(t + 5); if (e.key === 'ArrowLeft') seek(t - 5); if (e.key === ' ') { e.preventDefault(); playing ? pause() : play(); } });
+  $('jrRecord').onclick = startRecording;
+  $('jrMarks').innerHTML = CHAPTERS.slice(1).map(c => `<i style="left:${c[0] / DUR * 100}%"></i>`).join('');
+  $('jrChapters').innerHTML = CHAPTERS.map((c, i) => `<button data-t="${c[0]}"><b>${String(i).padStart(2, '0')} · ${fmt(c[0])}</b>${c[1]}</button>`).join('');
+  $('jrChapters').addEventListener('click', e => { const b = e.target.closest('button[data-t]'); if (b) { seek(Number(b.dataset.t) + .01); } });
+  // fullscreen
+  const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+  const canFs = !!(stage.requestFullscreen || stage.webkitRequestFullscreen);
+  function toggleFs() { if (fsEl()) (document.exitFullscreen || document.webkitExitFullscreen).call(document); else { const r = (stage.requestFullscreen || stage.webkitRequestFullscreen).call(stage); r?.catch?.(() => {}); if (!playing) play(); } }
+  if (!canFs) { $('jrFull').hidden = true; $('jrFull2').hidden = true; } else { $('jrFull').onclick = toggleFs; $('jrFull2').onclick = toggleFs; }
+  document.addEventListener('keydown', e => { if ($('journeyMode').hidden) return; if (e.target.closest('input,textarea,select')) return; if (e.key === 'f' || e.key === 'F') toggleFs(); if (e.key === ' ' && document.activeElement === document.body) { e.preventDefault(); playing ? pause() : play(); } });
+
+  /* ---------------- tab wiring ---------------- */
+  const TABS = ['workflow', 'optimizer', 'product', 'integration'];
+  function openJourney() {
+    for (const n of TABS) { $(n + 'Mode').hidden = true; $(n + 'Tab').setAttribute('aria-selected', 'false'); $(n + 'Tab').setAttribute('tabindex', '-1'); }
+    try { globalThis.productExperience?.activate(false); } catch { /* optional */ }
+    $('journeyMode').hidden = false; $('journeyTab').setAttribute('aria-pressed', 'true'); document.body.classList.add('journey-mode');
+    try { $('results')?.open && $('results').close(); } catch { /* ignore */ }
+    window.scrollTo({ top: 0 });
+    if (R) render();
+  }
+  function closeJourney() { if ($('journeyMode').hidden) return; stopRecording(true); pause(); $('journeyMode').hidden = true; $('journeyTab').setAttribute('aria-pressed', 'false'); document.body.classList.remove('journey-mode'); }
+  $('journeyTab').addEventListener('click', openJourney);
+  for (const n of TABS) $(n + 'Tab').addEventListener('click', closeJourney, true);
+  document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
+  globalThis.orderJourney = { seek, play, pause, get t() { return t; }, open: openJourney, info: () => R && { calls: R.renderer.info.render.calls, tris: R.renderer.info.render.triangles }, finishRecording: () => stopRecording(false) };
+})();
+
+</script><script>
+/* Minimal QR Code encoder (byte mode, error correction M, versions 1–10). No dependencies. */
+(() => {
+  'use strict';
+  // [total codewords, EC codewords per block, [[blocks, data codewords per block], ...]]
+  const VERS = [null,
+    [26, 10, [[1, 16]]], [44, 16, [[1, 28]]], [70, 26, [[1, 44]]], [100, 18, [[2, 32]]], [134, 24, [[2, 43]]],
+    [172, 16, [[4, 27]]], [196, 18, [[4, 31]]], [242, 22, [[2, 38], [2, 39]]], [292, 22, [[3, 36], [2, 37]]], [346, 26, [[4, 43], [1, 44]]]];
+  const ALIGN = [null, [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50]];
+  const REM = [0, 0, 7, 7, 7, 7, 7, 0, 0, 0, 0];
+  // GF(256)
+  const EXP = new Array(512), LOG = new Array(256);
+  { let x = 1; for (let i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 256) x ^= 0x11d; } for (let i = 255; i < 512; i++) EXP[i] = EXP[i - 255]; }
+  const mul = (a, b) => a && b ? EXP[LOG[a] + LOG[b]] : 0;
+  function genPoly(n) { let p = [1]; for (let i = 0; i < n; i++) { const q = new Array(p.length + 1).fill(0); for (let j = 0; j < p.length; j++) { q[j] ^= p[j]; q[j + 1] ^= mul(p[j], EXP[i]); } p = q; } return p; }
+  function rsEncode(data, n) { const g = genPoly(n), res = [...data, ...new Array(n).fill(0)]; for (let i = 0; i < data.length; i++) { const c = res[i]; if (c) for (let j = 0; j < g.length; j++) res[i + j] ^= mul(g[j], c); } return res.slice(data.length); }
+  function bch(value, poly, shift) { let v = value << shift; const deg = Math.floor(Math.log2(poly)); for (let i = Math.floor(Math.log2(v)); i >= deg; i--) if (v & (1 << i)) v ^= poly << (i - deg); return (value << shift) | v; }
+
+  function encode(text) {
+    const bytes = Array.from(new TextEncoder().encode(text));
+    let ver = 0;
+    for (let v = 1; v <= 10; v++) { const cap = VERS[v][2].reduce((s, [b, d]) => s + b * d, 0); const bits = 4 + (v < 10 ? 8 : 16) + bytes.length * 8; if (bits <= cap * 8) { ver = v; break; } }
+    if (!ver) throw new Error('Text too long for this QR encoder (max ~210 bytes).');
+    const [total, ecn, groups] = VERS[ver], dataCap = groups.reduce((s, [b, d]) => s + b * d, 0);
+    const bits = []; const put = (v, n) => { for (let i = n - 1; i >= 0; i--) bits.push((v >> i) & 1); };
+    put(4, 4); put(bytes.length, ver < 10 ? 8 : 16); bytes.forEach(b => put(b, 8));
+    for (let i = 0; i < 4 && bits.length < dataCap * 8; i++) bits.push(0);
+    while (bits.length % 8) bits.push(0);
+    const data = []; for (let i = 0; i < bits.length; i += 8) data.push(parseInt(bits.slice(i, i + 8).join(''), 2));
+    for (let p = 0; data.length < dataCap; p++) data.push(p % 2 ? 0x11 : 0xec);
+    // split into blocks, add EC, interleave
+    const blocks = []; let off = 0; for (const [b, d] of groups) for (let i = 0; i < b; i++) { const blk = data.slice(off, off + d); off += d; blocks.push({ d: blk, e: rsEncode(blk, ecn) }); }
+    const out = []; const maxD = Math.max(...blocks.map(b => b.d.length));
+    for (let i = 0; i < maxD; i++) for (const b of blocks) if (i < b.d.length) out.push(b.d[i]);
+    for (let i = 0; i < ecn; i++) for (const b of blocks) out.push(b.e[i]);
+    if (out.length !== total) throw new Error('QR internal length mismatch');
+    const stream = []; out.forEach(c => { for (let i = 7; i >= 0; i--) stream.push((c >> i) & 1); }); for (let i = 0; i < REM[ver]; i++) stream.push(0);
+    // matrix
+    const N = ver * 4 + 17, M = Array.from({ length: N }, () => new Array(N).fill(null)), F = Array.from({ length: N }, () => new Array(N).fill(false));
+    const set = (r, c, v, fn = true) => { if (r < 0 || c < 0 || r >= N || c >= N) return; M[r][c] = v; F[r][c] = fn; };
+    const finder = (r0, c0) => { for (let r = -1; r <= 7; r++) for (let c = -1; c <= 7; c++) { const on = r >= 0 && r <= 6 && c >= 0 && c <= 6 && (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4)); set(r0 + r, c0 + c, on ? 1 : 0); } };
+    finder(0, 0); finder(0, N - 7); finder(N - 7, 0);
+    for (let i = 8; i < N - 8; i++) { set(6, i, i % 2 ? 0 : 1); set(i, 6, i % 2 ? 0 : 1); }
+    const al = ALIGN[ver]; for (const r of al) for (const c of al) { if ((r < 9 && c < 9) || (r < 9 && c > N - 10) || (r > N - 10 && c < 9)) continue; for (let dr = -2; dr <= 2; dr++) for (let dc = -2; dc <= 2; dc++) set(r + dr, c + dc, Math.max(Math.abs(dr), Math.abs(dc)) !== 1 ? 1 : 0); }
+    // reserve format + version areas
+    for (let i = 0; i < 9; i++) { if (!F[8][i]) set(8, i, 0); if (!F[i][8]) set(i, 8, 0); }
+    for (let i = 0; i < 8; i++) { set(8, N - 1 - i, 0); set(N - 1 - i, 8, 0); }
+    set(N - 8, 8, 1);
+    if (ver >= 7) for (let i = 0; i < 18; i++) { set(Math.floor(i / 3), N - 11 + (i % 3), 0); set(N - 11 + (i % 3), Math.floor(i / 3), 0); }
+    // data placement
+    let k = 0, up = true;
+    for (let c = N - 1; c > 0; c -= 2) {
+      if (c === 6) c--;
+      for (let i = 0; i < N; i++) { const r = up ? N - 1 - i : i; for (const cc of [c, c - 1]) if (!F[r][cc]) { M[r][cc] = k < stream.length ? stream[k] : 0; k++; } }
+      up = !up;
+    }
+    const MASKS = [(r, c) => (r + c) % 2 === 0, (r) => r % 2 === 0, (r, c) => c % 3 === 0, (r, c) => (r + c) % 3 === 0, (r, c) => (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0, (r, c) => (r * c) % 2 + (r * c) % 3 === 0, (r, c) => ((r * c) % 2 + (r * c) % 3) % 2 === 0, (r, c) => ((r + c) % 2 + (r * c) % 3) % 2 === 0];
+    function withMask(m) {
+      const A = M.map(row => row.slice());
+      for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) if (!F[r][c] && MASKS[m](r, c)) A[r][c] ^= 1;
+      const fmt = bch((0 << 3) | m, 0x537, 10) ^ 0x5412; // ECC M = 00
+      const fb = i => (fmt >> i) & 1;
+      for (let i = 0; i <= 5; i++) A[8][i] = fb(14 - i); A[8][7] = fb(8); A[8][8] = fb(7); A[7][8] = fb(6); for (let i = 9; i < 15; i++) A[14 - i][8] = fb(14 - i);
+      for (let i = 0; i < 8; i++) A[N - 1 - i][8] = fb(14 - i); for (let i = 8; i < 15; i++) A[8][N - 15 + i] = fb(14 - i);
+      A[N - 8][8] = 1;
+      if (ver >= 7) { const vb = bch(ver, 0x1f25, 12); for (let i = 0; i < 18; i++) { const b = (vb >> i) & 1; A[Math.floor(i / 3)][N - 11 + (i % 3)] = b; A[N - 11 + (i % 3)][Math.floor(i / 3)] = b; } }
+      return A;
+    }
+    function penalty(A) {
+      let p = 0;
+      for (let pass = 0; pass < 2; pass++) for (let i = 0; i < N; i++) { let run = 1; for (let j = 1; j <= N; j++) { const a = j < N ? (pass ? A[j][i] : A[i][j]) : -1, b = pass ? A[j - 1][i] : A[i][j - 1]; if (a === b) run++; else { if (run >= 5) p += run - 2; run = 1; } } }
+      for (let r = 0; r < N - 1; r++) for (let c = 0; c < N - 1; c++) { const v = A[r][c]; if (v === A[r + 1][c] && v === A[r][c + 1] && v === A[r + 1][c + 1]) p += 3; }
+      const pat = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0], pat2 = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+      for (let r = 0; r < N; r++) for (let c = 0; c <= N - 11; c++) for (const P of [pat, pat2]) { if (P.every((v, i) => A[r][c + i] === v)) p += 40; if (P.every((v, i) => A[c + i][r] === v)) p += 40; }
+      let dark = 0; A.forEach(row => row.forEach(v => dark += v)); p += Math.floor(Math.abs(dark * 100 / (N * N) - 50) / 5) * 10;
+      return p;
+    }
+    let best = null, bestP = Infinity; for (let m = 0; m < 8; m++) { const A = withMask(m), p = penalty(A); if (p < bestP) { bestP = p; best = A; } }
+    return { size: N, modules: best, version: ver };
+  }
+  function toSvg(text, { margin = 4, dark = '#0a0f14', light = '#ffffff' } = {}) {
+    const q = encode(text), N = q.size + margin * 2; let path = '';
+    q.modules.forEach((row, r) => row.forEach((v, c) => { if (v) path += `M${c + margin} ${r + margin}h1v1h-1z`; }));
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges"><rect width="${N}" height="${N}" fill="${light}"/><path d="${path}" fill="${dark}"/></svg>`;
+  }
+  globalThis.MiniQR = { encode, toSvg };
+})();
+
+</script><script>
+/* Order Journey AR — the Tab 5 warehouse as a tabletop diorama on the viewer's phone.
+   Modes: Table AR (WebXR immersive-ar + hit-test, Android Chrome), Camera view (rear camera +
+   device orientation, iPhone and others), 3D view (touch orbit). Opened with index.html#ar. */
+(() => {
+  'use strict';
+  const T = globalThis.DEMO3D, CORE = globalThis.JourneyCore, $ = id => document.getElementById(id);
+  if (!T || !CORE) return;
+  const PUBKEY = 'geekplus-p800r-public-url';
+  const PRESETS = {
+    site: { label: 'Whole site', box: [-58, -26, 58, 24], size: .62, yaw: 0 },
+    robots: { label: 'Robots & stations', box: [-22, -20, 31, 12], size: .72, yaw: .3 },
+    station: { label: 'Station 2', box: [13.6, -3.6, 23.4, 3.6], size: .5, yaw: -1.05 }
+  };
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+  /* ---------------- desktop: QR dialog in Tab 5 ---------------- */
+  function arUrl() {
+    let base = location.href.split('#')[0];
+    if (location.protocol !== 'https:') { try { base = localStorage.getItem(PUBKEY) || ''; } catch { base = ''; } }
+    return base ? base.split('#')[0] + '#ar' : '';
+  }
+  function buildQrDialog() {
+    const d = document.createElement('dialog'); d.id = 'arQrDialog'; d.className = 'ar-qr-dialog';
+    d.innerHTML = `<div class="ar-qr-inner"><button class="ar-x" id="arQrClose" aria-label="Close">×</button><span class="jr-kicker">ORDER JOURNEY · AR</span><h2>Put the warehouse on your table</h2>
+      <div class="ar-qr-grid"><div id="arQrBox" class="ar-qr-box"></div><div><ol class="ar-steps"><li>Scan with the phone camera.</li><li><b>Android (Chrome):</b> “Table AR” — point at a table, tap to place.</li><li><b>iPhone:</b> “Camera view” — the warehouse floats in your camera; turn the phone to look around.</li><li>Switch scale: whole site · robots &amp; stations · one station.</li></ol>
+      <label class="eng-field ar-url-field" id="arUrlField" hidden>Public https link to this page (e.g. your GitHub Pages URL)<input id="arUrlInput" type="url" placeholder="https://yourname.github.io/geekplus-demo/" autocomplete="off"></label>
+      <p class="ar-url" id="arUrlText"></p><div class="eng-toolbar"><button class="jr-btn" id="arCopy">Copy link</button><button class="jr-btn" id="arQrPng">Download QR (PNG)</button><button class="jr-btn" id="arOpenHere">Open AR view here</button></div></div></div>
+      <p class="jr-note">Camera and AR need an https page (GitHub Pages works). Nothing is uploaded; the 3D runs on the phone.</p></div>`;
+    document.body.append(d);
+    const draw = () => {
+      const u = arUrl(); $('arUrlField').hidden = location.protocol === 'https:';
+      if (!u) { $('arQrBox').innerHTML = '<p class="ar-qr-empty">Paste the public https link of this page to generate the QR code.</p>'; $('arUrlText').textContent = 'Opened from a local file — the phone needs the hosted link.'; return; }
+      try { $('arQrBox').innerHTML = MiniQR.toSvg(u); } catch (e) { $('arQrBox').textContent = e.message; }
+      $('arUrlText').textContent = u;
+    };
+    $('arUrlInput').addEventListener('input', e => { const v = e.target.value.trim(); if (/^https:\/\//.test(v)) { try { localStorage.setItem(PUBKEY, v); } catch { /* ignore */ } draw(); } });
+    try { $('arUrlInput').value = localStorage.getItem(PUBKEY) || ''; } catch { /* ignore */ }
+    $('arQrClose').onclick = () => d.close();
+    $('arCopy').onclick = async () => { const u = arUrl(); if (!u) return; try { await navigator.clipboard.writeText(u); $('arCopy').textContent = 'Copied ✓'; } catch { $('arCopy').textContent = 'Copy failed'; } setTimeout(() => $('arCopy').textContent = 'Copy link', 1500); };
+    $('arQrPng').onclick = () => { const u = arUrl(); if (!u) return; const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = c.height = 1200; const g = c.getContext('2d'); g.imageSmoothingEnabled = false; g.drawImage(img, 0, 0, 1200, 1200); c.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'order-journey-AR-qr.png'; document.body.append(a); a.click(); a.remove(); }, 'image/png'); }; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(MiniQR.toSvg(u)); };
+    $('arOpenHere').onclick = () => { d.close(); openAR(); };
+    d.addEventListener('click', e => { if (e.target === d) d.close(); });
+    return { open: () => { draw(); d.showModal(); } };
+  }
+  const qr = buildQrDialog();
+  const btn = document.createElement('button'); btn.id = 'jrAR'; btn.className = 'jr-btn ar-btn'; btn.textContent = '📱 AR on your phone';
+  $('jrRecord').after(btn); btn.onclick = () => qr.open();
+
+  /* ---------------- AR app shell ---------------- */
+  const app = document.createElement('div'); app.id = 'arApp'; app.className = 'ar-app'; app.hidden = true;
+  app.innerHTML = `<video id="arVideo" playsinline muted autoplay></video><div id="arCanvas" class="ar-canvas"></div>
+    <div class="ar-top"><div><b>Order Journey</b><span id="arModeChip" class="ar-chip">AR</span></div><button id="arExit" class="ar-x" aria-label="Exit AR">×</button></div>
+    <div class="ar-hint" id="arHint" hidden></div>
+    <div class="ar-start" id="arStart"><div class="ar-start-card"><span class="jr-kicker">ORDER JOURNEY · AR</span><h1>A goods-to-person warehouse on your table</h1><p>Follow order SO-1042 from the inbound truck to the outbound truck. P800R robots bring shelves to the pickers; a glowing beacon shows where the order is.</p>
+      <button class="jr-btn primary big" id="arStartXR" hidden>Start table AR</button><button class="jr-btn primary big" id="arStartCam">Start camera view</button><button class="jr-btn" id="arStart3D">3D view without camera</button>
+      <p class="ar-small" id="arSupport"></p><p class="ar-small">Illustrative film — fictional site, not an official Geek+ facility. Created by Chenzhuo Tong.</p></div></div>
+    <div class="ar-sheet" id="arSheet"><div class="ar-sheet-head"><span id="arChapNo">00 / 08</span><b id="arChapTitle"></b></div><p id="arChapText"></p><p class="ar-event" id="arEvent"></p>
+      <div class="ar-progress"><i id="arFill"></i></div>
+      <div class="ar-row"><button id="arPrev" aria-label="Previous chapter">⏮</button><button id="arPlay" aria-label="Pause">⏸</button><button id="arNext" aria-label="Next chapter">⏭</button><span class="ar-time" id="arTime">0:00</span><button id="arRot" aria-label="Rotate">⟳</button><button id="arPlace" aria-label="Move the model" hidden>⌖</button></div>
+      <div class="ar-row ar-scales"><button data-ar-scale="site" aria-pressed="true">Whole site</button><button data-ar-scale="robots" aria-pressed="false">Robots</button><button data-ar-scale="station" aria-pressed="false">Station</button></div></div>`;
+  document.body.append(app);
+  for (const el of app.querySelectorAll('.ar-sheet, .ar-top, .ar-start')) el.addEventListener('beforexrselect', e => e.preventDefault());
+
+  let S = null; // runtime state
+  function setupThree() {
+    if (S) return S;
+    const renderer = new T.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(1.5, devicePixelRatio || 1)); renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1; renderer.outputColorSpace = T.SRGBColorSpace; renderer.setClearColor(0x000000, 0);
+    $('arCanvas').append(renderer.domElement);
+    const scene = new T.Scene();
+    const pm = new T.PMREMGenerator(renderer); scene.environment = pm.fromScene(new T.RoomEnvironment(), .04).texture; scene.environmentIntensity = .45; pm.dispose();
+    scene.add(new T.HemisphereLight('#e5f1ff', '#2a323b', 1.6)); const sun = new T.DirectionalLight('#fff4e0', 1.8); sun.position.set(-1, 3, 2); scene.add(sun);
+    const camera = new T.PerspectiveCamera(60, 1, .01, 50);
+    const root = new T.Group(), content = new T.Group(); root.add(content); scene.add(root);
+    const W = CORE.buildWorld(content); if (W.ground) W.ground.visible = false;
+    // moving actors are never culled
+    const dyn = new Set(); for (const v of Object.values(W)) { if (v && v.isObject3D) dyn.add(v); if (Array.isArray(v)) v.forEach(x => { if (x?.isObject3D) dyn.add(x); if (x?.rb) dyn.add(x.rb); if (x?.sh) dyn.add(x.sh); if (x?.g?.isObject3D) dyn.add(x.g); }); }
+    // diorama base (sized per preset)
+    const base = new T.Mesh(new T.BoxGeometry(1, 1, 1), new T.MeshStandardMaterial({ color: '#0d141c', roughness: .6, metalness: .3 })); content.add(base);
+    const rim = new T.Mesh(new T.BoxGeometry(1, 1, 1), new T.MeshBasicMaterial({ color: '#5fe3e8', transparent: true, opacity: .55, toneMapped: false })); content.add(rim);
+    // beacon that follows the hero order
+    const beam = new T.Mesh(new T.CylinderGeometry(1, 1, 1, 16, 1, true), new T.MeshBasicMaterial({ color: '#b69cff', transparent: true, opacity: .45, toneMapped: false, depthWrite: false })); content.add(beam);
+    const tagC = document.createElement('canvas'); tagC.width = 512; tagC.height = 160; { const g = tagC.getContext('2d'); g.fillStyle = '#b69cff'; g.beginPath(); g.roundRect(8, 8, 496, 144, 36); g.fill(); g.fillStyle = '#120a2a'; g.font = '800 78px system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('SO-1042', 256, 84); }
+    const tagT = new T.CanvasTexture(tagC); tagT.colorSpace = T.SRGBColorSpace;
+    const tag = new T.Mesh(new T.PlaneGeometry(1, .3125), new T.MeshBasicMaterial({ map: tagT, transparent: true, toneMapped: false, depthTest: false })); tag.renderOrder = 10; content.add(tag);
+    const reticle = new T.Mesh(new T.TorusGeometry(.07, .006, 8, 48), new T.MeshBasicMaterial({ color: '#5fe3e8', toneMapped: false })); reticle.matrixAutoUpdate = false; reticle.visible = false; scene.add(reticle);
+    const planes = [0, 1, 2, 3].map(() => new T.Plane(new T.Vector3(1, 0, 0), 0));
+    S = { renderer, scene, camera, root, content, W, base, rim, beam, tag, reticle, planes, dyn, t: 0, playing: true, last: 0, preset: 'site', userScale: 1, mode: null, xr: null, placed: false, uiTick: 0, controls: null, orient: null };
+    const resize = () => { if (renderer.xr.isPresenting) return; const w = innerWidth, h = innerHeight; renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix(); };
+    addEventListener('resize', resize); resize();
+    applyPreset('site');
+    renderer.setAnimationLoop(frame);
+    return S;
+  }
+  function physScale() { const P = PRESETS[S.preset], w = P.box[2] - P.box[0]; return P.size / w * S.userScale; }
+  function applyPreset(name) {
+    S.preset = name; const P = PRESETS[name], [x0, z0, x1, z1] = P.box, cx = (x0 + x1) / 2, cz = (z0 + z1) / 2, s = physScale();
+    S.root.scale.setScalar(s); S.content.position.set(-cx, 0, -cz);
+    const th = .018 / s; S.base.scale.set(x1 - x0, th, z1 - z0); S.base.position.set(cx, -th / 2 - .05, cz);
+    S.rim.scale.set(x1 - x0 + .004 / s, .003 / s, z1 - z0 + .004 / s); S.rim.position.set(cx, -.05 - th + .0015 / s, cz);
+    S.clipLocal = [[1, 0, 0, -x0], [-1, 0, 0, x1], [0, 0, 1, -z0], [0, 0, -1, z1]];
+    app.querySelectorAll('[data-ar-scale]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.arScale === name)));
+    if (S.mode !== 'xr' || !S.placed) S.root.rotation.y = P.yaw;
+    cull(x0, z0, x1, z1, name === 'site');
+    if (S.mode === '3d' && S.controls) frame3D();
+  }
+  /* hide static objects that lie fully outside the diorama box (fewer draw calls on phones) */
+  const _v = new T.Vector3();
+  function cull(x0, z0, x1, z1, all) {
+    S.root.updateMatrixWorld(true); const inv = S.content.matrixWorld.clone().invert(), m = 2;
+    for (const c of S.content.children) {
+      if (c.isInstancedMesh || S.dyn.has(c) || c === S.base || c === S.rim || c === S.beam || c === S.tag) { c.visible = c.visible || !c.isInstancedMesh ? c.visible : true; continue; }
+      if (all) { c.visible = true; continue; }
+      let inside = false;
+      c.traverse(o => { if (inside || !o.isMesh) return; o.getWorldPosition(_v).applyMatrix4(inv); if (o.geometry && !o.geometry.boundingSphere) o.geometry.computeBoundingSphere(); const r = (o.geometry?.boundingSphere?.radius || 1) * Math.max(o.scale.x, o.scale.y, o.scale.z); if (_v.x > x0 - m - r && _v.x < x1 + m + r && _v.z > z0 - m - r && _v.z < z1 + m + r) inside = true; });
+      c.visible = inside;
+    }
+    if (S.W.truss) S.W.truss.visible = false; if (S.W.lights) S.W.lights.visible = false;
+  }
+  function updateClip() {
+    S.content.updateMatrixWorld(true);
+    S.clipLocal.forEach(([nx, ny, nz, c], i) => { S.planes[i].normal.set(nx, ny, nz); S.planes[i].constant = c; S.planes[i].applyMatrix4(S.content.matrixWorld); });
+    S.renderer.clippingPlanes = S.mode === 'xr' && !S.placed ? [] : S.planes;
+  }
+  function frame(ts, xrFrame) {
+    if (!S || app.hidden) return;
+    const dt = S.last ? Math.min(.1, (ts - S.last) / 1000) : 0; S.last = ts;
+    if (S.playing) { S.t += dt; if (S.t >= CORE.DUR) S.t = 0; }
+    CORE.update(S.W, S.t);
+    // beacon
+    const s = physScale(), f = CORE.heroFocus(S.W, S.t), bh = .09 / s;
+    S.beam.scale.set(.0016 / s, bh, .0016 / s); S.beam.position.set(f.x, (f.y || 0) + bh / 2, f.z); S.beam.material.opacity = .3 + .2 * Math.sin(ts / 220);
+    S.tag.scale.setScalar(.05 / s); S.tag.position.set(f.x, (f.y || 0) + bh + .02 / s, f.z);
+    // camera modes
+    if (S.mode === 'camera') orientCamera();
+    if (S.mode === '3d' && S.controls) S.controls.update();
+    const viewCam = S.renderer.xr.isPresenting ? S.renderer.xr.getCamera() : S.camera; S.tag.quaternion.copy(viewCam.quaternion); if (S.root.quaternion) S.tag.quaternion.premultiply(S.root.quaternion.clone().invert());
+    // WebXR hit test
+    if (xrFrame && S.xr && S.xr.hitSource && !S.placed) {
+      const hits = xrFrame.getHitTestResults(S.xr.hitSource);
+      if (hits.length) { const pose = hits[0].getPose(S.renderer.xr.getReferenceSpace()); S.reticle.visible = true; S.reticle.matrix.fromArray(pose.transform.matrix); S.reticle.matrix.multiply(FLAT); hint('Tap to place the warehouse here'); }
+      else { S.reticle.visible = false; hint('Move the phone slowly over a table…'); }
+    }
+    S.root.visible = S.mode !== 'xr' || S.placed;
+    updateClip();
+    S.renderer.render(S.scene, S.camera);
+    if (ts - S.uiTick > 250) { S.uiTick = ts; ui(); }
+  }
+  function ui() {
+    let ch = 0; CORE.CHAPTERS.forEach((c, i) => { if (S.t >= c[0]) ch = i; });
+    $('arChapNo').textContent = `${String(ch).padStart(2, '0')} / 08`; $('arChapTitle').textContent = CORE.CHAPTERS[ch][1]; $('arChapText').textContent = CORE.CHAPTERS[ch][2];
+    const ev = CORE.LOG.filter(l => l[0] <= S.t).at(-1); $('arEvent').textContent = ev ? `${ev[1]} · ${ev[2]}` : 'Waiting for the trailer…';
+    $('arFill').style.width = (S.t / CORE.DUR * 100) + '%'; $('arTime').textContent = `${fmt(S.t)} / ${fmt(CORE.DUR)}`; $('arPlay').textContent = S.playing ? '⏸' : '▶';
+  }
+  const FLAT = (() => { const o = new T.Object3D(); o.rotation.x = -Math.PI / 2; o.updateMatrix(); return o.matrix; })();
+  function hint(text) { const h = $('arHint'); if (!text) { h.hidden = true; return; } h.hidden = false; if (h.textContent !== text) h.textContent = text; }
+  function chapterJump(d) { let ch = 0; CORE.CHAPTERS.forEach((c, i) => { if (S.t >= c[0]) ch = i; }); ch = Math.max(0, Math.min(CORE.CHAPTERS.length - 1, ch + d)); S.t = CORE.CHAPTERS[ch][0] + .01; ui(); }
+
+  /* ---------------- camera view: rear camera + device orientation ---------------- */
+  const qFromYXZ = (x, y, z) => { const c1 = Math.cos(x / 2), c2 = Math.cos(y / 2), c3 = Math.cos(z / 2), s1 = Math.sin(x / 2), s2 = Math.sin(y / 2), s3 = Math.sin(z / 2); return new T.Quaternion(s1 * c2 * c3 + c1 * s2 * s3, c1 * s2 * c3 - s1 * c2 * s3, c1 * c2 * s3 - s1 * s2 * c3, c1 * c2 * c3 + s1 * s2 * s3); };
+  const Q_FIX = new T.Quaternion(-Math.SQRT1_2, 0, 0, Math.SQRT1_2);
+  function onOrient(e) { if (e.alpha === null && e.beta === null) return; S.orient = { a: e.alpha || 0, b: e.beta || 0, g: e.gamma || 0 }; if (S.alpha0 === undefined) S.alpha0 = S.orient.a; }
+  function orientCamera() {
+    const cam = S.camera;
+    if (S.orient) {
+      const d2r = Math.PI / 180, o = S.orient, scr = ((screen.orientation && screen.orientation.angle) || window.orientation || 0) * d2r;
+      const q = qFromYXZ(o.b * d2r, (o.a - S.alpha0) * d2r, -o.g * d2r); q.multiply(Q_FIX); q.multiply(new T.Quaternion().setFromAxisAngle(new T.Vector3(0, 0, 1), -scr));
+      cam.quaternion.copy(q);
+    } else { cam.rotation.set(S.lookPitch, S.lookYaw, 0, 'YXZ'); }
+    cam.position.set(0, 0, 0);
+  }
+  async function startCamera() {
+    setupThree(); S.mode = 'camera'; $('arModeChip').textContent = 'CAMERA VIEW';
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') { try { await DeviceOrientationEvent.requestPermission(); } catch { /* user may deny */ } }
+    addEventListener('deviceorientation', onOrient);
+    S.lookYaw = 0; S.lookPitch = -.42; S.alpha0 = undefined;
+    S.root.position.set(0, -.42, -.85); S.root.rotation.set(0, 0, 0);
+    try {
+      if (!isSecureContext || !navigator.mediaDevices?.getUserMedia) throw new Error('insecure');
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
+      S.stream = stream; const v = $('arVideo'); v.srcObject = stream; v.hidden = false; await v.play().catch(() => {});
+      hint('Turn the phone to look around · drag to rotate · pinch to zoom'); setTimeout(() => hint(''), 4500);
+    } catch (e) {
+      $('arVideo').hidden = true; app.classList.add('no-cam');
+      hint(location.protocol !== 'https:' ? 'Camera needs the https link — showing 3D view instead.' : 'Camera unavailable — showing 3D view instead.'); setTimeout(() => hint(''), 4000);
+    }
+    $('arStart').hidden = true; app.classList.add('running');
+  }
+  /* ---------------- 3D view: touch orbit ---------------- */
+  function frame3D() { const s = physScale(); S.root.position.set(0, 0, 0); S.camera.position.set(.35, .55, .75); S.controls.target.set(0, 0, 0); S.controls.minDistance = .08; S.controls.maxDistance = 3; S.controls.update(); void s; }
+  function start3D() {
+    setupThree(); S.mode = '3d'; $('arModeChip').textContent = '3D VIEW'; $('arVideo').hidden = true; app.classList.add('no-cam');
+    S.controls = new T.OrbitControls(S.camera, S.renderer.domElement); S.controls.enableDamping = true; S.controls.maxPolarAngle = 1.45; frame3D();
+    $('arStart').hidden = true; app.classList.add('running');
+  }
+  /* ---------------- table AR: WebXR immersive-ar + hit test ---------------- */
+  async function startXR() {
+    setupThree();
+    try {
+      const session = await navigator.xr.requestSession('immersive-ar', { requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay', 'local-floor'], domOverlay: { root: app } });
+      S.renderer.xr.enabled = true; S.renderer.xr.setReferenceSpaceType('local'); await S.renderer.xr.setSession(session);
+      S.mode = 'xr'; S.placed = false; $('arModeChip').textContent = 'TABLE AR'; $('arVideo').hidden = true; $('arPlace').hidden = false;
+      const viewer = await session.requestReferenceSpace('viewer'); const hitSource = await session.requestHitTestSource({ space: viewer });
+      S.xr = { session, hitSource };
+      session.addEventListener('select', () => {
+        if (S.placed || !S.reticle.visible) return;
+        S.root.position.setFromMatrixPosition(S.reticle.matrix);
+        const cam = S.renderer.xr.getCamera(); const dx = cam.position.x - S.root.position.x, dz = cam.position.z - S.root.position.z; S.root.rotation.set(0, Math.atan2(dx, dz), 0);
+        S.placed = true; S.reticle.visible = false; hint('Walk around the table · pinch-free: use the scale buttons'); setTimeout(() => hint(''), 3500);
+      });
+      session.addEventListener('end', () => { S.xr = null; S.renderer.xr.enabled = false; S.mode = null; S.placed = false; $('arStart').hidden = false; app.classList.remove('running'); hint(''); });
+      $('arStart').hidden = true; app.classList.add('running', 'xr'); hint('Move the phone slowly over a table…');
+    } catch (e) { $('arSupport').textContent = 'Table AR could not start (' + (e.message || e) + '). Try camera view.'; }
+  }
+
+  /* ---------------- gestures for camera view ---------------- */
+  const touches = new Map(); let pinch0 = 0, scale0 = 1;
+  app.addEventListener('pointerdown', e => { if (!S || S.mode !== 'camera' || e.target.closest('.ar-sheet,.ar-top')) return; touches.set(e.pointerId, { x: e.clientX, y: e.clientY }); if (touches.size === 2) { const [a, b] = [...touches.values()]; pinch0 = Math.hypot(a.x - b.x, a.y - b.y); scale0 = S.userScale; } });
+  app.addEventListener('pointermove', e => {
+    if (!S || !touches.has(e.pointerId)) return; const p = touches.get(e.pointerId), dx = e.clientX - p.x, dy = e.clientY - p.y; touches.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (touches.size === 1) { S.root.rotation.y += dx * .008; if (!S.orient) { S.lookPitch = Math.max(-1.2, Math.min(.3, S.lookPitch - dy * .003)); } }
+    else if (touches.size === 2 && pinch0) { const [a, b] = [...touches.values()]; S.userScale = Math.max(.35, Math.min(4, scale0 * Math.hypot(a.x - b.x, a.y - b.y) / pinch0)); applyPreset(S.preset); }
+  });
+  const endTouch = e => { touches.delete(e.pointerId); if (touches.size < 2) pinch0 = 0; };
+  app.addEventListener('pointerup', endTouch); app.addEventListener('pointercancel', endTouch);
+
+  /* ---------------- controls ---------------- */
+  $('arStartCam').onclick = startCamera; $('arStart3D').onclick = start3D; $('arStartXR').onclick = startXR;
+  $('arPlay').onclick = () => { S.playing = !S.playing; ui(); };
+  $('arPrev').onclick = () => chapterJump(-1); $('arNext').onclick = () => chapterJump(1);
+  $('arRot').onclick = () => { S.root.rotation.y += Math.PI / 4; };
+  $('arPlace').onclick = () => { if (S.mode === 'xr') { S.placed = false; hint('Point at the table and tap to place'); } };
+  app.querySelectorAll('[data-ar-scale]').forEach(b => b.onclick = () => { S.userScale = 1; applyPreset(b.dataset.arScale); });
+  $('arExit').onclick = closeAR;
+  document.addEventListener('visibilitychange', () => { if (S && document.hidden) S.playing = false; });
+
+  function openAR() {
+    document.body.classList.add('ar-mode'); app.hidden = false; $('arStart').hidden = false;
+    try { globalThis.orderJourney?.pause(); } catch { /* ignore */ }
+    if (location.hash !== '#ar') history.replaceState(null, '', location.pathname + location.search + '#ar');
+    const sup = $('arSupport'); sup.textContent = 'Checking AR support…';
+    if (navigator.xr?.isSessionSupported) navigator.xr.isSessionSupported('immersive-ar').then(ok => { $('arStartXR').hidden = !ok; sup.textContent = ok ? 'Table AR is available on this phone.' : 'Table AR (WebXR) isn’t available in this browser — iPhone Safari doesn’t support it yet. Camera view works everywhere.'; }).catch(() => { sup.textContent = 'Camera view works on any modern phone.'; });
+    else sup.textContent = 'Table AR (WebXR) isn’t available in this browser — iPhone Safari doesn’t support it yet. Camera view works everywhere.';
+    if (location.protocol !== 'https:') sup.textContent += ' Opened from a local file: the camera needs the hosted https link.';
+  }
+  function closeAR() {
+    if (S) { if (S.xr) { try { S.xr.session.end(); } catch { /* ignore */ } } if (S.stream) { S.stream.getTracks().forEach(t => t.stop()); S.stream = null; } removeEventListener('deviceorientation', onOrient); S.renderer.clippingPlanes = []; S.mode = null; S.controls?.dispose(); S.controls = null; }
+    app.hidden = true; app.classList.remove('running', 'xr', 'no-cam'); document.body.classList.remove('ar-mode');
+    history.replaceState(null, '', location.pathname + location.search);
+  }
+  globalThis.orderJourneyAR = { open: openAR, close: closeAR, state: () => S && { mode: S.mode, t: S.t, preset: S.preset, calls: S.renderer.info.render.calls } };
+  if (location.hash === '#ar') openAR();
 })();
 
 </script></body></html>
