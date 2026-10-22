@@ -289,6 +289,15 @@ body.ar-mode{overflow:hidden;background:#000}
 .ar-scales button{flex:1;font-size:12px;font-weight:700}
 .ar-scales button[aria-pressed="true"]{background:#5fe3e8;color:#041018;border-color:#5fe3e8}
 @media(max-width:700px){.ar-qr-grid{grid-template-columns:1fr}.ar-qr-box{max-width:240px;margin:0 auto}}
+/* ---- Diagnose with AI (WMS lab) ---- */
+.live-alert{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.live-alert[hidden]{display:none}
+.live-alert #liveAlertText{flex:1;min-width:200px}
+.live-ai-btn,.wms-ai-btn{border:1px solid #b69cff!important;background:linear-gradient(120deg,#3a2f7a,#155e6e)!important;color:#fff!important;font-weight:700}
+.live-ai-btn{flex:none;border-radius:8px;font-size:12px;padding:8px 12px;min-height:36px;cursor:pointer}
+.live-ai-btn:hover,.wms-ai-btn:hover{filter:brightness(1.15)}
+.wms-ai-btn[hidden]{display:none}
+@media(max-width:700px){.live-ai-btn{width:100%;min-height:44px}}
 
 /* ---- Warehouse AI Copilot ---- */
 .cp-root{--cp-font:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;--cp-bg:#08111d;--cp-panel:#0c1726;--cp-line:#24405a;--cp-text:#e3eef7;--cp-muted:#8fa9bd;--cp-accent:#3ee6ec;--cp-violet:#b69cff;--cp-kb:0px;position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(max(18px,env(safe-area-inset-bottom)) + var(--cp-kb));z-index:40;font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--cp-text)}
@@ -407,6 +416,18 @@ body.ar-mode .cp-root,body.live-fs .cp-root{display:none}
   .cp-form textarea{font-size:16px}
   html.cp-chat-open,html.cp-chat-open body{overflow:hidden}
 }
+/* ---- live problem banner + diagnose buttons ---- */
+.cp-issue{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #5a3a2a;background:linear-gradient(90deg,#3a2118,#24161a);color:#ffd8c8;font-size:12px;line-height:1.4}
+.cp-issue[hidden]{display:none}
+.cp-issue-warning{background:linear-gradient(90deg,#3a2e18,#241d16);color:#f4dcae;border-top-color:#6a5530}
+.cp-issue-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#ff7a5c;animation:cp-vs 1.6s ease-in-out infinite}
+.cp-issue-warning .cp-issue-dot{background:#e8b86a}
+.cp-issue-text{flex:1;min-width:0}
+.cp-issue-btn{flex:none;border:1px solid #b69cff;background:linear-gradient(120deg,#3a2f7a,#155e6e);color:#fff;border-radius:8px;font:700 11.5px var(--cp-font);padding:7px 10px;min-height:34px;cursor:pointer;white-space:nowrap}
+.cp-issue-btn:hover{filter:brightness(1.15)}
+.cp-issue-btn:focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
+@media(max-width:600px){.cp-issue{flex-wrap:wrap}.cp-issue-btn{width:100%;min-height:44px}}
+@media(prefers-reduced-motion:reduce){.cp-issue-dot{animation:none}}
 </style></head><body><nav class="mode-switcher" role="tablist" aria-label="Warehouse demonstration mode"><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true">Traditional vs. P800R</button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false">Warehouse Optimizer</button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false">3D Product Experience</button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false">WMS Integration Lab</button><span class="nav-sep" aria-hidden="true"></span><button id="journeyTab" class="journey-tab" type="button" aria-pressed="false" aria-controls="journeyMode"><i aria-hidden="true">▶</i>Order Journey<small>3D FILM</small></button><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
 <section id="engTour" class="eng-tour engineering" hidden aria-label="Guided engineering demonstration"><div class="eng-title-row"><span id="engTourStep" class="eng-kicker">STEP 1 / 7</span><span id="engTourTime" class="eng-tour-badge">0 / 105 s</span></div><h2 id="engTourTitle"></h2><p id="engTourText"></p><div class="eng-tour-progress"><div id="engTourProgress"></div></div><div class="eng-toolbar"><button class="btn" id="engTourPrevious">← Previous</button><button class="btn" id="engTourPause">Pause</button><button class="btn primary" id="engTourNext">Next →</button><button class="btn" id="engTourReset">Reset tour</button><button class="btn" id="engTourExit">Exit tour</button></div><p class="eng-note">Uses current customer requirements; resets the mock lab at the integration step. Previous revisits evidence without rewinding data. Reset starts a fresh walkthrough. You can skip steps; no automatic deployment or external requests occur.</p></section>
 
@@ -502,12 +523,12 @@ body.ar-mode .cp-root,body.live-fs .cp-root{display:none}
  <div class="wms-live-wrap" id="wmsLiveWrap">
  <div class="eng-toolbar wms-player-bar" id="wmsPlayerBar"><span id="wmsClock" class="eng-pill">Demo clock 09:00:00 UTC</span><div class="wms-player" role="group" aria-label="Mock execution clock"><button class="btn primary" id="wmsPlay">▶ Play</button><button class="btn" id="wmsPause" disabled>⏸ Pause</button><div class="wms-speed" role="group" aria-label="Clock speed"><button class="btn" data-wms-speed="1" aria-pressed="true">1×</button><button class="btn" data-wms-speed="2" aria-pressed="false">2×</button><button class="btn" data-wms-speed="5" aria-pressed="false">5×</button></div></div><button class="btn" id="wmsAdvance">+10 s</button><button class="btn" id="wmsFinish">+60 s</button><label class="wms-autopause"><input type="checkbox" id="wmsAutoPause" checked> Auto-pause on errors &amp; recovery</label><button class="btn" id="wmsRestore">Restore service & retry queue</button><button class="btn" id="wmsReset">Reset lab / load shared fleet</button><span id="wmsService" role="status"></span><span id="wmsPlayerStatus" class="wms-player-status" role="status">⏸ Paused</span></div>
  <div class="wms-live-grid">
- <section class="eng-card live-card" id="liveCard"><div class="eng-title-row"><div><span class="eng-kicker">LIVE FLOOR VIEW · DRIVEN BY THE MOCK EXECUTION CLOCK</span><h2>See the tasks move</h2></div><div class="eng-toolbar"><button id="liveCamera" class="btn">Reset camera</button><button id="liveFullscreen" class="btn">⛶ Fullscreen</button></div></div><div class="live-actions" role="group" aria-label="Scenario shortcuts"><span class="live-actions-label">Scenario</span><button id="liveOrder" class="btn">Send order</button><button id="liveWave" class="btn">Order wave ×5</button><span class="live-actions-sep"></span><button id="liveInject" class="btn">Inject fault</button><button id="liveDiagnose" class="btn" disabled>Diagnose</button><button id="liveResolve" class="btn" disabled>Fix &amp; resubmit</button><button id="liveVerify" class="btn" disabled>Verify</button><span id="liveFaultStep" class="live-fault-step"></span></div><div class="live-config" id="liveConfig"><span class="live-actions-label">Lab setup</span><label class="eng-field">Robots<select id="liveRobots"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label><label class="eng-field">Stations<select id="liveStations"><option>1</option><option>2</option><option>3</option></select></label><label class="eng-field">Shelves<select id="liveShelves"><option>6</option><option>12</option><option>24</option></select></label><button id="liveApply" class="btn">Apply &amp; reset lab</button></div><div class="live-stage"><div id="liveViewer" class="live-viewer"><button id="liveStart" class="btn primary live-start">▶ Open live 3D view</button></div><div class="live-overlay" id="liveOverlay" aria-live="polite"></div><div class="live-alert" id="liveAlert" hidden></div></div><p class="eng-note">Each robot's position is computed from its task record (start, pick and completion times) at the current demo time — the 3D view is a picture of the mock state, not a separate animation. Timing follows the mock: 20 s retrieve, 12 s pick, 20 s return. Paths are schematic; no collision avoidance is shown. The shelf keeps its orientation while the robot turns, like the P800R's rotating lift.</p></section>
+ <section class="eng-card live-card" id="liveCard"><div class="eng-title-row"><div><span class="eng-kicker">LIVE FLOOR VIEW · DRIVEN BY THE MOCK EXECUTION CLOCK</span><h2>See the tasks move</h2></div><div class="eng-toolbar"><button id="liveCamera" class="btn">Reset camera</button><button id="liveFullscreen" class="btn">⛶ Fullscreen</button></div></div><div class="live-actions" role="group" aria-label="Scenario shortcuts"><span class="live-actions-label">Scenario</span><button id="liveOrder" class="btn">Send order</button><button id="liveWave" class="btn">Order wave ×5</button><span class="live-actions-sep"></span><button id="liveInject" class="btn">Inject fault</button><button id="liveDiagnose" class="btn" disabled>Diagnose</button><button id="liveResolve" class="btn" disabled>Fix &amp; resubmit</button><button id="liveVerify" class="btn" disabled>Verify</button><span id="liveFaultStep" class="live-fault-step"></span></div><div class="live-config" id="liveConfig"><span class="live-actions-label">Lab setup</span><label class="eng-field">Robots<select id="liveRobots"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label><label class="eng-field">Stations<select id="liveStations"><option>1</option><option>2</option><option>3</option></select></label><label class="eng-field">Shelves<select id="liveShelves"><option>6</option><option>12</option><option>24</option></select></label><button id="liveApply" class="btn">Apply &amp; reset lab</button></div><div class="live-stage"><div id="liveViewer" class="live-viewer"><button id="liveStart" class="btn primary live-start">▶ Open live 3D view</button></div><div class="live-overlay" id="liveOverlay" aria-live="polite"></div><div class="live-alert" id="liveAlert" hidden><span id="liveAlertText"></span><button type="button" class="live-ai-btn" id="liveAlertAI" data-ai-diagnose>🤖 Diagnose with AI</button></div></div><p class="eng-note">Each robot's position is computed from its task record (start, pick and completion times) at the current demo time — the 3D view is a picture of the mock state, not a separate animation. Timing follows the mock: 20 s retrieve, 12 s pick, 20 s return. Paths are schematic; no collision avoidance is shown. The shelf keeps its orientation while the robot turns, like the P800R's rotating lift.</p></section>
   <section class="eng-card"><span class="eng-kicker">CURRENT SIMULATED STATE</span><h2>Execution & observability</h2><div class="eng-metrics" id="wmsMetrics"></div><div class="eng-table-wrap" id="wmsTasks"></div><button class="btn" id="wmsIllustrate" disabled>Illustrate latest task in 3D ↗</button><p class="eng-note">The 3D scene illustrates one representative task. It does not acknowledge or complete an integration order; the mock execution clock controls that state.</p><h3>Integration event stream</h3><pre id="wmsLogs" class="eng-code eng-log" tabindex="0" aria-label="Integration event log"></pre><h3>Outbound callback → customer WMS</h3><div class="eng-endpoint"><b>POST</b> /wms/callbacks/pick-confirmation <span>Simulated</span></div><pre id="wmsCallback" class="eng-code" tabindex="0">No pick confirmation sent yet. Advance the clock after an order is accepted.</pre></section>
  </div></div>
  <div class="eng-split">
   <section class="eng-card"><span class="eng-kicker">REQUEST → RESPONSE</span><h2>API contract playground</h2><label class="eng-field">Test scenario<select id="wmsScenario"><option value="success">A · Successful order</option><option value="missing">B · Missing required field</option><option value="inventory">C · Insufficient inventory</option><option value="duplicate">D · Duplicate order</option><option value="unavailable">E · Dependent service unavailable</option></select></label><div class="eng-endpoint"><b>POST</b> /demo/orders <span>Simulated endpoint</span></div><label class="eng-field">Editable JSON request<textarea id="wmsRequest" rows="10" spellcheck="false" aria-label="Mock order JSON request"></textarea></label><div class="eng-toolbar"><button id="wmsSubmit" class="btn primary">Send mock request →</button><button id="wmsPostman" class="btn">Export Postman collection</button></div><p class="eng-note" id="wmsScenarioNote"></p><h3 id="wmsResponseStatus">No request sent</h3><pre id="wmsResponse" class="eng-code" tabindex="0">Response appears here.</pre></section>
-  <section class="eng-card"><span class="eng-kicker">CONTROLLED FAILURE LAB</span><h2>Detect → Diagnose → Resolve → Verify</h2><div class="eng-steps" id="wmsFaultSteps"><span>Detect</span><span>Diagnose</span><span>Resolve</span><span>Verify</span></div><p id="wmsFaultText" role="status">Inject a location-mapping defect. Inspect the failed order and SQL evidence, correct the configuration, and verify completion.</p><div class="eng-toolbar"><button id="wmsInject" class="btn">Inject Integration Failure</button><button id="wmsDiagnose" class="btn" disabled>Inspect & diagnose</button><button id="wmsResolve" class="btn" disabled>Correct & resubmit</button><button id="wmsVerify" class="btn" disabled>Verify recovery</button></div><p class="eng-note">This fault changes A-01 to an unknown internal location. Rejection occurs before stock reservation or robot task creation.</p></section>
+  <section class="eng-card"><span class="eng-kicker">CONTROLLED FAILURE LAB</span><h2>Detect → Diagnose → Resolve → Verify</h2><div class="eng-steps" id="wmsFaultSteps"><span>Detect</span><span>Diagnose</span><span>Resolve</span><span>Verify</span></div><p id="wmsFaultText" role="status">Inject a location-mapping defect. Inspect the failed order and SQL evidence, correct the configuration, and verify completion.</p><div class="eng-toolbar"><button id="wmsInject" class="btn">Inject Integration Failure</button><button id="wmsDiagnose" class="btn" disabled>Inspect & diagnose</button><button id="wmsResolve" class="btn" disabled>Correct & resubmit</button><button id="wmsVerify" class="btn" disabled>Verify recovery</button><button id="wmsAIDiagnose" class="btn wms-ai-btn" data-ai-diagnose hidden>🤖 Diagnose with AI</button></div><p class="eng-note">This fault changes A-01 to an unknown internal location. Rejection occurs before stock reservation or robot task creation.</p></section>
  </div>
  <div class="wms-sql-row">
  <section class="eng-card"><div class="eng-title-row"><div><span class="eng-kicker">READ-ONLY SQL · LIVE MOCK TABLES</span><h2>SQL console</h2></div><label class="eng-field">Example query<select id="wmsQuery"></select></label></div><p class="eng-note">Type any SELECT — WHERE, JOIN, GROUP BY, HAVING, ORDER BY, LIMIT. A small SQL engine runs in the browser on the live mock tables; write statements are blocked, like a read-only production replica.</p><label class="eng-field eng-sql-editor">Query<textarea id="wmsSql" rows="4" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="SQL query"></textarea></label><div class="eng-toolbar"><button id="wmsSqlRun" class="btn primary">Run query ▶</button><span id="wmsSqlStatus" class="eng-sql-status" role="status"></span><span class="eng-hint">Ctrl / ⌘ + Enter</span></div><div id="wmsQueryResult" class="eng-table-wrap"></div><details class="eng-details"><summary>Schema and column reference</summary><pre class="eng-code">Orders(order_id, status, priority, task_id, created_at, completed_at, error_code)
@@ -5951,7 +5972,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     const html = `<span class="lv-clock">${new Date(Date.parse('2026-10-20T09:00:00Z') + vt * 1000).toISOString().slice(11, 19)} UTC${Math.abs(M().time - vt) > .5 && !playing ? ' · catching up' : ''}</span>${chips}${queued ? `<span class="lv-chip is-queue">${queued} task${queued > 1 ? 's' : ''} queued</span>` : ''}`;
     if (html !== lastOverlay) { $('liveOverlay').innerHTML = html; lastOverlay = html; }
     const alert = faulty ? `${f.id}: WMS A-01 → UNKNOWN — order rejected before dispatch, no robot assigned` : !m.online ? 'Dependent service unavailable — valid orders wait in the queue' : '';
-    $('liveAlert').hidden = !alert; $('liveAlert').textContent = alert;
+    $('liveAlert').hidden = !alert; { const lt = $('liveAlertText'); if (lt && lt.textContent !== alert) lt.textContent = alert; }
     return poses.some(p => p.task) || faulty || Math.abs(M().time - vt) > .01;
   }
   function loop() {
@@ -7176,6 +7197,44 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     };
   }
 
+  /* Deterministic, read-only problem detection over a snapshot. Severity: error | warning | info.
+     error/warning drive the "Diagnose with AI" prompts; info is context only. */
+  function cap(x, n) { x = String(x); return x.length > n ? x.slice(0, n - 1) + '…' : x; }
+  function detectWmsIssues(s) {
+    var out = [];
+    if (!s || !s.initialized) return out;
+    var f = s.fault, inv = (s.location_mapping && s.location_mapping.invalid) || [];
+    if ((f && f.active) || inv.length) {
+      var m = inv[0] || { wms_location: f ? f.wms_location : '?', mapped_to: f ? f.current_mapping : '?' };
+      var shelfRow = (s.shelves.inventory || []).filter(function (x) { return x.wms_location === m.wms_location || x.shelf === (f && f.expected_mapping); })[0];
+      out.push({ code: 'LOCATION_MAPPING', severity: 'error',
+        title: 'WMS location ' + m.wms_location + ' is mapped to ' + m.mapped_to + ' (no such rack)',
+        evidence: cap((f && f.fault_order_id ? 'Order ' + f.fault_order_id + ' rejected before dispatch (' + (f.order_status || 'FAILED') + '); no robot task created. ' : '') +
+          (inv.length ? inv.length + ' invalid mapping(s): ' + inv.map(function (x) { return x.wms_location + '→' + x.mapped_to; }).join(', ') + '. ' : '') +
+          (f ? 'Expected mapping ' + f.wms_location + '→' + f.expected_mapping + '. Failure-lab stage: ' + f.stage + '.' : '') +
+          (shelfRow ? ' Stock for ' + shelfRow.sku + ' exists at rack ' + shelfRow.shelf + '.' : ''), 300) });
+    }
+    if (s.service && s.service.online === false) {
+      out.push({ code: 'SERVICE_UNAVAILABLE', severity: 'error', title: 'Dependent service is unavailable — new tasks are not dispatched',
+        evidence: cap(s.kpis.tasks_queued + ' task(s) queued; ' + s.robots.by_status.idle + ' of ' + s.robots.total + ' robot(s) idle. Already-dispatched tasks still finish.', 300) });
+    }
+    var lr = s.last_api_response;
+    if (lr && lr.http_status >= 400 && lr.error && lr.error !== 'LOCATION_MAPPING') {
+      out.push({ code: 'ORDER_REJECTED', severity: 'warning', title: 'Last order request was rejected: HTTP ' + lr.http_status + ' ' + lr.error,
+        evidence: cap('The mock WMS API returned ' + lr.http_status + ' (' + lr.error + '). ' + ({ VALIDATION_ERROR: 'A required field is missing or invalid.', INSUFFICIENT_INVENTORY: 'Requested quantity exceeds available stock.', IDEMPOTENCY_CONFLICT: 'The order ID was reused with a different payload.', INVALID_JSON: 'The request body is not valid JSON.' }[lr.error] || ''), 300) });
+    }
+    var failed = (s.orders.recent || []).filter(function (o) { return o.status === 'FAILED' && !(f && f.active && o.order_id === f.fault_order_id); });
+    if (failed.length) {
+      out.push({ code: 'FAILED_ORDERS', severity: 'warning', title: failed.length + ' order(s) in FAILED status',
+        evidence: cap(failed.slice(0, 5).map(function (o) { return o.order_id + (o.error_code ? ' (' + o.error_code + ')' : ''); }).join(', '), 300) });
+    }
+    var tf = s.tests && s.tests.results ? s.tests.results.filter(function (x) { return x.result === 'FAIL'; }) : [];
+    if (tf.length) out.push({ code: 'TEST_FAILURES', severity: 'info', title: tf.length + ' SIT/UAT test(s) currently failing', evidence: cap(tf.map(function (x) { return x.type + ': ' + x.name; }).join('; '), 300) });
+    var low = (s.shelves.inventory || []).filter(function (x) { return x.available === 0; });
+    if (low.length) out.push({ code: 'LOW_STOCK', severity: 'info', title: low.length + ' shelf/shelves with 0 available units', evidence: cap(low.slice(0, 6).map(function (x) { return x.sku + ' @ ' + x.shelf; }).join(', '), 300) });
+    return out.slice(0, 8);
+  }
+
   // Keep the payload small: drop the least important detail first.
   function fit(s) {
     var steps = [
@@ -7196,9 +7255,10 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     try { model = window.WarehouseEngineering && window.WarehouseEngineering.wms && window.WarehouseEngineering.wms.model; } catch (e) { model = null; }
     if (!model) return unavailable('lab_not_initialized');
     if (!model.db || typeof model.db !== 'object' || !Array.isArray(model.db.Robots) || !Array.isArray(model.db.Orders)) return unavailable('state_malformed');
-    try { return fit(build(model)); } catch (e) { return unavailable('state_unavailable'); }
+    try { var snap = build(model); snap.issues = detectWmsIssues(snap); return fit(snap); } catch (e) { return unavailable('state_unavailable'); }
   }
   window.getWmsLabStateSnapshot = getWmsLabStateSnapshot;
+  window.detectWmsIssues = detectWmsIssues;
   window.getWmsLabStateSnapshot.MAX_BYTES = MAX_BYTES;
 })();
 
@@ -7224,13 +7284,13 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     { id: 'journey', en: 'Order Journey', zh: '订单旅程', keys: ['order journey', '3d film', 'dock to dock', 'dock-to-dock', '订单旅程', '3d 影片', '3d 动画'] }
   ];
   var SUGGEST = {
-    en: ['What does the P800R do?', 'Give me a quick tour of this website.', 'Why can adding robots stop increasing throughput?', 'What is the difference between SIT and UAT?'],
-    zh: ['P800R 是做什么的？', '带我快速了解这个网站。', '为什么增加机器人不一定提高产出？', 'SIT 和 UAT 有什么区别？']
+    en: ['What does the P800R do?', 'Give me a quick tour of this website.', 'Give me a live status report of the WMS lab: robots, stations, shelves and orders.', 'Is anything wrong in the simulation right now? If so, how do I fix it?'],
+    zh: ['P800R 是做什么的？', '带我快速了解这个网站。', '给我一份 WMS 实验室的实时状态报告：机器人、工作站、货架和订单。', '现在模拟里有没有问题？如果有，应该怎么解决？']
   };
   var lang = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
   var T = {
-    en: { title: 'Warehouse AI Copilot', sub: 'GPT-4.1 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design.', note: 'AI-generated · may be wrong · remembers the last 6 exchanges in this browser tab · cannot see or change the live simulation', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
-    zh: { title: '仓库 AI 助手', sub: 'GPT-4.1 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。', note: 'AI 生成内容，可能有误 · 记住本标签页最近 6 轮对话 · 无法读取或修改页面上的实时模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
+    en: { title: 'Warehouse AI Copilot', sub: 'GPT-4.1 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design. I can also read the live WMS lab — ask for a status report, or click “Diagnose with AI” when a fault appears.', note: 'AI-generated · may be wrong · remembers the last 6 exchanges in this browser tab · reads a snapshot of the WMS lab, never changes it', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', issueLabel: 'WMS lab', diagBtn: 'Diagnose with AI', diagPrompt: 'Diagnose the current problem in the WMS Integration Lab. Using the live lab state, tell me: 1) what is wrong, 2) the evidence, 3) the root cause, 4) the exact steps to fix it with the lab buttons, and 5) how to verify the fix.', moreIssues: ' more', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
+    zh: { title: '仓库 AI 助手', sub: 'GPT-4.1 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。我还能读取 WMS 实验室的实时状态——可以让我出状态报告，或在出现故障时点击“用 AI 诊断”。', note: 'AI 生成内容，可能有误 · 记住本标签页最近 6 轮对话 · 只读取 WMS 实验室状态快照，不会修改模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', issueLabel: 'WMS 实验室', diagBtn: '用 AI 诊断', diagPrompt: '请诊断 WMS 集成实验室当前的问题。根据实时的实验室状态告诉我：1）出了什么问题，2）证据，3）根本原因，4）用实验室按钮修复的具体步骤，5）如何验证已经修复。', moreIssues: ' 项其他问题', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
   };
   var t = function (k) { return T[lang][k]; };
 
@@ -7247,6 +7307,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     '<div class="cp-lang" role="group" aria-label="Language"><button type="button" data-cp-lang="en">EN</button><button type="button" data-cp-lang="zh">中文</button></div>' +
     '<button type="button" class="cp-icon-btn cp-clear" id="copilotClear"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6a1 1 0 0 1 1 1V6h3.25a.75.75 0 0 1 0 1.5h-.8l-.86 11.2A2.5 2.5 0 0 1 15.1 21H8.9a2.5 2.5 0 0 1-2.49-2.3L5.55 7.5h-.8a.75.75 0 0 1 0-1.5H8V4.5a1 1 0 0 1 1-1zm.5 2.5h5V5h-5v1zm-2.44 1.5.85 11.08a1 1 0 0 0 1 .92h6.18a1 1 0 0 0 1-.92l.85-11.08H7.06zM10 10a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 10 10zm4 0a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 14 10z"/></svg></button><button type="button" class="cp-icon-btn cp-close" id="copilotClose">×</button></header>' +
     '<div class="cp-log" id="copilotLog" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>' +
+    '<div class="cp-issue" id="copilotIssue" hidden role="status"><span class="cp-issue-dot" aria-hidden="true"></span><span class="cp-issue-text" id="copilotIssueText"></span><button type="button" class="cp-issue-btn" id="copilotIssueBtn" data-ai-diagnose></button></div>' +
     '<div class="cp-suggest" id="copilotSuggest"></div>' +
     '<div class="cp-voice-status" id="copilotVoiceStatus" hidden><span class="cp-vs-dot" aria-hidden="true"></span><span id="copilotVoiceText" role="status" aria-live="polite"></span><button type="button" class="cp-vs-cancel" id="copilotVoiceCancel"></button></div>' +
     '<form class="cp-form" id="copilotForm" autocomplete="off"><label class="cp-sr" for="copilotInput">Question</label>' +
@@ -7267,7 +7328,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     $('copilotClose').setAttribute('aria-label', t('close')); $('copilotClear').setAttribute('aria-label', t('clear')); $('copilotClear').title = t('clear');
     $('copilotNote').textContent = t('note'); fabLabel.textContent = t('open'); fab.setAttribute('aria-label', t('open'));
     var bs = panel.querySelectorAll('[data-cp-lang]'); for (var i = 0; i < bs.length; i++) bs[i].setAttribute('aria-pressed', String(bs[i].getAttribute('data-cp-lang') === lang));
-    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels();
+    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels(); $('copilotIssueBtn').textContent = '🤖 ' + t('diagBtn'); refreshIssues();
     var hello = log.querySelector('.cp-hello .cp-text'); if (hello) hello.textContent = t('hello');
   }
   function renderSuggestions() {
@@ -7450,7 +7511,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     setBusy(true);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
-    var gen = generation, payload = { message: q, history: Memory.get(), wms_state: captureWmsState() };
+    var gen = generation, payload = { message: q, history: Memory.get(), wms_state: captureWmsState() }; setTimeout(refreshIssues, 0);
     inflight = { ctrl: ctrl, typing: typing, timer: timer };
     var stale = function () { return gen !== generation; };
     var finish = function () { clearTimeout(timer); if (typing.parentNode) typing.parentNode.removeChild(typing); inflight = null; setBusy(false); };
@@ -7584,6 +7645,30 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   // clear the "ready" hint once a message is sent
   var _ask = ask; ask = function (q) { if (voice.active()) return; if (voice.state() === 'ready') { voice.cancel(true); } return _ask(q); };
 
+  /* ---------------- live problem monitor + one-click diagnosis ----------------
+     Reads the same read-only snapshot the AI receives; never changes the simulation. */
+  function currentIssues() {
+    try { var s = captureWmsState(); return s && s.initialized && Array.isArray(s.issues) ? s.issues.filter(function (x) { return x.severity === 'error' || x.severity === 'warning'; }) : []; } catch (e) { return []; }
+  }
+  function refreshIssues() {
+    var list = currentIssues(), box = $('copilotIssue');
+    if (!list.length) { box.hidden = true; } else {
+      box.hidden = false; box.className = 'cp-issue cp-issue-' + list[0].severity;
+      $('copilotIssueText').textContent = '⚠ ' + t('issueLabel') + ': ' + list[0].title + (list.length > 1 ? ' (+' + (list.length - 1) + t('moreIssues') + ')' : '');
+    }
+    var lab = document.getElementById('wmsAIDiagnose'); if (lab) lab.hidden = !list.length;
+    return list;
+  }
+  function diagnose() {
+    setOpen(true);
+    var q = t('diagPrompt');
+    if (busy || Date.now() < cooldownUntil || voice.active()) { input.value = q; autosize(); updateCount(); try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } return; }
+    setTimeout(function () { ask(q); }, 60);
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('[data-ai-diagnose]') : null; if (b) { e.preventDefault(); diagnose(); } });
+  document.addEventListener('wms:render', refreshIssues);
+  document.addEventListener('wms:reset', function () { setTimeout(refreshIssues, 0); });
+
   /* ---------------- open / close / input ---------------- */
   var lastFocus = null;
   function setOpen(on) {
@@ -7594,6 +7679,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       document.documentElement.classList.add('cp-chat-open');
       requestAnimationFrame(function () { panel.classList.add('cp-visible'); });
       if (!log.children.length) restoreChat();
+      refreshIssues();
       setTimeout(function () { if (!window.matchMedia('(pointer: coarse)').matches) input.focus(); }, 180);
     } else {
       voice.cancel(true);
@@ -7645,7 +7731,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     if (h.length) $('copilotSuggest').classList.add('cp-collapsed');
   }
   applyLang();
-  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); } };
+  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); }, diagnose: diagnose, issues: currentIssues };
 })();
 
 </script></body></html>
