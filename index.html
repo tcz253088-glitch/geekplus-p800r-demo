@@ -312,6 +312,7 @@ body.ar-mode{overflow:hidden;background:#000}
 .cp-lang button[aria-pressed="true"]{background:#1d3a52;color:#fff}
 .cp-icon-btn{flex:none;border:1px solid var(--cp-line);background:transparent;color:var(--cp-muted);border-radius:8px;font:600 11px var(--cp-font);padding:6px 9px;min-height:30px;cursor:pointer}
 .cp-close{font-size:20px;line-height:1;padding:2px 9px;color:#dbe8f2}
+.cp-clear{padding:5px 7px;display:grid;place-items:center}.cp-clear svg{width:16px;height:16px;fill:currentColor;display:block}.cp-clear:hover{color:#ffd8c8;border-color:#7a4a3c}
 .cp-icon-btn:hover,.cp-lang button:hover{color:#fff}
 .cp-log{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px 14px 6px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
 .cp-log:focus-visible{outline:2px solid #3ee6ec55;outline-offset:-2px}
@@ -359,6 +360,35 @@ body.ar-mode{overflow:hidden;background:#000}
 .cp-foot{display:flex;gap:10px;justify-content:space-between;padding:2px 14px 10px;font-size:9.5px;line-height:1.4;color:#6f8aa0;background:#0a1522}
 .cp-foot #copilotCount{flex:none}.cp-foot .cp-warn{color:#e8b86a}
 .cp-foot #copilotNote{text-align:right}
+/* ---- voice input ---- */
+.cp-voice{flex:none;display:flex;align-items:center;gap:4px}
+.cp-vlang{min-width:30px;height:30px;padding:0 6px;border-radius:8px;border:1px solid #2c4a63;background:#0b1a29;color:#8fb3c7;font:700 10.5px var(--cp-font);cursor:pointer;transition:color .2s,border-color .2s}
+.cp-vlang:hover:not(:disabled){color:#fff;border-color:#3ee6ec66}
+.cp-vlang:disabled{opacity:.45;cursor:default}
+.cp-mic{position:relative;width:42px;height:42px;border-radius:12px;border:1px solid #2f5670;background:#0f2133;color:#9fe9ef;cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s,border-color .2s,box-shadow .2s}
+.cp-mic svg{width:20px;height:20px;fill:currentColor}
+.cp-mic:hover{background:#143049;color:#fff;border-color:#3ee6ec88}
+.cp-mic:focus-visible,.cp-vlang:focus-visible,.cp-vs-cancel:focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
+.cp-root[data-voice="listening"] .cp-mic{background:linear-gradient(135deg,#3a2f7a,#155e6e);color:#fff;border-color:#b69cff;box-shadow:0 0 0 0 #b69cff66;animation:cp-mic-pulse 1.8s ease-out infinite}
+.cp-root[data-voice="processing"] .cp-mic{color:#fff;border-color:#3ee6ec;opacity:.8}
+@keyframes cp-mic-pulse{0%{box-shadow:0 0 0 0 #b69cff55}70%{box-shadow:0 0 0 9px #b69cff00}100%{box-shadow:0 0 0 0 #b69cff00}}
+.cp-no-voice .cp-mic{color:#5f7a8c;border-style:dashed}
+.cp-no-voice .cp-vlang{display:none}
+.cp-root[data-voice="listening"] .cp-form textarea{border-color:#b69cff99;box-shadow:0 0 0 3px #b69cff22}
+.cp-voice-status{display:flex;align-items:center;gap:8px;padding:7px 14px;font-size:12px;line-height:1.45;border-top:1px solid #1a3247;background:#0b1828;color:#cfe3ee}
+.cp-voice-status[hidden]{display:none}
+.cp-vs-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#3ee6ec}
+.cp-vs-listening .cp-vs-dot{background:#b69cff;animation:cp-vs 1.4s ease-in-out infinite}
+.cp-vs-processing .cp-vs-dot{background:#3ee6ec;animation:cp-vs .9s ease-in-out infinite}
+.cp-vs-ready{color:#c9f3dd}.cp-vs-ready .cp-vs-dot{background:#7fdca5}
+.cp-vs-error{color:#ffd8c8;background:#21161a}.cp-vs-error .cp-vs-dot{background:#ff9d8a}
+.cp-vs-info .cp-vs-dot{background:#8fa9bd}
+@keyframes cp-vs{50%{opacity:.3}}
+#copilotVoiceText{flex:1}
+.cp-vs-cancel{flex:none;border:1px solid #3b3470;background:#151530;color:#e3dcff;border-radius:8px;font:600 11px var(--cp-font);padding:5px 10px;min-height:30px;cursor:pointer}
+.cp-vs-cancel[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.cp-root[data-voice="listening"] .cp-mic,.cp-vs-dot{animation:none}}
+@media(max-width:600px){.cp-mic{width:44px;height:44px}.cp-vlang{height:36px;min-width:34px}.cp-form{gap:6px}}
 /* film page: compact button so it never covers the player controls */
 body.journey-mode .cp-fab{padding:7px;min-height:50px}body.journey-mode .cp-fab-label{display:none}
 /* stay out of the way of full-screen modes */
@@ -7016,8 +7046,8 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   };
   var lang = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
   var T = {
-    en: { title: 'Warehouse AI Copilot', sub: 'GPT-4.1 mini · answers each question on its own', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design.', note: 'AI-generated · may be wrong · each question is answered independently (no memory of earlier messages) · cannot see or change the live simulation', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓' },
-    zh: { title: '仓库 AI 助手', sub: 'GPT-4.1 mini · 每个问题独立回答', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。', note: 'AI 生成内容，可能有误 · 每个问题独立回答（不记得之前的对话）· 无法读取或修改页面上的实时模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓' }
+    en: { title: 'Warehouse AI Copilot', sub: 'GPT-4.1 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design.', note: 'AI-generated · may be wrong · remembers the last 6 exchanges in this browser tab · cannot see or change the live simulation', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
+    zh: { title: '仓库 AI 助手', sub: 'GPT-4.1 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。', note: 'AI 生成内容，可能有误 · 记住本标签页最近 6 轮对话 · 无法读取或修改页面上的实时模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
   };
   var t = function (k) { return T[lang][k]; };
 
@@ -7032,11 +7062,13 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   panel.innerHTML = '' +
     '<header class="cp-head"><div class="cp-avatar" aria-hidden="true">AI</div><div class="cp-titles"><h2 id="copilotTitle"></h2><p id="copilotSub"></p></div>' +
     '<div class="cp-lang" role="group" aria-label="Language"><button type="button" data-cp-lang="en">EN</button><button type="button" data-cp-lang="zh">中文</button></div>' +
-    '<button type="button" class="cp-icon-btn" id="copilotClear"></button><button type="button" class="cp-icon-btn cp-close" id="copilotClose">×</button></header>' +
+    '<button type="button" class="cp-icon-btn cp-clear" id="copilotClear"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6a1 1 0 0 1 1 1V6h3.25a.75.75 0 0 1 0 1.5h-.8l-.86 11.2A2.5 2.5 0 0 1 15.1 21H8.9a2.5 2.5 0 0 1-2.49-2.3L5.55 7.5h-.8a.75.75 0 0 1 0-1.5H8V4.5a1 1 0 0 1 1-1zm.5 2.5h5V5h-5v1zm-2.44 1.5.85 11.08a1 1 0 0 0 1 .92h6.18a1 1 0 0 0 1-.92l.85-11.08H7.06zM10 10a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 10 10zm4 0a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 14 10z"/></svg></button><button type="button" class="cp-icon-btn cp-close" id="copilotClose">×</button></header>' +
     '<div class="cp-log" id="copilotLog" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>' +
     '<div class="cp-suggest" id="copilotSuggest"></div>' +
+    '<div class="cp-voice-status" id="copilotVoiceStatus" hidden><span class="cp-vs-dot" aria-hidden="true"></span><span id="copilotVoiceText" role="status" aria-live="polite"></span><button type="button" class="cp-vs-cancel" id="copilotVoiceCancel"></button></div>' +
     '<form class="cp-form" id="copilotForm" autocomplete="off"><label class="cp-sr" for="copilotInput">Question</label>' +
     '<textarea id="copilotInput" rows="1" maxlength="' + MAX_CHARS + '" enterkeyhint="send"></textarea>' +
+    '<div class="cp-voice"><button type="button" class="cp-vlang" id="copilotVoiceLang"></button><button type="button" class="cp-mic" id="copilotMic" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14.5a3.5 3.5 0 0 0 3.5-3.5V6a3.5 3.5 0 1 0-7 0v5a3.5 3.5 0 0 0 3.5 3.5z"/><path d="M18.5 11a.9.9 0 0 0-1.8 0 4.7 4.7 0 0 1-9.4 0 .9.9 0 0 0-1.8 0 6.5 6.5 0 0 0 5.6 6.43V20H8.8a.9.9 0 0 0 0 1.8h6.4a.9.9 0 0 0 0-1.8h-2.3v-2.57A6.5 6.5 0 0 0 18.5 11z"/></svg></button></div>' +
     '<button type="submit" class="cp-send" id="copilotSend"><span class="cp-sr" id="copilotSendLabel"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12.6 2-12.6 2z"/></svg></button></form>' +
     '<div class="cp-foot"><span id="copilotCount">0/' + MAX_CHARS + '</span><span id="copilotNote"></span></div>';
   root.appendChild(panel); root.appendChild(fab);
@@ -7049,10 +7081,10 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     document.documentElement.setAttribute('data-cp-lang', lang);
     $('copilotTitle').textContent = t('title'); $('copilotSub').textContent = t('sub');
     input.placeholder = t('ph'); $('copilotSendLabel').textContent = t('send'); sendBtn.setAttribute('aria-label', t('send'));
-    $('copilotClose').setAttribute('aria-label', t('close')); $('copilotClear').textContent = t('clear');
+    $('copilotClose').setAttribute('aria-label', t('close')); $('copilotClear').setAttribute('aria-label', t('clear')); $('copilotClear').title = t('clear');
     $('copilotNote').textContent = t('note'); fabLabel.textContent = t('open'); fab.setAttribute('aria-label', t('open'));
     var bs = panel.querySelectorAll('[data-cp-lang]'); for (var i = 0; i < bs.length; i++) bs[i].setAttribute('aria-pressed', String(bs[i].getAttribute('data-cp-lang') === lang));
-    renderSuggestions();
+    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels();
     var hello = log.querySelector('.cp-hello .cp-text'); if (hello) hello.textContent = t('hello');
   }
   function renderSuggestions() {
@@ -7133,6 +7165,62 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     if (window.matchMedia('(max-width: 600px)').matches) setOpen(false);
   }
 
+  /* ---------------- conversation memory ----------------
+     API contract v1: { message, history:[{role,content}...] } — history holds only completed,
+     successful exchanges (user then assistant), oldest first, at most 6 exchanges (12 messages).
+     Persisted per browser tab in sessionStorage; falls back to memory if storage is unavailable. */
+  var Memory = (function () {
+    var KEY = 'geekplus_warehouse_ai_chat_v1', MAX_EXCH = 6, MAX_USER = MAX_CHARS, MAX_AI = 1500, MAX_BYTES = 24000;
+    var hist = [], persistent = true;
+    function store() { try { return window.sessionStorage; } catch (e) { return null; } }
+    function clip(s, n) { s = String(s); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
+    function valid(list) {
+      if (!Array.isArray(list) || list.length % 2 !== 0 || list.length > MAX_EXCH * 2) return false;
+      for (var i = 0; i < list.length; i++) {
+        var m = list[i];
+        if (!m || typeof m !== 'object' || Array.isArray(m)) return false;
+        var keys = Object.keys(m); if (keys.length !== 2 || keys.indexOf('role') < 0 || keys.indexOf('content') < 0) return false;
+        if (m.role !== (i % 2 === 0 ? 'user' : 'assistant')) return false;
+        if (typeof m.content !== 'string' || !m.content.trim() || m.content.length > (m.role === 'user' ? MAX_USER : MAX_AI)) return false;
+      }
+      return true;
+    }
+    function save() {
+      var st = store(); if (!st) { persistent = false; return; }
+      try {
+        var data = JSON.stringify({ v: 1, history: hist });
+        while (data.length > MAX_BYTES && hist.length) { hist = hist.slice(2); data = JSON.stringify({ v: 1, history: hist }); }
+        if (hist.length) st.setItem(KEY, data); else st.removeItem(KEY);
+        persistent = true;
+      } catch (e) { persistent = false; }
+    }
+    function load() {
+      var st = store(); if (!st) { persistent = false; return; }
+      var raw = null; try { raw = st.getItem(KEY); } catch (e) { persistent = false; return; }
+      if (raw === null) return;
+      try {
+        var d = JSON.parse(raw);
+        if (d && d.v === 1 && valid(d.history)) { hist = d.history.map(function (m) { return { role: m.role, content: m.content }; }); return; }
+      } catch (e) { /* fall through */ }
+      try { st.removeItem(KEY); } catch (e) { /* ignore */ }   // corrupted or incompatible → reset safely
+      hist = [];
+    }
+    load();
+    return {
+      get: function () { return hist.map(function (m) { return { role: m.role, content: m.content }; }); },
+      add: function (q, a) {
+        hist.push({ role: 'user', content: clip(q, MAX_USER) }, { role: 'assistant', content: clip(a, MAX_AI) });
+        if (hist.length > MAX_EXCH * 2) hist = hist.slice(hist.length - MAX_EXCH * 2);
+        save();
+      },
+      clear: function () { hist = []; var st = store(); if (st) { try { st.removeItem(KEY); } catch (e) { /* ignore */ } } },
+      exchanges: function () { return hist.length / 2; },
+      persistent: function () { return persistent; },
+      KEY: KEY
+    };
+  })();
+  var generation = 0, inflight = null;   // generation changes on Clear; stale replies are dropped
+
   /* ---------------- networking ---------------- */
   function parseError(status, data, retryAfter) {
     var msg = '';
@@ -7149,12 +7237,12 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     busy = on; sendBtn.disabled = on || Date.now() < cooldownUntil; root.classList.toggle('cp-busy', on);
     var chips = panel.querySelectorAll('.cp-chip'); for (var i = 0; i < chips.length; i++) chips[i].disabled = on;
   }
-  function startCooldown(sec) {
+  function startCooldown(sec, retryQ) {
     cooldownUntil = Date.now() + sec * 1000; clearInterval(cooldownTimer);
     var note = addMsg('ai', '', { cls: 'cp-error', plain: true }), body = note.querySelector('.cp-text');
     var tick = function () {
       var left = Math.ceil((cooldownUntil - Date.now()) / 1000);
-      if (left <= 0) { clearInterval(cooldownTimer); body.textContent = lang === 'zh' ? '现在可以继续提问了。' : 'You can ask again now.'; note.className = 'cp-msg cp-ai cp-info'; sendBtn.disabled = busy; return; }
+      if (left <= 0) { clearInterval(cooldownTimer); body.textContent = t('readyAgain'); note.className = 'cp-msg cp-ai cp-info'; sendBtn.disabled = busy; if (retryQ && note.parentNode) { var rb = el('button', 'cp-retry', t('retry')); rb.type = 'button'; rb.addEventListener('click', function () { if (rb.parentNode) rb.parentNode.removeChild(rb); ask(retryQ); }); note.appendChild(rb); } return; }
       body.textContent = t('limit') + left + t('sec'); sendBtn.disabled = true;
     };
     tick(); cooldownTimer = setInterval(tick, 1000);
@@ -7174,29 +7262,139 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     setBusy(true);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
-    var finish = function () { clearTimeout(timer); if (typing.parentNode) typing.parentNode.removeChild(typing); setBusy(false); };
-    fetch(ENDPOINT, { method: 'POST', mode: 'cors', credentials: 'omit', cache: 'no-store', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: q }), signal: ctrl ? ctrl.signal : undefined })
+    var gen = generation, payload = { message: q, history: Memory.get() };
+    inflight = { ctrl: ctrl, typing: typing, timer: timer };
+    var stale = function () { return gen !== generation; };
+    var finish = function () { clearTimeout(timer); if (typing.parentNode) typing.parentNode.removeChild(typing); inflight = null; setBusy(false); };
+    fetch(ENDPOINT, { method: 'POST', mode: 'cors', credentials: 'omit', cache: 'no-store', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl ? ctrl.signal : undefined })
       .then(function (res) {
         return res.text().then(function (txt) { var data = null; try { data = txt ? JSON.parse(txt) : null; } catch (e) { data = null; } return { res: res, data: data }; });
       })
       .then(function (r) {
+        if (stale()) return;
         finish();
         if (!r.res.ok) {
           var e = parseError(r.res.status, r.data, r.res.headers.get('Retry-After'));
-          if (e.kind === 'rate') startCooldown(e.wait);
+          if (e.kind === 'rate') startCooldown(e.wait, q);
           else addMsg('ai', e.text, { cls: 'cp-error', plain: true, retry: e.kind === 'retry' ? q : null });
           return;
         }
         var d = r.data || {}, answer = typeof d.answer === 'string' ? d.answer : typeof d.reply === 'string' ? d.reply : '';
         if (!answer.trim()) { addMsg('ai', t('empty'), { cls: 'cp-error', plain: true, retry: q }); return; }
+        Memory.add(q, answer);
         addMsg('ai', answer, { actions: true });
       })
       .catch(function (err) {
+        if (stale()) return;
         finish();
         var timeout = err && err.name === 'AbortError';
         addMsg('ai', timeout ? t('timeout') : t('net'), { cls: 'cp-error', plain: true, retry: q });
       });
   }
+
+  /* ---------------- voice input (browser speech recognition) ----------------
+     Uses SpeechRecognition / webkitSpeechRecognition when present. Recognition may be performed by the
+     browser vendor's online speech service (e.g. Google for Chrome, Apple for Safari) — it is not
+     guaranteed to be local or offline. The transcript only fills the input box; the user presses Send. */
+  var voice = (function () {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+    var mic = $('copilotMic'), vlang = $('copilotVoiceLang'), bar = $('copilotVoiceStatus'), barText = $('copilotVoiceText'), cancelBtn = $('copilotVoiceCancel');
+    var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var rec = null, state = 'idle', baseText = '', finalText = '', interimText = '', gotResult = false, errored = false, cancelled = false, maxTimer = 0, hideTimer = 0;
+    var speechLang = 'en-US';
+    function compose() { var add = (finalText + interimText).replace(/\s+/g, ' ').trim(); return add ? (baseText ? baseText.replace(/\s+$/, '') + ' ' + add : add) : baseText; }
+    function show(kind, text, withCancel) {
+      clearTimeout(hideTimer); bar.hidden = false; bar.className = 'cp-voice-status cp-vs-' + kind; barText.textContent = text; cancelBtn.hidden = !withCancel;
+      if (kind === 'ready' || kind === 'info') hideTimer = setTimeout(function () { if (state !== 'listening' && state !== 'processing') bar.hidden = true; }, 6000);
+    }
+    function setState(s) {
+      state = s; root.setAttribute('data-voice', s);
+      var on = s === 'listening' || s === 'processing';
+      mic.setAttribute('aria-pressed', String(s === 'listening'));
+      mic.setAttribute('aria-label', s === 'listening' ? t('micStop') : t('micStart')); mic.title = mic.getAttribute('aria-label');
+      input.readOnly = on; vlang.disabled = on;
+    }
+    function labels() {
+      mic.setAttribute('aria-label', state === 'listening' ? t('micStop') : t('micStart')); mic.title = mic.getAttribute('aria-label');
+      vlang.textContent = speechLang === 'zh-CN' ? '中' : 'EN';
+      vlang.setAttribute('aria-label', t('vlangTitle') + ': ' + (speechLang === 'zh-CN' ? t('vlangZh') : t('vlangEn'))); vlang.title = vlang.getAttribute('aria-label');
+      cancelBtn.textContent = t('vCancel');
+      if (state === 'listening') barText.textContent = t('vListening');
+    }
+    function cleanup() { clearTimeout(maxTimer); if (rec) { rec.onresult = rec.onerror = rec.onend = rec.onstart = rec.onspeechend = null; } rec = null; }
+    function errorText(code) {
+      if (code === 'not-allowed' || code === 'service-not-allowed') return isIOS ? t('vDeniedIOS') : t('vDenied');
+      if (code === 'no-speech') return t('vNoSpeech');
+      if (code === 'audio-capture') return t('vNoMic');
+      if (code === 'network') return t('vNetwork');
+      if (code === 'language-not-supported' || code === 'bad-grammar') return t('vLangBad');
+      return t('vFailed');
+    }
+    function start() {
+      if (state === 'listening' || state === 'processing') return;
+      if (!SR) { setState('error'); show('error', t('vUnsupported')); return; }
+      if (window.isSecureContext === false) { setState('error'); show('error', t('vInsecure')); return; }
+      try { rec = new SR(); } catch (e) { setState('error'); show('error', t('vUnsupported')); return; }
+      baseText = input.value; finalText = ''; interimText = ''; gotResult = false; errored = false; cancelled = false;
+      rec.lang = speechLang; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+      rec.onresult = function (ev) {
+        var fin = '', inter = '';
+        for (var i = 0; i < ev.results.length; i++) { var r = ev.results[i], tx = r[0] && r[0].transcript ? r[0].transcript : ''; if (r.isFinal) fin += tx; else inter += tx; }
+        finalText = fin; interimText = inter; if ((fin + inter).trim()) gotResult = true;
+        var v = compose(); if (v.length > MAX_CHARS) v = v.slice(0, MAX_CHARS); input.value = v; autosize(); updateCount();
+      };
+      rec.onerror = function (ev) {
+        var code = ev && ev.error;
+        if (code === 'aborted' && cancelled) return;
+        errored = true; setState('error'); show('error', errorText(code));
+      };
+      rec.onend = function () {
+        cleanup();
+        if (cancelled) return;
+        if (errored) { if (!gotResult) { input.value = baseText; autosize(); updateCount(); } return; }
+        if (!gotResult || !compose().trim() || compose() === baseText) { input.value = baseText; autosize(); updateCount(); setState('error'); show('error', t('vNoSpeech')); return; }
+        setState('ready'); show('ready', t('vReady'));
+        try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+        try { var L = input.value.length; input.setSelectionRange(L, L); } catch (e) { /* ignore */ }
+      };
+      setState('listening'); show('listening', t('vListening'), true);
+      try { rec.start(); } catch (e) { cleanup(); setState('error'); show('error', t('vFailed')); return; }
+      // never listen for long: stop automatically after 20 s
+      maxTimer = setTimeout(function () { stop(); }, 20000);
+    }
+    function stop(fromSend) {
+      if (state !== 'listening' || !rec) return;
+      setState('processing'); show('processing', fromSend ? t('vStoppedSend') : t('vProcessing'), true);
+      clearTimeout(maxTimer);
+      try { rec.stop(); } catch (e) { cleanup(); setState('ready'); }
+      // some engines never fire onend after stop(); finish ourselves
+      maxTimer = setTimeout(function () { if (rec && rec.onend) rec.onend(); }, 4000);
+    }
+    function cancel(silent) {
+      if (state !== 'listening' && state !== 'processing') { if (silent) { bar.hidden = true; setState('idle'); } return; }
+      cancelled = true;
+      try { rec && rec.abort(); } catch (e) { /* ignore */ }
+      cleanup(); input.value = baseText; autosize(); updateCount(); setState('idle');
+      if (silent) bar.hidden = true; else show('info', t('vCancelled'));
+    }
+    mic.addEventListener('click', function () { if (state === 'listening') stop(); else if (state !== 'processing') start(); });
+    cancelBtn.addEventListener('click', function () { cancel(); mic.focus(); });
+    vlang.addEventListener('click', function () { speechLang = speechLang === 'en-US' ? 'zh-CN' : 'en-US'; labels(); });
+    input.addEventListener('input', function () { if (state === 'ready' || state === 'error') { setState('idle'); bar.hidden = true; } });
+    document.addEventListener('visibilitychange', function () { if (document.hidden) cancel(true); });
+    if (!SR) root.classList.add('cp-no-voice');
+    var api = {
+      active: function () { return state === 'listening' || state === 'processing'; },
+      start: start, stop: stop, cancel: cancel, labels: labels,
+      setLang: function (l) { if (!api.active()) { speechLang = l; labels(); } },
+      state: function () { return state; }, lang: function () { return speechLang; }, supported: !!SR
+    };
+    setState('idle'); labels();
+    window.__cpVoice = api;
+    return api;
+  })();
+  // clear the "ready" hint once a message is sent
+  var _ask = ask; ask = function (q) { if (voice.active()) return; if (voice.state() === 'ready') { voice.cancel(true); } return _ask(q); };
 
   /* ---------------- open / close / input ---------------- */
   var lastFocus = null;
@@ -7207,9 +7405,10 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       panel.hidden = false; root.classList.add('cp-open'); fab.setAttribute('aria-expanded', 'true');
       document.documentElement.classList.add('cp-chat-open');
       requestAnimationFrame(function () { panel.classList.add('cp-visible'); });
-      if (!log.children.length) { var h = addMsg('ai', t('hello'), { cls: 'cp-hello', plain: true }); void h; }
+      if (!log.children.length) restoreChat();
       setTimeout(function () { if (!window.matchMedia('(pointer: coarse)').matches) input.focus(); }, 180);
     } else {
+      voice.cancel(true);
       panel.classList.remove('cp-visible'); root.classList.remove('cp-open'); fab.setAttribute('aria-expanded', 'false');
       document.documentElement.classList.remove('cp-chat-open');
       setTimeout(function () { if (!root.classList.contains('cp-open')) panel.hidden = true; }, 220);
@@ -7220,15 +7419,27 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   function updateCount() { var n = input.value.length; var c = $('copilotCount'); c.textContent = n + '/' + MAX_CHARS; c.className = n > MAX_CHARS * .9 ? 'cp-warn' : ''; }
   fab.addEventListener('click', function () { setOpen(panel.hidden); });
   $('copilotClose').addEventListener('click', function () { setOpen(false); fab.focus(); });
-  $('copilotClear').addEventListener('click', function () { log.textContent = ''; addMsg('ai', t('hello'), { cls: 'cp-hello', plain: true }); $('copilotSuggest').classList.remove('cp-collapsed'); input.focus(); });
-  form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); });
+  function clearChat() {
+    generation++;                                   // any reply still on its way is now ignored
+    if (inflight) { clearTimeout(inflight.timer); try { inflight.ctrl && inflight.ctrl.abort(); } catch (e) { /* ignore */ } inflight = null; }
+    Memory.clear();
+    clearInterval(cooldownTimer);                   // keep the rate-limit wait itself (cooldownUntil)
+    log.textContent = ''; setBusy(false);
+    addMsg('ai', t('hello'), { cls: 'cp-hello', plain: true });
+    $('copilotSuggest').classList.remove('cp-collapsed');
+    if (Date.now() < cooldownUntil) startCooldown(Math.ceil((cooldownUntil - Date.now()) / 1000));
+    var live = $('copilotVoiceText'); if (live && !voice.active()) { $('copilotVoiceStatus').hidden = false; $('copilotVoiceStatus').className = 'cp-voice-status cp-vs-info'; live.textContent = t('cleared'); setTimeout(function () { if (!voice.active() && live.textContent === t('cleared')) $('copilotVoiceStatus').hidden = true; }, 2500); }
+    try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+  }
+  $('copilotClear').addEventListener('click', clearChat);
+  form.addEventListener('submit', function (e) { e.preventDefault(); if (voice.active()) { voice.stop(true); return; } ask(input.value); });
   input.addEventListener('input', function () { autosize(); updateCount(); });
   input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); ask(input.value); }
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (voice.active()) { voice.stop(true); return; } ask(input.value); }
   });
-  panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); setOpen(false); fab.focus(); } });
+  panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); if (voice.active()) { voice.cancel(); $('copilotMic').focus(); return; } setOpen(false); fab.focus(); } });
   var langBtns = panel.querySelectorAll('[data-cp-lang]');
-  for (var i = 0; i < langBtns.length; i++) langBtns[i].addEventListener('click', function () { lang = this.getAttribute('data-cp-lang'); applyLang(); $('copilotSuggest').classList.remove('cp-collapsed'); });
+  for (var i = 0; i < langBtns.length; i++) langBtns[i].addEventListener('click', function () { lang = this.getAttribute('data-cp-lang'); voice.setLang(lang === 'zh' ? 'zh-CN' : 'en-US'); applyLang(); $('copilotSuggest').classList.remove('cp-collapsed'); });
   // show suggestions again when the input is focused and empty
   input.addEventListener('focus', function () { if (!input.value) $('copilotSuggest').classList.remove('cp-collapsed'); });
 
@@ -7238,8 +7449,15 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     var onVV = function () { var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop); root.style.setProperty('--cp-kb', kb + 'px'); };
     vv.addEventListener('resize', onVV); vv.addEventListener('scroll', onVV);
   }
+  function restoreChat() {
+    log.textContent = '';
+    addMsg('ai', t('hello'), { cls: 'cp-hello', plain: true });
+    var h = Memory.get();
+    for (var i = 0; i < h.length; i++) addMsg(h[i].role === 'user' ? 'user' : 'ai', h[i].content, h[i].role === 'user' ? {} : { actions: true });
+    if (h.length) $('copilotSuggest').classList.add('cp-collapsed');
+  }
   applyLang();
-  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: ask, endpoint: ENDPOINT };
+  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); } };
 })();
 
 </script></body></html>
