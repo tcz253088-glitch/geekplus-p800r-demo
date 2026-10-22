@@ -5734,6 +5734,8 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   document.addEventListener('visibilitychange', () => { if (document.hidden && playing) pause(); });
   document.addEventListener('wms:render', checkAutoPause);
   document.addEventListener('wms:reset', () => { pause(); seenLogs = 0; });
+  // read-only view of the clock player for the AI state snapshot
+  globalThis.WmsClockPlayer = Object.freeze({ get playing() { return playing; }, get speed() { return speed; }, get autoPause() { return $('wmsAutoPause').checked; } });
   setStatus();
 
   /* ---------------- Lab presets (presenter = simple, detail = fleet) ---------------- */
@@ -7020,6 +7022,187 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
 })();
 
 </script><script>
+/* Read-only snapshot of the WMS Integration Lab mock state for the Warehouse AI (wms_state, schema v1).
+   Source: WarehouseEngineering.wms.model (the lab's single central model) + the live-view clock player.
+   The function only reads and copies values; it never calls a method that changes the simulation. */
+(function () {
+  'use strict';
+  var SCHEMA_VERSION = 1, MAX_BYTES = 12000;
+  var LIMITS = { robots: 6, stations: 3, shelves: 24, orders: 20, active_tasks: 12, waves: 6, events: 10, invalid_mappings: 24 };
+  var ORDER_STATUSES = ['QUEUED', 'EXECUTING', 'COMPLETED', 'FAILED'];
+  var TASK_STATUSES = ['QUEUED', 'TRAVELLING', 'PICKING', 'RETURNING', 'COMPLETED'];
+  var ROBOT_STATUSES = ['IDLE', 'BUSY'];
+  var STATION_STATUSES = ['IDLE', 'RESERVED', 'PICKING'];
+  var EPOCH_MS = Date.parse('2026-10-20T09:00:00Z');
+  var TAB_IDS = ['workflow', 'optimizer', 'product', 'integration'];
+  var labSession = 1, sequence = 0;
+  document.addEventListener('wms:reset', function () { labSession++; });
+
+  function arr(x) { return Array.isArray(x) ? x : []; }
+  function str(x, n) { if (x === null || x === undefined) return null; var s = String(x); return s.length > (n || 80) ? s.slice(0, (n || 80) - 1) + '…' : s; }
+  function num(x) { return typeof x === 'number' && isFinite(x) ? x : null; }
+  function count(list, key, values) {
+    var out = {}; values.forEach(function (v) { out[v.toLowerCase()] = 0; });
+    var other = 0;
+    list.forEach(function (it) { var v = it && typeof it[key] === 'string' ? it[key] : null; if (v && Object.prototype.hasOwnProperty.call(out, v.toLowerCase())) out[v.toLowerCase()]++; else other++; });
+    if (other) out.other = other;
+    return out;
+  }
+  function demoIso(sec) { var s = num(sec); return s === null ? null : new Date(EPOCH_MS + s * 1000).toISOString(); }
+  function activeTab() {
+    var j = document.getElementById('journeyMode'); if (j && !j.hidden) return 'journey';
+    for (var i = 0; i < TAB_IDS.length; i++) { var p = document.getElementById(TAB_IDS[i] + 'Mode'); if (p && !p.hidden) return TAB_IDS[i]; }
+    return null;
+  }
+  function unavailable(reason) {
+    return { schema_version: SCHEMA_VERSION, source: 'wms_integration_lab', initialized: false, reason: reason, captured_at: new Date().toISOString(), sequence: ++sequence, viewing_tab: activeTab() };
+  }
+
+  function build(model) {
+    var db = model.db || {};
+    var robots = arr(db.Robots), stations = arr(db.Workstations), inv = arr(db.Inventory), orders = arr(db.Orders), lines = arr(db.Order_Lines), tasks = arr(db.Robot_Tasks), logs = arr(db.Integration_Logs), callbacks = arr(db.WMS_Callbacks);
+    var map = model.map && typeof model.map === 'object' ? model.map : {};
+    var t = num(model.time);
+    var player = window.WmsClockPlayer || null;
+    var locOf = {}; lines.forEach(function (l) { if (l && l.order_id) locOf[l.order_id] = l.location; });
+    var wmsLocOf = {}; Object.keys(map).forEach(function (k) { if (typeof map[k] === 'string') wmsLocOf[map[k]] = k; });
+    var invLocs = {}; inv.forEach(function (x) { if (x && x.location) invLocs[x.location] = true; });
+
+    var invalid = Object.keys(map).filter(function (k) { return !invLocs[map[k]]; }).map(function (k) { return { wms_location: str(k, 16), mapped_to: str(map[k], 16) }; });
+    var ACTIVE = { TRAVELLING: 1, PICKING: 1, RETURNING: 1 };
+    var activeTasks = tasks.filter(function (x) { return x && x.status !== 'COMPLETED'; });
+
+    // waves are not stored as entities: derived from order IDs "WAVE-<n>-<k>" created by "Order wave ×5"
+    var waves = {};
+    orders.forEach(function (o) { var m = o && typeof o.order_id === 'string' ? /^WAVE-(\d+)-\d+$/.exec(o.order_id) : null; if (!m) return; var id = 'WAVE-' + m[1]; (waves[id] = waves[id] || []).push(o); });
+    var waveList = Object.keys(waves).sort(function (a, b) { return Number(a.slice(5)) - Number(b.slice(5)); }).map(function (id) {
+      var os = waves[id], c = count(os, 'status', ORDER_STATUSES);
+      return { wave_id: id, orders: os.length, by_status: c, complete: c.completed === os.length };
+    });
+
+    var f = model.fault && typeof model.fault === 'object' ? model.fault : null, fault = null;
+    if (f) {
+      var fo = orders.filter(function (o) { return o.order_id === f.id; })[0] || null;
+      fault = {
+        active: !f.corrected,
+        type: 'LOCATION_MAPPING',
+        fault_order_id: str(f.id, 32),
+        wms_location: 'A-01',
+        current_mapping: str(map['A-01'], 16),
+        expected_mapping: 'R01',
+        affected_shelf: 'R01',
+        stage: str(f.stage, 16),
+        corrected: !!f.corrected,
+        order_status: fo ? str(fo.status, 16) : null,
+        recovered: !!(fo && fo.status === 'COMPLETED' && f.corrected)
+      };
+    }
+    var lastResp = model.lastResponse && typeof model.lastResponse === 'object' ? model.lastResponse : null;
+    var lastErr = lastResp && lastResp.body && typeof lastResp.body === 'object' ? (lastResp.body.error || null) : null;
+
+    var tests = null;
+    try {
+      // tests() evaluates the current state on a deep-cloned sandbox (it does not change the lab)
+      var res = typeof model.tests === 'function' ? model.tests() : null;
+      if (Array.isArray(res)) tests = { evaluated_at_capture: true, results: res.map(function (r) { return { name: str(r.name, 60), type: str(r.type, 4), result: str(r.result, 8) }; }), summary: count(res, 'result', ['PASS', 'FAIL', 'NOT RUN']) };
+    } catch (e) { tests = null; }
+
+    return {
+      schema_version: SCHEMA_VERSION,
+      source: 'wms_integration_lab',
+      initialized: true,
+      captured_at: new Date().toISOString(),
+      sequence: ++sequence,
+      lab_session: labSession,
+      state_revision: logs.length,
+      viewing_tab: activeTab(),
+      data_note: 'Mock simulation in the browser; not a real WMS. Times are simulated (demo clock).',
+      clock: {
+        sim_time_s: t,
+        demo_clock_utc: demoIso(t),
+        running: player ? !!player.playing : null,
+        speed: player ? num(player.speed) : null,
+        auto_pause: player ? !!player.autoPause : null
+      },
+      service: { online: model.online !== false },
+      config: {
+        robots: robots.length, stations: stations.length, shelves: num(model.shelves) !== null ? model.shelves : inv.length,
+        static_timing_s: { travel_to_station: 20, pick: 12, return: 20, cycle: 52 }
+      },
+      robots: {
+        total: robots.length, by_status: count(robots, 'status', ROBOT_STATUSES),
+        list: robots.slice(0, LIMITS.robots).map(function (r) { return { robot_id: str(r.robot_id, 12), status: str(r.status, 12), task_id: str(r.task_id, 12) }; })
+      },
+      stations: {
+        total: stations.length, by_status: count(stations, 'status', STATION_STATUSES),
+        list: stations.slice(0, LIMITS.stations).map(function (s) { return { station_id: str(s.station_id, 12), status: str(s.status, 12), task_id: str(s.task_id, 12) }; })
+      },
+      shelves: {
+        total: inv.length,
+        busy: activeTasks.filter(function (x) { return ACTIVE[x.status]; }).map(function (x) { return locOf[x.order_id]; }).filter(Boolean).slice(0, LIMITS.shelves),
+        inventory: inv.slice(0, LIMITS.shelves).map(function (x) {
+          var on = num(x.on_hand), re = num(x.reserved);
+          return { shelf: str(x.location, 8), wms_location: str(wmsLocOf[x.location] || null, 8), sku: str(x.sku, 16), on_hand: on, reserved: re, available: on !== null && re !== null ? on - re : null };
+        })
+      },
+      location_mapping: { total: Object.keys(map).length, invalid: invalid.slice(0, LIMITS.invalid_mappings) },
+      orders: {
+        total: orders.length, by_status: count(orders, 'status', ORDER_STATUSES),
+        recent: orders.slice(-LIMITS.orders).map(function (o) {
+          return { order_id: str(o.order_id, 32), status: str(o.status, 16), priority: str(o.priority, 8), task_id: str(o.task_id, 12), shelf: str(locOf[o.order_id] || null, 8), error_code: str(o.error_code, 32), created_at: str(o.created_at, 30), completed_at: str(o.completed_at, 30) };
+        })
+      },
+      waves: { derived_from: 'order_id prefix WAVE-<n>-', total: waveList.length, list: waveList.slice(-LIMITS.waves) },
+      tasks: {
+        total: tasks.length, by_status: count(tasks, 'status', TASK_STATUSES),
+        active: activeTasks.slice(0, LIMITS.active_tasks).map(function (x) {
+          var st = num(x.start_at);
+          return { task_id: str(x.task_id, 12), order_id: str(x.order_id, 32), robot_id: str(x.robot_id, 12), station_id: str(x.station_id, 12), shelf: str(locOf[x.order_id] || null, 8), status: str(x.status, 12), elapsed_s: st !== null && t !== null ? Math.max(0, t - st) : null, attempts: num(x.attempts) };
+        })
+      },
+      fault: fault,
+      kpis: {
+        orders_completed: orders.filter(function (o) { return o.status === 'COMPLETED'; }).length,
+        orders_failed: orders.filter(function (o) { return o.status === 'FAILED'; }).length,
+        tasks_queued: tasks.filter(function (x) { return x.status === 'QUEUED'; }).length,
+        units_reserved: inv.reduce(function (s, x) { return s + (num(x.reserved) || 0); }, 0),
+        wms_callbacks_sent: callbacks.length,
+        error_events: logs.filter(function (l) { return l && l.status === 'ERROR'; }).length
+      },
+      last_api_response: lastResp ? { http_status: num(lastResp.code), error: str(typeof lastErr === 'string' ? lastErr : null, 40) } : null,
+      tests: tests,
+      recent_events: logs.slice(-LIMITS.events).map(function (l) { return { time: str(l.timestamp, 30), level: str(l.status, 6), order_id: str(l.order_id, 32), event: str(l.event, 32), error_code: str(l.error_code, 32) || null }; }),
+      truncated: false
+    };
+  }
+
+  // Keep the payload small: drop the least important detail first.
+  function fit(s) {
+    var steps = [
+      function () { s.recent_events = s.recent_events.slice(-5); },
+      function () { s.orders.recent = s.orders.recent.slice(-10); },
+      function () { s.shelves.inventory = s.shelves.inventory.slice(0, 8); },
+      function () { if (s.tests) s.tests.results = []; },
+      function () { s.tasks.active = s.tasks.active.slice(0, 6); s.waves.list = s.waves.list.slice(-3); },
+      function () { s.recent_events = []; s.orders.recent = s.orders.recent.slice(-5); s.shelves.inventory = []; }
+    ];
+    var i = 0;
+    while (JSON.stringify(s).length > MAX_BYTES && i < steps.length) { steps[i++](); s.truncated = true; }
+    return s;
+  }
+
+  function getWmsLabStateSnapshot() {
+    var model;
+    try { model = window.WarehouseEngineering && window.WarehouseEngineering.wms && window.WarehouseEngineering.wms.model; } catch (e) { model = null; }
+    if (!model) return unavailable('lab_not_initialized');
+    if (!model.db || typeof model.db !== 'object' || !Array.isArray(model.db.Robots) || !Array.isArray(model.db.Orders)) return unavailable('state_malformed');
+    try { return fit(build(model)); } catch (e) { return unavailable('state_unavailable'); }
+  }
+  window.getWmsLabStateSnapshot = getWmsLabStateSnapshot;
+  window.getWmsLabStateSnapshot.MAX_BYTES = MAX_BYTES;
+})();
+
+</script><script>
 /* Warehouse AI Copilot — floating chat widget.
    Talks to the Cloudflare Worker (which holds the OpenAI key). The browser never sees any key.
    Every question is sent on its own: the Worker currently accepts one "message" string and keeps
@@ -7219,7 +7402,12 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       KEY: KEY
     };
   })();
-  var generation = 0, inflight = null;   // generation changes on Clear; stale replies are dropped
+  var generation = 0, inflight = null;
+  /* Read-only WMS Integration Lab snapshot (schema v1), captured fresh for every question. */
+  function captureWmsState() {
+    try { if (typeof window.getWmsLabStateSnapshot === 'function') return window.getWmsLabStateSnapshot(); } catch (e) { /* fall through */ }
+    return { schema_version: 1, source: 'wms_integration_lab', initialized: false, reason: 'snapshot_unavailable', captured_at: new Date().toISOString() };
+  }   // generation changes on Clear; stale replies are dropped
 
   /* ---------------- networking ---------------- */
   function parseError(status, data, retryAfter) {
@@ -7262,7 +7450,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     setBusy(true);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
-    var gen = generation, payload = { message: q, history: Memory.get() };
+    var gen = generation, payload = { message: q, history: Memory.get(), wms_state: captureWmsState() };
     inflight = { ctrl: ctrl, typing: typing, timer: timer };
     var stale = function () { return gen !== generation; };
     var finish = function () { clearTimeout(timer); if (typing.parentNode) typing.parentNode.removeChild(typing); inflight = null; setBusy(false); };
