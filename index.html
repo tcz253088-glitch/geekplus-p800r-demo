@@ -7635,6 +7635,19 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     };
     tick(); cooldownTimer = setInterval(tick, 1000);
   }
+  var suggestWant = false;
+  function updateSuggest() {
+    var box = document.getElementById('copilotSuggest'); if (!box || typeof active === 'undefined') return;
+    var empty = !active.messages.length && !active.pending;
+    var listening = typeof voice !== 'undefined' && voice && voice.active && voice.active();
+    var a = document.activeElement, focused = a === input || box.contains(a);
+    var show = !listening && (empty || (suggestWant && focused && !input.value.trim()));
+    if (box.classList.contains('cp-collapsed') !== !show) {
+      var atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 24;
+      box.classList.toggle('cp-collapsed', !show);
+      if (atBottom) { var sb = log.style.scrollBehavior; log.style.scrollBehavior = 'auto'; log.scrollTop = log.scrollHeight; log.style.scrollBehavior = sb; }
+    }
+  }
   function makeTyping() {
     var typing = el('div', 'cp-msg cp-ai cp-typing'); var tb = el('div', 'cp-bubble');
     tb.appendChild(el('span', 'cp-sr', t('thinking'))); for (var i = 0; i < 3; i++) tb.appendChild(el('i', 'cp-dot'));
@@ -7661,13 +7674,13 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     var origin = active, rid = ++reqSeq;
     addMsg('user', q);
     input.value = ''; autosize(); updateCount();
-    document.getElementById('copilotSuggest').classList.add('cp-collapsed');
+    suggestWant = false; updateSuggest();
     var typing = makeTyping(); log.appendChild(typing); scrollDown();
     setBusy(true);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
     var payload = { message: q, history: contextFor(origin), wms_state: captureWmsState() }; setTimeout(refreshIssues, 0);
-    origin.pending = { rid: rid, q: q };
+    origin.pending = { rid: rid, q: q }; updateSuggest();
     inflight = { ctrl: ctrl, typing: typing, timer: timer, rid: rid, origin: origin };
     var stale = function () { return !origin.pending || origin.pending.rid !== rid || origin.deleted; };
     var shown = function () { return active === origin; };
@@ -7691,7 +7704,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
         }
         var d = r.data || {}, answer = typeof d.answer === 'string' ? d.answer : typeof d.reply === 'string' ? d.reply : '';
         if (!answer.trim()) { if (shown()) addMsg('ai', t('empty'), { cls: 'cp-error', plain: true, retry: q }); return; }
-        var res = addExchange(origin, q, answer);
+        var res = addExchange(origin, q, answer); updateSuggest();
         if (shown()) {
           addMsg('ai', answer, { actions: true });
           if (res === 'trimmed') addMsg('ai', t('hTrimmed'), { cls: 'cp-info', plain: true });
@@ -7725,6 +7738,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     }
     function setState(s) {
       state = s; root.setAttribute('data-voice', s);
+      setTimeout(updateSuggest, 0);
       var on = s === 'listening' || s === 'processing';
       mic.setAttribute('aria-pressed', String(s === 'listening'));
       mic.setAttribute('aria-label', s === 'listening' ? t('micStop') : t('micStart')); mic.title = mic.getAttribute('aria-label');
@@ -7846,7 +7860,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       document.documentElement.classList.add('cp-chat-open');
       requestAnimationFrame(function () { panel.classList.add('cp-visible'); });
       if (!log.children.length) restoreChat();
-      refreshIssues(); if (Layout) Layout.place();
+      refreshIssues(); if (Layout) Layout.place(); suggestWant = false; updateSuggest();
       setTimeout(function () { if (!window.matchMedia('(pointer: coarse)').matches) input.focus(); }, 180);
     } else {
       voice.cancel(true);
@@ -7875,7 +7889,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       var ty = makeTyping(); log.appendChild(ty);
       if (inflight && inflight.rid === active.pending.rid) inflight.typing = ty;
     }
-    $('copilotSuggest').classList.toggle('cp-collapsed', !!(m.length || active.pending));
+    suggestWant = false; updateSuggest();
     if (Date.now() < cooldownUntil) startCooldown(Math.ceil((cooldownUntil - Date.now()) / 1000));
     updateSession(); scrollDown();
   }
@@ -8029,7 +8043,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     dropPending(temp); temp.messages = [];
     clearInterval(cooldownTimer);                   // keep the rate-limit wait itself (cooldownUntil)
     setBusy(false); hideConfirm(); closeHistory();
-    renderConv(); $('copilotSuggest').classList.remove('cp-collapsed');
+    renderConv();
     flash(t('cleared'));
     try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
   }
@@ -8181,9 +8195,22 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   });
   panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); if (!$('copilotConfirm').hidden) { hideConfirm(); return; } if (!$('copilotHist').hidden) { closeHistory(); $('copilotHistBtn').focus(); return; } if (voice.active()) { voice.cancel(); $('copilotMic').focus(); return; } if (Layout && Layout.isMax()) { Layout.setMax(false); return; } setOpen(false); fab.focus(); } });
   var langBtns = panel.querySelectorAll('[data-cp-lang]');
-  for (var i = 0; i < langBtns.length; i++) langBtns[i].addEventListener('click', function () { lang = this.getAttribute('data-cp-lang'); voice.setLang(lang === 'zh' ? 'zh-CN' : 'en-US'); applyLang(); $('copilotSuggest').classList.remove('cp-collapsed'); });
+  for (var i = 0; i < langBtns.length; i++) langBtns[i].addEventListener('click', function () { lang = this.getAttribute('data-cp-lang'); voice.setLang(lang === 'zh' ? 'zh-CN' : 'en-US'); applyLang(); updateSuggest(); });
   // show suggestions again when the input is focused and empty
-  input.addEventListener('focus', function () { if (!input.value) $('copilotSuggest').classList.remove('cp-collapsed'); });
+  /* Suggested questions: shown on an empty chat, or while the user is about to type (they clicked/tapped or
+     tabbed into an empty input). Hidden while reading, typing, after sending, and on programmatic focus. */
+  var suggestBox = $('copilotSuggest'), lastTabKey = 0;
+  function focusInSuggest() { var a = document.activeElement; return a === input || suggestBox.contains(a); }
+  input.addEventListener('pointerdown', function () { suggestWant = true; setTimeout(updateSuggest, 0); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Tab') lastTabKey = Date.now(); }, true);
+  input.addEventListener('focus', function () { if (Date.now() - lastTabKey < 600) suggestWant = true; updateSuggest(); });
+  input.addEventListener('input', updateSuggest);
+  function onFocusOut() { setTimeout(function () { if (!focusInSuggest()) suggestWant = false; updateSuggest(); }, 0); }
+  input.addEventListener('focusout', onFocusOut); suggestBox.addEventListener('focusout', onFocusOut);
+  // pressing a chip must not blur the input (that would collapse the area under the pointer before the click lands)
+  suggestBox.addEventListener('pointerdown', function (e) { if (e.pointerType === 'mouse' || e.pointerType === 'pen') e.preventDefault(); });
+  // a click anywhere else in the panel (answers, log, header) means "reading": hide
+  panel.addEventListener('pointerdown', function (e) { if (e.target === input || suggestBox.contains(e.target)) return; suggestWant = false; setTimeout(updateSuggest, 0); });
 
   // iOS: keep the panel above the on-screen keyboard
   if (window.visualViewport) {
