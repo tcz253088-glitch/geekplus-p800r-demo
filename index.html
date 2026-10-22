@@ -466,6 +466,66 @@ body.ar-mode .cp-root,body.live-fs .cp-root{display:none}
   .cp-fab{min-width:50px;min-height:50px}
 }
 @media(prefers-reduced-motion:reduce){.cp-root.cp-moved:not(.cp-dragging){transition:none}}
+/* ---- chat sessions: session bar, history drawer, inline confirm ---- */
+.cp-sess{display:flex;align-items:center;gap:6px;padding:5px 8px 5px 14px;border-bottom:1px solid #1b3247;background:#0a1422;min-height:38px}
+.cp-sess-dot{flex:none;width:7px;height:7px;border-radius:50%;border:1.5px solid var(--cp-muted);box-sizing:border-box}
+.cp-sess-saved .cp-sess-dot{background:var(--cp-accent);border-color:var(--cp-accent);box-shadow:0 0 8px #3ee6ec88}
+.cp-sess-title{flex:1;min-width:0;font:600 11.5px/1.3 var(--cp-font);color:var(--cp-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-sess-saved .cp-sess-title{color:#cfeef3}
+.cp-sbtn{position:relative;flex:none;display:grid;place-items:center;width:32px;height:30px;border-radius:8px;border:1px solid var(--cp-line);background:transparent;color:var(--cp-muted);cursor:pointer;padding:0}
+.cp-sbtn svg{width:17px;height:17px;fill:currentColor}
+.cp-sbtn:hover:not(:disabled){color:#fff;border-color:#3b6684;background:#10233a}
+.cp-sbtn:focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
+.cp-sbtn:disabled{opacity:.38;cursor:default}
+.cp-sbtn[aria-expanded="true"]{color:#fff;border-color:var(--cp-accent);background:#0f2b3a}
+#copilotSave .cp-i-f{display:none}
+#copilotSave[aria-pressed="true"]{opacity:1;color:var(--cp-accent);border-color:#2b6070}
+#copilotSave[aria-pressed="true"] .cp-i-f{display:block}#copilotSave[aria-pressed="true"] .cp-i-o{display:none}
+.cp-badge{position:absolute;top:-6px;right:-6px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:linear-gradient(135deg,var(--cp-violet),var(--cp-accent));color:#08101c;font:800 10px/16px var(--cp-font);text-align:center;box-sizing:border-box}
+.cp-badge[hidden]{display:none}
+.cp-confirm{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:9px 12px;background:#2a1820;border-bottom:1px solid #6b3546;color:#ffd6dc;font-size:12.5px;line-height:1.4}
+.cp-confirm[hidden]{display:none}
+.cp-confirm span{flex:1 1 180px}
+.cp-cbtn{flex:none;border:1px solid var(--cp-line);background:#0c1726;color:#e3eef7;border-radius:8px;font:700 12px var(--cp-font);padding:7px 12px;min-height:32px;cursor:pointer}
+.cp-cyes{border-color:#b5506a;background:#5a1f30;color:#fff}
+.cp-cbtn:focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
+.cp-hist{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;flex-direction:column;background:linear-gradient(180deg,#0b1626f7,#08111dfa);border-top:1px solid #1b3247;backdrop-filter:blur(6px);animation:cp-hist-in .16s ease-out}
+.cp-hist[hidden]{display:none}
+@keyframes cp-hist-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.cp-hist-head{display:flex;align-items:center;gap:8px;padding:10px 12px 8px 14px}
+.cp-hist-head h3{margin:0;font:800 13px var(--cp-font);color:#eafcff;letter-spacing:.2px}
+.cp-hist-count{flex:1;font-size:11px;color:var(--cp-muted)}
+.cp-hist-x{font-size:16px;line-height:1;width:32px;padding:0}
+.cp-hist-note{margin:0 12px 8px;padding:8px 10px;border-radius:8px;background:#2a2312;border:1px solid #6a5530;color:#f4dcae;font-size:11.5px;line-height:1.45}
+.cp-hist-note[hidden]{display:none}
+.cp-hist-list{list-style:none;margin:0;padding:0 8px 8px;overflow-y:auto;flex:1;min-height:0}
+.cp-hist-item{display:flex;align-items:stretch;gap:4px;margin:0 0 4px;border-radius:10px;border:1px solid transparent}
+.cp-hist-item:hover{background:#0f2034}
+.cp-hist-item.cp-current{border-color:#2b6070;background:#0d2433}
+.cp-hist-top .cp-hist-title{color:var(--cp-accent)}
+.cp-hist-open{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;background:transparent;border:0;color:#e3eef7;padding:8px 10px;border-radius:10px;cursor:pointer;font-family:var(--cp-font)}
+.cp-hist-title{max-width:100%;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cp-hist-meta{font-size:10.5px;color:var(--cp-muted)}
+.cp-hist-act{flex:none;align-self:center;min-width:32px;height:32px;border-radius:8px;border:1px solid transparent;background:transparent;color:var(--cp-muted);cursor:pointer;font-size:13px;padding:0 6px}
+.cp-hist-act:hover{border-color:var(--cp-line);color:#fff}
+.cp-hist-del.cp-armed{border-color:#b5506a;background:#5a1f30;color:#fff;font:700 11px var(--cp-font)}
+.cp-hist-open:focus-visible,.cp-hist-act:focus-visible,.cp-hist-clear:focus-visible{outline:2px solid var(--cp-accent);outline-offset:1px}
+.cp-hist-input{flex:1;min-width:0;margin:4px;padding:7px 9px;border-radius:8px;border:1px solid var(--cp-accent);background:#08111d;color:#fff;font:600 13px var(--cp-font)}
+.cp-hist-empty{padding:14px 10px;color:var(--cp-muted);font-size:12px;line-height:1.5}
+.cp-hist-foot{display:flex;justify-content:flex-end;padding:8px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid #1b3247}
+.cp-hist-clear{border:1px solid #6b3546;background:transparent;color:#ffb8c4;border-radius:8px;font:700 11.5px var(--cp-font);padding:7px 11px;min-height:32px;cursor:pointer}
+.cp-hist-clear:disabled{opacity:.35;cursor:default}
+.cp-msg.cp-info .cp-bubble{background:#0d2131;border-color:#24506a;color:#bfe4ee}
+@media(max-width:600px){
+  .cp-sess{padding:4px 8px 4px 12px;min-height:50px}
+  .cp-sbtn{width:44px;height:44px}
+  .cp-hist-act{min-width:44px;height:44px}
+  .cp-hist-open{min-height:44px}
+  .cp-cbtn,.cp-hist-clear{min-height:44px}
+  .cp-hist-x{width:44px;height:44px}
+  .cp-hist-input{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.cp-hist{animation:none}}
 </style></head><body><nav class="mode-switcher" role="tablist" aria-label="Warehouse demonstration mode"><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true">Traditional vs. P800R</button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false">Warehouse Optimizer</button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false">3D Product Experience</button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false">WMS Integration Lab</button><span class="nav-sep" aria-hidden="true"></span><button id="journeyTab" class="journey-tab" type="button" aria-pressed="false" aria-controls="journeyMode"><i aria-hidden="true">▶</i>Order Journey<small>3D FILM</small></button><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
 <section id="engTour" class="eng-tour engineering" hidden aria-label="Guided engineering demonstration"><div class="eng-title-row"><span id="engTourStep" class="eng-kicker">STEP 1 / 7</span><span id="engTourTime" class="eng-tour-badge">0 / 105 s</span></div><h2 id="engTourTitle"></h2><p id="engTourText"></p><div class="eng-tour-progress"><div id="engTourProgress"></div></div><div class="eng-toolbar"><button class="btn" id="engTourPrevious">← Previous</button><button class="btn" id="engTourPause">Pause</button><button class="btn primary" id="engTourNext">Next →</button><button class="btn" id="engTourReset">Reset tour</button><button class="btn" id="engTourExit">Exit tour</button></div><p class="eng-note">Uses current customer requirements; resets the mock lab at the integration step. Previous revisits evidence without rewinding data. Reset starts a fresh walkthrough. You can skip steps; no automatic deployment or external requests occur.</p></section>
 
@@ -7327,8 +7387,8 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   };
   var lang = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
   var T = {
-    en: { title: 'Warehouse AI Copilot', sub: 'GPT-5.4 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design. I can also read the live WMS lab — ask for a status report, or click “Diagnose with AI” when a fault appears.', note: 'AI-generated · may be wrong · remembers the last 6 exchanges in this browser tab · reads a snapshot of the WMS lab, never changes it', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', maxOn: 'Full screen', maxOff: 'Exit full screen', layoutReset: 'Reset position & size', fabDrag: 'drag to move', grip: 'Drag to resize', issueLabel: 'WMS lab', diagBtn: 'Diagnose with AI', diagPrompt: 'Diagnose the current problem in the WMS Integration Lab. Using the live lab state, tell me: 1) what is wrong, 2) the evidence, 3) the root cause, 4) the exact steps to fix it with the lab buttons, and 5) how to verify the fix.', moreIssues: ' more', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
-    zh: { title: '仓库 AI 助手', sub: 'GPT-5.4 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。我还能读取 WMS 实验室的实时状态——可以让我出状态报告，或在出现故障时点击“用 AI 诊断”。', note: 'AI 生成内容，可能有误 · 记住本标签页最近 6 轮对话 · 只读取 WMS 实验室状态快照，不会修改模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', maxOn: '全屏', maxOff: '退出全屏', layoutReset: '重置位置和大小', fabDrag: '可拖动移动位置', grip: '拖动调整大小', issueLabel: 'WMS 实验室', diagBtn: '用 AI 诊断', diagPrompt: '请诊断 WMS 集成实验室当前的问题。根据实时的实验室状态告诉我：1）出了什么问题，2）证据，3）根本原因，4）用实验室按钮修复的具体步骤，5）如何验证已经修复。', moreIssues: ' 项其他问题', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
+    en: { title: 'Warehouse AI Copilot', sub: 'GPT-5.4 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design. I can also read the live WMS lab — ask for a status report, or click “Diagnose with AI” when a fault appears.', note: 'AI-generated · may be wrong · uses the last 6 exchanges of this chat · saved chats stay in this browser · reads a snapshot of the WMS lab, never changes it', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', hNew: 'New chat', hSave: 'Save chat', hSaved: 'Saved to history', hHist: 'Chat history', hTemp: 'New chat · not saved', hSavedFlash: 'Saved to history.', hArchived: 'Previous chat saved to history.', hBack: 'Back to current chat', hNewRow: 'New chat', hEmpty: 'No saved chats yet. Use Save, or start a New chat — the current one is kept automatically.', hRename: 'Rename', hDel: 'Delete', hDelQ: 'Delete?', hClearAll: 'Clear all history', hClearAllQ: 'Delete all saved chats? This cannot be undone.', hDelSavedQ: 'Delete this saved chat from history?', hNo: 'Cancel', hTrashSaved: 'Delete this saved chat', hFull: 'History is full (30 chats). Delete older chats in History to keep this one.', hQuota: 'Could not save — this browser\'s storage is full. Delete some chats in History.', hNoStore: 'Saving is not available in this browser (storage is blocked). Saved chats last only until you refresh.', hTrimmed: 'This chat is long, so only its latest 100 messages are kept.', hUpdateFail: 'This reply could not be saved to history (browser storage is full).', hOpenHist: 'Open history', hUntitled: 'Untitled chat', hJust: 'just now', hMin: ' min ago', hHour: ' h ago', hMsgs: ' msgs', hCount: ' / 30 saved', hTitleLabel: 'Chat title', hDeleted: 'Saved chat deleted.', hCleared: 'All saved chats deleted.', maxOn: 'Full screen', maxOff: 'Exit full screen', layoutReset: 'Reset position & size', fabDrag: 'drag to move', grip: 'Drag to resize', issueLabel: 'WMS lab', diagBtn: 'Diagnose with AI', diagPrompt: 'Diagnose the current problem in the WMS Integration Lab. Using the live lab state, tell me: 1) what is wrong, 2) the evidence, 3) the root cause, 4) the exact steps to fix it with the lab buttons, and 5) how to verify the fix.', moreIssues: ' more', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
+    zh: { title: '仓库 AI 助手', sub: 'GPT-5.4 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。我还能读取 WMS 实验室的实时状态——可以让我出状态报告，或在出现故障时点击“用 AI 诊断”。', note: 'AI 生成内容，可能有误 · 参考本对话最近 6 轮 · 已保存的对话只存在本浏览器 · 只读取 WMS 实验室状态快照，不会修改模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', hNew: '新对话', hSave: '保存对话', hSaved: '已保存到对话记录', hHist: '对话记录', hTemp: '新对话 · 未保存', hSavedFlash: '已保存到对话记录。', hArchived: '上一段对话已保存到对话记录。', hBack: '返回当前对话', hNewRow: '新对话', hEmpty: '还没有保存的对话。点“保存”，或开始“新对话”——当前对话会自动保存。', hRename: '重命名', hDel: '删除', hDelQ: '确认删除？', hClearAll: '清空全部记录', hClearAllQ: '删除全部已保存的对话？此操作无法撤销。', hDelSavedQ: '要从对话记录中删除这段已保存的对话吗？', hNo: '取消', hTrashSaved: '删除这段已保存的对话', hFull: '对话记录已满（30 段）。请在对话记录中删除旧对话后再保存。', hQuota: '无法保存——浏览器存储空间已满。请在对话记录中删除一些对话。', hNoStore: '此浏览器无法保存（存储被禁用）。已保存的对话只保留到刷新页面为止。', hTrimmed: '这段对话较长，只保留最近 100 条消息。', hUpdateFail: '这条回复没能保存到对话记录（浏览器存储已满）。', hOpenHist: '打开对话记录', hUntitled: '未命名对话', hJust: '刚刚', hMin: ' 分钟前', hHour: ' 小时前', hMsgs: ' 条', hCount: ' / 30 已保存', hTitleLabel: '对话标题', hDeleted: '已删除这段保存的对话。', hCleared: '已删除全部保存的对话。', maxOn: '全屏', maxOff: '退出全屏', layoutReset: '重置位置和大小', fabDrag: '可拖动移动位置', grip: '拖动调整大小', issueLabel: 'WMS 实验室', diagBtn: '用 AI 诊断', diagPrompt: '请诊断 WMS 集成实验室当前的问题。根据实时的实验室状态告诉我：1）出了什么问题，2）证据，3）根本原因，4）用实验室按钮修复的具体步骤，5）如何验证已经修复。', moreIssues: ' 项其他问题', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
   };
   var t = function (k) { return T[lang][k]; };
 
@@ -7346,6 +7406,14 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     '<button type="button" class="cp-icon-btn cp-hbtn cp-reset-layout" id="copilotLayoutReset" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 1-7.75 10h1.6A6.5 6.5 0 1 0 7.4 7.4L10 10H4V4l2.34 2.34A7.97 7.97 0 0 1 12 4z"/></svg></button>' +
     '<button type="button" class="cp-icon-btn cp-hbtn cp-max" id="copilotMax" aria-pressed="false"><svg class="cp-i-max" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v1.6H6.7l4 4-1.1 1.1-4-4V10H4V4zm10 0h6v6h-1.6V6.7l-4 4-1.1-1.1 4-4H14V4zM4 14h1.6v3.3l4-4 1.1 1.1-4 4H10V20H4v-6zm14.4 3.3V14H20v6h-6v-1.6h3.3l-4-4 1.1-1.1 4 4z"/></svg><svg class="cp-i-min" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h1.6v6H4.6V8.4h3.3l-4-4L5 3.3l4 4V4zm4.4 0H15v3.3l4-4 1.1 1.1-4 4h3.3V10h-6V4zM4.6 14h6v6H9v-3.3l-4 4-1.1-1.1 4-4H4.6V14zm8.8 0h6v1.6h-3.3l4 4-1.1 1.1-4-4V20h-1.6v-6z"/></svg></button>' +
     '<button type="button" class="cp-icon-btn cp-clear" id="copilotClear"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6a1 1 0 0 1 1 1V6h3.25a.75.75 0 0 1 0 1.5h-.8l-.86 11.2A2.5 2.5 0 0 1 15.1 21H8.9a2.5 2.5 0 0 1-2.49-2.3L5.55 7.5h-.8a.75.75 0 0 1 0-1.5H8V4.5a1 1 0 0 1 1-1zm.5 2.5h5V5h-5v1zm-2.44 1.5.85 11.08a1 1 0 0 0 1 .92h6.18a1 1 0 0 0 1-.92l.85-11.08H7.06zM10 10a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 10 10zm4 0a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 14 10z"/></svg></button><button type="button" class="cp-icon-btn cp-close" id="copilotClose">×</button></header>' +
+    '<div class="cp-sess" id="copilotSess"><span class="cp-sess-dot" aria-hidden="true"></span><span class="cp-sess-title" id="copilotSessTitle"></span>' +
+    '<button type="button" class="cp-sbtn" id="copilotNew"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.25 5h1.5v6.25H19v1.5h-6.25V19h-1.5v-6.25H5v-1.5h6.25z"/></svg></button>' +
+    '<button type="button" class="cp-sbtn" id="copilotSave" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="cp-i-o" d="M7 3.5h10A1.5 1.5 0 0 1 18.5 5v15.2a.6.6 0 0 1-.95.49L12 16.9l-5.55 3.79A.6.6 0 0 1 5.5 20.2V5A1.5 1.5 0 0 1 7 3.5zm0 1.5v13.7l5-3.42 5 3.42V5H7z"/><path class="cp-i-f" d="M7 3.5h10A1.5 1.5 0 0 1 18.5 5v15.2a.6.6 0 0 1-.95.49L12 16.9l-5.55 3.79A.6.6 0 0 1 5.5 20.2V5A1.5 1.5 0 0 1 7 3.5z"/></svg></button>' +
+    '<button type="button" class="cp-sbtn" id="copilotHistBtn" aria-expanded="false" aria-controls="copilotHist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17zm0 1.5a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm-.75 2.5h1.5v4.19l2.78 2.78-1.06 1.06-3.22-3.22V7.5z"/></svg><span class="cp-badge" id="copilotHistBadge" hidden></span></button></div>' +
+    '<div class="cp-confirm" id="copilotConfirm" role="alertdialog" aria-labelledby="copilotConfirmText" hidden><span id="copilotConfirmText"></span><button type="button" class="cp-cbtn cp-cyes" id="copilotConfirmYes"></button><button type="button" class="cp-cbtn" id="copilotConfirmNo"></button></div>' +
+    '<div class="cp-hist" id="copilotHist" role="region" aria-labelledby="copilotHistTitle" hidden><div class="cp-hist-head"><h3 id="copilotHistTitle"></h3><span class="cp-hist-count" id="copilotHistCount"></span><button type="button" class="cp-icon-btn cp-hist-x" id="copilotHistClose">×</button></div>' +
+    '<p class="cp-hist-note" id="copilotHistNote" hidden></p><ul class="cp-hist-list" id="copilotHistList"></ul>' +
+    '<div class="cp-hist-foot"><button type="button" class="cp-hist-clear" id="copilotHistClear"></button></div></div>' +
     '<div class="cp-log" id="copilotLog" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>' +
     '<div class="cp-issue" id="copilotIssue" hidden role="status"><span class="cp-issue-dot" aria-hidden="true"></span><span class="cp-issue-text" id="copilotIssueText"></span><button type="button" class="cp-issue-btn" id="copilotIssueBtn" data-ai-diagnose></button></div>' +
     '<div class="cp-suggest" id="copilotSuggest"></div>' +
@@ -7368,7 +7436,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     $('copilotClose').setAttribute('aria-label', t('close')); $('copilotClear').setAttribute('aria-label', t('clear')); $('copilotClear').title = t('clear');
     $('copilotNote').textContent = t('note'); fabLabel.textContent = t('open'); fab.setAttribute('aria-label', t('open'));
     var bs = panel.querySelectorAll('[data-cp-lang]'); for (var i = 0; i < bs.length; i++) bs[i].setAttribute('aria-pressed', String(bs[i].getAttribute('data-cp-lang') === lang));
-    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels(); layoutLabels(); $('copilotIssueBtn').textContent = '🤖 ' + t('diagBtn'); refreshIssues();
+    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels(); layoutLabels(); $('copilotIssueBtn').textContent = '🤖 ' + t('diagBtn'); refreshIssues(); histLabels();
     var hello = log.querySelector('.cp-hello .cp-text'); if (hello) hello.textContent = t('hello');
   }
   function renderSuggestions() {
@@ -7449,60 +7517,91 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     if (window.matchMedia('(max-width: 600px)').matches) setOpen(false);
   }
 
-  /* ---------------- conversation memory ----------------
-     API contract v1: { message, history:[{role,content}...] } — history holds only completed,
-     successful exchanges (user then assistant), oldest first, at most 6 exchanges (12 messages).
-     Persisted per browser tab in sessionStorage; falls back to memory if storage is unavailable. */
-  var Memory = (function () {
-    var KEY = 'geekplus_warehouse_ai_chat_v1', MAX_EXCH = 6, MAX_USER = MAX_CHARS, MAX_AI = 1500, MAX_BYTES = 24000;
-    var hist = [], persistent = true;
-    function store() { try { return window.sessionStorage; } catch (e) { return null; } }
-    function clip(s, n) { s = String(s); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
-    function valid(list) {
-      if (!Array.isArray(list) || list.length % 2 !== 0 || list.length > MAX_EXCH * 2) return false;
-      for (var i = 0; i < list.length; i++) {
-        var m = list[i];
-        if (!m || typeof m !== 'object' || Array.isArray(m)) return false;
-        var keys = Object.keys(m); if (keys.length !== 2 || keys.indexOf('role') < 0 || keys.indexOf('content') < 0) return false;
-        if (m.role !== (i % 2 === 0 ? 'user' : 'assistant')) return false;
-        if (typeof m.content !== 'string' || !m.content.trim() || m.content.length > (m.role === 'user' ? MAX_USER : MAX_AI)) return false;
+  /* ---------------- conversations ----------------
+     • One temporary chat that lives only in page memory: a refresh always starts a blank one.
+     • Saved chats (explicit Save, or archived by New chat) in localStorage[SAVED_KEY] — nothing else is stored.
+     • API contract v1 is unchanged: { message, history, wms_state }. history = only the ACTIVE chat's
+       latest completed exchanges (≤ 6 → 12 messages, answers clipped to 1,500 chars); the current question is never in it.
+     • wms_state is captured fresh for every request and is never stored with a chat. */
+  var SAVED_KEY = 'geekplus_warehouse_ai_saved_chats_v1', OLD_SESSION_KEY = 'geekplus_warehouse_ai_chat_v1';
+  var CTX_MSGS = 12, MAX_USER = MAX_CHARS, MAX_AI_CTX = 1500, MAX_AI_STORE = 4000, MAX_SAVED = 30, MAX_MSGS = 100, MAX_TITLE = 80;
+  function clip(s, n) { s = String(s); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
+  var Store = (function () {
+    var ls = null;
+    try { ls = window.localStorage; var probe = '__cp_probe__'; ls.setItem(probe, '1'); ls.removeItem(probe); } catch (e) { ls = null; }
+    // the previous per-tab memory is retired on purpose: not restored, not imported into saved history
+    try { window.sessionStorage.removeItem(OLD_SESSION_KEY); } catch (e) { /* ignore */ }
+    function num(v) { return typeof v === 'number' && isFinite(v) && v > 0; }
+    function validMsgs(m) {
+      if (!Array.isArray(m) || !m.length || m.length % 2) return false;
+      for (var i = 0; i < m.length; i++) {
+        var x = m[i];
+        if (!x || typeof x !== 'object' || x.role !== (i % 2 ? 'assistant' : 'user') || typeof x.content !== 'string' || !x.content.trim()) return false;
       }
       return true;
     }
-    function save() {
-      var st = store(); if (!st) { persistent = false; return; }
-      try {
-        var data = JSON.stringify({ v: 1, history: hist });
-        while (data.length > MAX_BYTES && hist.length) { hist = hist.slice(2); data = JSON.stringify({ v: 1, history: hist }); }
-        if (hist.length) st.setItem(KEY, data); else st.removeItem(KEY);
-        persistent = true;
-      } catch (e) { persistent = false; }
-    }
     function load() {
-      var st = store(); if (!st) { persistent = false; return; }
-      var raw = null; try { raw = st.getItem(KEY); } catch (e) { persistent = false; return; }
-      if (raw === null) return;
-      try {
-        var d = JSON.parse(raw);
-        if (d && d.v === 1 && valid(d.history)) { hist = d.history.map(function (m) { return { role: m.role, content: m.content }; }); return; }
-      } catch (e) { /* fall through */ }
-      try { st.removeItem(KEY); } catch (e) { /* ignore */ }   // corrupted or incompatible → reset safely
-      hist = [];
+      if (!ls) return [];
+      var raw = null, d = null; try { raw = ls.getItem(SAVED_KEY); } catch (e) { return []; }
+      if (!raw) return [];
+      try { d = JSON.parse(raw); } catch (e) { return []; }            // unreadable: ignore (left as is until the next save)
+      if (!d || d.v !== 1 || !Array.isArray(d.chats)) return [];
+      var out = [], seen = {};
+      d.chats.forEach(function (c) {
+        if (!c || typeof c !== 'object' || typeof c.id !== 'string' || !/^c_[a-z0-9_]{1,40}$/i.test(c.id) || seen[c.id]) return;
+        if (typeof c.title !== 'string' || !num(c.created) || !num(c.updated) || !validMsgs(c.messages)) return;
+        seen[c.id] = 1;
+        out.push({ id: c.id, title: clip(c.title.trim() || 'Chat', MAX_TITLE), created: c.created, updated: c.updated, pending: null,
+          messages: c.messages.slice(-MAX_MSGS).map(function (x) { return { role: x.role, content: clip(x.content, x.role === 'user' ? MAX_USER : MAX_AI_STORE) }; }) });
+      });
+      out.sort(function (a, b) { return b.updated - a.updated; });
+      return out.slice(0, MAX_SAVED);
     }
-    load();
-    return {
-      get: function () { return hist.map(function (m) { return { role: m.role, content: m.content }; }); },
-      add: function (q, a) {
-        hist.push({ role: 'user', content: clip(q, MAX_USER) }, { role: 'assistant', content: clip(a, MAX_AI) });
-        if (hist.length > MAX_EXCH * 2) hist = hist.slice(hist.length - MAX_EXCH * 2);
-        save();
-      },
-      clear: function () { hist = []; var st = store(); if (st) { try { st.removeItem(KEY); } catch (e) { /* ignore */ } } },
-      exchanges: function () { return hist.length / 2; },
-      persistent: function () { return persistent; },
-      KEY: KEY
-    };
+    function write(list) {
+      if (!ls) return true;                                           // storage blocked: saved chats live in memory for this page
+      try {
+        if (!list.length) ls.removeItem(SAVED_KEY);
+        else ls.setItem(SAVED_KEY, JSON.stringify({ v: 1, chats: list.map(function (c) { return { id: c.id, title: c.title, created: c.created, updated: c.updated, messages: c.messages }; }) }));
+        return true;
+      } catch (e) { return false; }                                   // quota exceeded etc.
+    }
+    return { available: function () { return !!ls; }, load: load, write: write };
   })();
+  function newConv() { return { id: null, title: '', created: 0, updated: 0, messages: [], pending: null }; }
+  var saved = Store.load(), temp = newConv(), active = temp, reqSeq = 0;
+  function sortSaved() { saved.sort(function (a, b) { return b.updated - a.updated; }); }
+  function titleFrom(c) { var u = c.messages[0]; return u ? clip(u.content.replace(/\s+/g, ' ').trim(), 60) : t('hUntitled'); }
+  function contextFor(c) {
+    return c.messages.slice(-CTX_MSGS).map(function (m) { return { role: m.role, content: m.role === 'assistant' ? clip(m.content, MAX_AI_CTX) : m.content }; });
+  }
+  // temp → saved, keeping the same object (an in-flight reply still lands in it). Returns '' or an error code.
+  function makeSaved(c) {
+    if (c.id) return '';
+    if (!c.messages.length) return 'empty';
+    if (saved.length >= MAX_SAVED) return 'full';
+    var now = Date.now();
+    c.id = 'c_' + now.toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+    c.title = titleFrom(c); c.created = c.updated = now;
+    saved.unshift(c);
+    if (!Store.write(saved)) { saved.splice(saved.indexOf(c), 1); c.id = null; c.title = ''; return 'quota'; }
+    return '';
+  }
+  function addExchange(c, q, a) {
+    c.messages.push({ role: 'user', content: clip(q, MAX_USER) }, { role: 'assistant', content: clip(a, MAX_AI_STORE) });
+    var trimmed = false;
+    if (c.messages.length > MAX_MSGS) { c.messages = c.messages.slice(-MAX_MSGS); trimmed = true; }
+    if (c.id && !c.deleted) { c.updated = Date.now(); sortSaved(); if (!Store.write(saved)) return 'update'; }
+    return trimmed ? 'trimmed' : '';
+  }
+  // compatibility shim used by older code paths/tests: always the ACTIVE chat
+  var Memory = {
+    get: function () { return contextFor(active); },
+    add: function (q, a) { return addExchange(active, q, a); },
+    clear: function () { if (!active.id) active.messages = []; },
+    exchanges: function () { return active.messages.length / 2; },
+    persistent: function () { return Store.available(); },
+    KEY: SAVED_KEY
+  };
   var generation = 0, inflight = null;
   /* Read-only WMS Integration Lab snapshot (schema v1), captured fresh for every question. */
   function captureWmsState() {
@@ -7536,25 +7635,47 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     };
     tick(); cooldownTimer = setInterval(tick, 1000);
   }
+  function makeTyping() {
+    var typing = el('div', 'cp-msg cp-ai cp-typing'); var tb = el('div', 'cp-bubble');
+    tb.appendChild(el('span', 'cp-sr', t('thinking'))); for (var i = 0; i < 3; i++) tb.appendChild(el('i', 'cp-dot'));
+    typing.appendChild(tb); return typing;
+  }
+  /* Pending-request policy: one request at a time (no duplicates). A reply belongs to the chat that sent it
+     (origin + request id): it is stored there and only drawn if that chat is on screen. Clearing, deleting or
+     discarding the origin drops the request, so a late reply can never land elsewhere or recreate a deleted chat. */
+  function dropPending(c) {
+    if (!c || !c.pending) return;
+    if (inflight && inflight.rid === c.pending.rid) {
+      clearTimeout(inflight.timer); try { inflight.ctrl && inflight.ctrl.abort(); } catch (e) { /* ignore */ }
+      if (inflight.typing && inflight.typing.parentNode) inflight.typing.parentNode.removeChild(inflight.typing);
+      inflight = null; setBusy(false);
+    }
+    c.pending = null;
+  }
   function ask(question) {
     var q = String(question || '').trim();
     if (!q || busy) return;
     if (Date.now() < cooldownUntil) return;
     if (q.length > MAX_CHARS) { addMsg('ai', t('long'), { cls: 'cp-error', plain: true }); return; }
-    lastQuestion = q;
+    lastQuestion = q; closeHistory(); hideConfirm();
+    var origin = active, rid = ++reqSeq;
     addMsg('user', q);
     input.value = ''; autosize(); updateCount();
     document.getElementById('copilotSuggest').classList.add('cp-collapsed');
-    var typing = el('div', 'cp-msg cp-ai cp-typing'); var tb = el('div', 'cp-bubble');
-    tb.appendChild(el('span', 'cp-sr', t('thinking'))); for (var i = 0; i < 3; i++) tb.appendChild(el('i', 'cp-dot'));
-    typing.appendChild(tb); log.appendChild(typing); scrollDown();
+    var typing = makeTyping(); log.appendChild(typing); scrollDown();
     setBusy(true);
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
     var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
-    var gen = generation, payload = { message: q, history: Memory.get(), wms_state: captureWmsState() }; setTimeout(refreshIssues, 0);
-    inflight = { ctrl: ctrl, typing: typing, timer: timer };
-    var stale = function () { return gen !== generation; };
-    var finish = function () { clearTimeout(timer); if (typing.parentNode) typing.parentNode.removeChild(typing); inflight = null; setBusy(false); };
+    var payload = { message: q, history: contextFor(origin), wms_state: captureWmsState() }; setTimeout(refreshIssues, 0);
+    origin.pending = { rid: rid, q: q };
+    inflight = { ctrl: ctrl, typing: typing, timer: timer, rid: rid, origin: origin };
+    var stale = function () { return !origin.pending || origin.pending.rid !== rid || origin.deleted; };
+    var shown = function () { return active === origin; };
+    var finish = function () {
+      clearTimeout(timer);
+      if (inflight && inflight.rid === rid) { if (inflight.typing && inflight.typing.parentNode) inflight.typing.parentNode.removeChild(inflight.typing); inflight = null; }
+      origin.pending = null; setBusy(false);
+    };
     fetch(ENDPOINT, { method: 'POST', mode: 'cors', credentials: 'omit', cache: 'no-store', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl ? ctrl.signal : undefined })
       .then(function (res) {
         return res.text().then(function (txt) { var data = null; try { data = txt ? JSON.parse(txt) : null; } catch (e) { data = null; } return { res: res, data: data }; });
@@ -7564,18 +7685,24 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
         finish();
         if (!r.res.ok) {
           var e = parseError(r.res.status, r.data, r.res.headers.get('Retry-After'));
-          if (e.kind === 'rate') startCooldown(e.wait, q);
-          else addMsg('ai', e.text, { cls: 'cp-error', plain: true, retry: e.kind === 'retry' ? q : null });
+          if (e.kind === 'rate') startCooldown(e.wait, shown() ? q : null);
+          else if (shown()) addMsg('ai', e.text, { cls: 'cp-error', plain: true, retry: e.kind === 'retry' ? q : null });
           return;
         }
         var d = r.data || {}, answer = typeof d.answer === 'string' ? d.answer : typeof d.reply === 'string' ? d.reply : '';
-        if (!answer.trim()) { addMsg('ai', t('empty'), { cls: 'cp-error', plain: true, retry: q }); return; }
-        Memory.add(q, answer);
-        addMsg('ai', answer, { actions: true });
+        if (!answer.trim()) { if (shown()) addMsg('ai', t('empty'), { cls: 'cp-error', plain: true, retry: q }); return; }
+        var res = addExchange(origin, q, answer);
+        if (shown()) {
+          addMsg('ai', answer, { actions: true });
+          if (res === 'trimmed') addMsg('ai', t('hTrimmed'), { cls: 'cp-info', plain: true });
+          if (res === 'update') addMsg('ai', t('hUpdateFail'), { cls: 'cp-error', plain: true });
+        }
+        updateSession();
       })
       .catch(function (err) {
         if (stale()) return;
         finish();
+        if (!shown()) return;
         var timeout = err && err.name === 'AbortError';
         addMsg('ai', timeout ? t('timeout') : t('net'), { cls: 'cp-error', plain: true, retry: q });
       });
@@ -7733,16 +7860,177 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   function updateCount() { var n = input.value.length; var c = $('copilotCount'); c.textContent = n + '/' + MAX_CHARS; c.className = n > MAX_CHARS * .9 ? 'cp-warn' : ''; }
   fab.addEventListener('click', function () { setOpen(panel.hidden); });
   $('copilotClose').addEventListener('click', function () { setOpen(false); fab.focus(); });
-  function clearChat() {
-    generation++;                                   // any reply still on its way is now ignored
-    if (inflight) { clearTimeout(inflight.timer); try { inflight.ctrl && inflight.ctrl.abort(); } catch (e) { /* ignore */ } inflight = null; }
-    Memory.clear();
-    clearInterval(cooldownTimer);                   // keep the rate-limit wait itself (cooldownUntil)
-    log.textContent = ''; setBusy(false);
+  function flash(text) {
+    var live = $('copilotVoiceText'); if (!live || voice.active()) return;
+    $('copilotVoiceStatus').hidden = false; $('copilotVoiceStatus').className = 'cp-voice-status cp-vs-info'; live.textContent = text;
+    setTimeout(function () { if (!voice.active() && live.textContent === text) $('copilotVoiceStatus').hidden = true; }, 2500);
+  }
+  function renderConv() {
+    log.textContent = '';
     addMsg('ai', t('hello'), { cls: 'cp-hello', plain: true });
-    $('copilotSuggest').classList.remove('cp-collapsed');
+    var m = active.messages;
+    for (var i = 0; i < m.length; i++) addMsg(m[i].role === 'user' ? 'user' : 'ai', m[i].content, m[i].role === 'user' ? {} : { actions: true });
+    if (active.pending) {
+      addMsg('user', active.pending.q);
+      var ty = makeTyping(); log.appendChild(ty);
+      if (inflight && inflight.rid === active.pending.rid) inflight.typing = ty;
+    }
+    $('copilotSuggest').classList.toggle('cp-collapsed', !!(m.length || active.pending));
     if (Date.now() < cooldownUntil) startCooldown(Math.ceil((cooldownUntil - Date.now()) / 1000));
-    var live = $('copilotVoiceText'); if (live && !voice.active()) { $('copilotVoiceStatus').hidden = false; $('copilotVoiceStatus').className = 'cp-voice-status cp-vs-info'; live.textContent = t('cleared'); setTimeout(function () { if (!voice.active() && live.textContent === t('cleared')) $('copilotVoiceStatus').hidden = true; }, 2500); }
+    updateSession(); scrollDown();
+  }
+  function restoreChat() { renderConv(); }
+  function switchTo(c) {
+    voice.cancel(true);                    // a late transcript must not land in another chat
+    hideConfirm(); closeHistory();
+    if (active !== c) { if (inflight && inflight.typing && inflight.typing.parentNode) inflight.typing.parentNode.removeChild(inflight.typing); }
+    active = c; clearInterval(cooldownTimer); renderConv();
+    if (!window.matchMedia('(pointer: coarse)').matches) { try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }
+  }
+  function storageNotice(code) {
+    var txt = code === 'full' ? t('hFull') : code === 'quota' ? t('hQuota') : '';
+    if (!txt) return;
+    var w = addMsg('ai', txt, { cls: 'cp-error', plain: true });
+    var b = el('button', 'cp-retry', t('hOpenHist')); b.type = 'button'; b.addEventListener('click', openHistory); w.appendChild(b);
+  }
+  function newChat() {
+    voice.cancel(true); hideConfirm();
+    var archived = false;
+    if (temp.messages.length) {
+      var e = makeSaved(temp);
+      if (e) { if (active !== temp) switchTo(temp); closeHistory(); storageNotice(e); return false; }
+      archived = true;
+    } else dropPending(temp);             // nothing completed yet: discard the temporary chat (and its pending request)
+    temp = newConv(); switchTo(temp);
+    if (archived) flash(Store.available() ? t('hArchived') : t('hNoStore'));
+    return true;
+  }
+  function saveChat() {
+    if (active.id || !active.messages.length) return false;
+    var e = makeSaved(active);
+    if (e) { storageNotice(e); return false; }
+    if (active === temp) temp = newConv();
+    updateSession(); flash(Store.available() ? t('hSavedFlash') : t('hNoStore'));
+    return true;
+  }
+  function findSaved(id) { for (var i = 0; i < saved.length; i++) if (saved[i].id === id) return saved[i]; return null; }
+  function deleteSaved(c) {
+    var i = saved.indexOf(c); if (i < 0) return false;
+    saved.splice(i, 1); Store.write(saved);
+    c.deleted = true; dropPending(c);
+    if (active === c) switchTo(temp); else { updateSession(); if (!$('copilotHist').hidden) renderHistory(); }
+    flash(t('hDeleted'));
+    return true;
+  }
+  function clearAllSaved() {
+    var wasActive = !!active.id;
+    saved.forEach(function (c) { c.deleted = true; dropPending(c); });
+    saved = []; Store.write(saved);        // removes only SAVED_KEY
+    if (wasActive) switchTo(temp); else { updateSession(); if (!$('copilotHist').hidden) renderHistory(); }
+    flash(t('hCleared'));
+  }
+  function renameSaved(c, title) {
+    var v = String(title || '').replace(/\s+/g, ' ').trim(); if (!v) return false;
+    c.title = clip(v, MAX_TITLE); Store.write(saved); updateSession(); return true;
+  }
+  function updateSession() {
+    var isSaved = !!active.id;
+    $('copilotSessTitle').textContent = isSaved ? active.title : t('hTemp');
+    $('copilotSess').classList.toggle('cp-sess-saved', isSaved);
+    var sv = $('copilotSave'); sv.disabled = isSaved || !active.messages.length; sv.setAttribute('aria-pressed', String(isSaved));
+    sv.setAttribute('aria-label', isSaved ? t('hSaved') : t('hSave')); sv.title = sv.getAttribute('aria-label');
+    var badge = $('copilotHistBadge'); badge.hidden = !saved.length; badge.textContent = saved.length;
+    $('copilotClear').setAttribute('aria-label', isSaved ? t('hTrashSaved') : t('clear')); $('copilotClear').title = $('copilotClear').getAttribute('aria-label');
+  }
+  function histLabels() {
+    $('copilotNew').setAttribute('aria-label', t('hNew')); $('copilotNew').title = t('hNew');
+    $('copilotHistBtn').setAttribute('aria-label', t('hHist')); $('copilotHistBtn').title = t('hHist');
+    $('copilotHistTitle').textContent = t('hHist'); $('copilotHistClose').setAttribute('aria-label', t('close'));
+    $('copilotHistClear').textContent = t('hClearAll'); $('copilotConfirmNo').textContent = t('hNo');
+    updateSession(); if (!$('copilotHist').hidden) renderHistory();
+  }
+  /* ---- inline confirmation (no browser dialogs) ---- */
+  var confirmFn = null;
+  function confirmAsk(text, yes, fn) {
+    confirmFn = fn; $('copilotConfirmText').textContent = text; $('copilotConfirmYes').textContent = yes;
+    $('copilotConfirm').hidden = false; placeHist(); try { $('copilotConfirmNo').focus(); } catch (e) { /* ignore */ }
+  }
+  function hideConfirm() { confirmFn = null; $('copilotConfirm').hidden = true; placeHist(); }
+  // the drawer sits below the session bar — and below the confirmation strip while one is shown
+  function placeHist() {
+    var h = $('copilotHist'); if (h.hidden) return;
+    var sess = $('copilotSess'), cf = $('copilotConfirm'), top = sess.offsetTop + sess.offsetHeight;
+    if (!cf.hidden) top = Math.max(top, cf.offsetTop + cf.offsetHeight);
+    h.style.top = top + 'px';
+  }
+  $('copilotConfirmYes').addEventListener('click', function () { var f = confirmFn; hideConfirm(); if (f) f(); });
+  $('copilotConfirmNo').addEventListener('click', function () { hideConfirm(); try { input.focus({ preventScroll: true }); } catch (e) { /* ignore */ } });
+  /* ---- history drawer ---- */
+  function ago(ts) {
+    var d = Math.max(0, Date.now() - ts), m = Math.floor(d / 60000);
+    if (m < 1) return t('hJust'); if (m < 60) return m + t('hMin'); if (m < 24 * 60) return Math.floor(m / 60) + t('hHour');
+    try { return new Date(ts).toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric' }); } catch (e) { return ''; }
+  }
+  function renderHistory() {
+    var list = $('copilotHistList'); list.textContent = '';
+    var top = el('li', 'cp-hist-item cp-hist-top' + (active === temp ? ' cp-current' : ''));
+    var tempHas = temp.messages.length || temp.pending;
+    var tb = el('button', 'cp-hist-open', ''); tb.type = 'button';
+    tb.appendChild(el('span', 'cp-hist-title', (active !== temp && tempHas ? '↩ ' + t('hBack') : '+ ' + t('hNewRow'))));
+    if (tempHas && active !== temp) tb.appendChild(el('span', 'cp-hist-meta', t('hTemp') + ' · ' + (temp.messages.length + (temp.pending ? 1 : 0)) + t('hMsgs')));
+    tb.addEventListener('click', function () { if (active === temp) newChat(); else switchTo(temp); });
+    top.appendChild(tb); list.appendChild(top);
+    if (!saved.length) list.appendChild(el('li', 'cp-hist-empty', t('hEmpty')));
+    saved.forEach(function (c) {
+      var li = el('li', 'cp-hist-item' + (c === active ? ' cp-current' : '')); li.setAttribute('data-id', c.id);
+      var ob = el('button', 'cp-hist-open'); ob.type = 'button';
+      if (c === active) ob.setAttribute('aria-current', 'true');
+      ob.appendChild(el('span', 'cp-hist-title', c.title));
+      ob.appendChild(el('span', 'cp-hist-meta', ago(c.updated) + ' · ' + c.messages.length + t('hMsgs') + (c.pending ? ' · …' : '')));
+      ob.addEventListener('click', function () { switchTo(c); });
+      var rn = el('button', 'cp-hist-act cp-hist-rn', '✎'); rn.type = 'button'; rn.setAttribute('aria-label', t('hRename') + ': ' + c.title); rn.title = t('hRename');
+      rn.addEventListener('click', function () {
+        var inp = el('input', 'cp-hist-input'); inp.type = 'text'; inp.maxLength = MAX_TITLE; inp.value = c.title; inp.setAttribute('aria-label', t('hTitleLabel'));
+        var done = false, fin = function (ok) { if (done) return; done = true; if (ok) renameSaved(c, inp.value); renderHistory(); var b = $('copilotHistList').querySelector('[data-id="' + c.id + '"] .cp-hist-rn'); if (b) b.focus(); };
+        inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); fin(true); } else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); fin(false); } });
+        inp.addEventListener('blur', function () { fin(true); });
+        li.replaceChild(inp, ob); inp.focus(); inp.select();
+      });
+      var del = el('button', 'cp-hist-act cp-hist-del', '🗑'); del.type = 'button'; del.setAttribute('aria-label', t('hDel') + ': ' + c.title); del.title = t('hDel');
+      var armT = 0;
+      del.addEventListener('click', function () {
+        if (del.classList.contains('cp-armed')) { clearTimeout(armT); deleteSaved(c); return; }
+        del.classList.add('cp-armed'); del.textContent = t('hDelQ'); del.setAttribute('aria-label', t('hDelQ') + ' ' + c.title);
+        armT = setTimeout(function () { del.classList.remove('cp-armed'); del.textContent = '🗑'; del.setAttribute('aria-label', t('hDel') + ': ' + c.title); }, 3500);
+      });
+      li.appendChild(ob); li.appendChild(rn); li.appendChild(del); list.appendChild(li);
+    });
+    $('copilotHistCount').textContent = saved.length + t('hCount');
+    var note = $('copilotHistNote');
+    note.hidden = Store.available() && saved.length < MAX_SAVED;
+    note.textContent = !Store.available() ? t('hNoStore') : saved.length >= MAX_SAVED ? t('hFull') : '';
+    $('copilotHistClear').disabled = !saved.length;
+  }
+  function openHistory() {
+    hideConfirm(); renderHistory();
+    var h = $('copilotHist');
+    h.hidden = false; placeHist(); $('copilotHistBtn').setAttribute('aria-expanded', 'true');
+    var first = h.querySelector('.cp-current .cp-hist-open') || h.querySelector('.cp-hist-open'); if (first) try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
+  }
+  function closeHistory() { var h = $('copilotHist'); if (h.hidden) return; h.hidden = true; $('copilotHistBtn').setAttribute('aria-expanded', 'false'); }
+  $('copilotHistBtn').addEventListener('click', function () { if ($('copilotHist').hidden) openHistory(); else { closeHistory(); $('copilotHistBtn').focus(); } });
+  $('copilotHistClose').addEventListener('click', function () { closeHistory(); $('copilotHistBtn').focus(); });
+  $('copilotHistClear').addEventListener('click', function () { if (saved.length) confirmAsk(t('hClearAllQ'), t('hClearAll'), clearAllSaved); });
+  $('copilotNew').addEventListener('click', function () { newChat(); });
+  $('copilotSave').addEventListener('click', function () { saveChat(); });
+  function clearChat() {
+    if (active.id) { confirmAsk(t('hDelSavedQ'), t('hDel'), function () { deleteSaved(active); }); return; }
+    generation++;
+    dropPending(temp); temp.messages = [];
+    clearInterval(cooldownTimer);                   // keep the rate-limit wait itself (cooldownUntil)
+    setBusy(false); hideConfirm(); closeHistory();
+    renderConv(); $('copilotSuggest').classList.remove('cp-collapsed');
+    flash(t('cleared'));
     try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
   }
 
@@ -7891,7 +8179,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (voice.active()) { voice.stop(true); return; } ask(input.value); }
   });
-  panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); if (voice.active()) { voice.cancel(); $('copilotMic').focus(); return; } if (Layout && Layout.isMax()) { Layout.setMax(false); return; } setOpen(false); fab.focus(); } });
+  panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); if (!$('copilotConfirm').hidden) { hideConfirm(); return; } if (!$('copilotHist').hidden) { closeHistory(); $('copilotHistBtn').focus(); return; } if (voice.active()) { voice.cancel(); $('copilotMic').focus(); return; } if (Layout && Layout.isMax()) { Layout.setMax(false); return; } setOpen(false); fab.focus(); } });
   var langBtns = panel.querySelectorAll('[data-cp-lang]');
   for (var i = 0; i < langBtns.length; i++) langBtns[i].addEventListener('click', function () { lang = this.getAttribute('data-cp-lang'); voice.setLang(lang === 'zh' ? 'zh-CN' : 'en-US'); applyLang(); $('copilotSuggest').classList.remove('cp-collapsed'); });
   // show suggestions again when the input is focused and empty
@@ -7903,15 +8191,8 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     var onVV = function () { var kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop); root.style.setProperty('--cp-kb', kb + 'px'); };
     vv.addEventListener('resize', onVV); vv.addEventListener('scroll', onVV);
   }
-  function restoreChat() {
-    log.textContent = '';
-    addMsg('ai', t('hello'), { cls: 'cp-hello', plain: true });
-    var h = Memory.get();
-    for (var i = 0; i < h.length; i++) addMsg(h[i].role === 'user' ? 'user' : 'ai', h[i].content, h[i].role === 'user' ? {} : { actions: true });
-    if (h.length) $('copilotSuggest').classList.add('cp-collapsed');
-  }
   applyLang();
-  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); }, diagnose: diagnose, issues: currentIssues, layout: Layout };
+  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); }, diagnose: diagnose, chats: { KEY: SAVED_KEY, list: function () { return saved.map(function (c) { return { id: c.id, title: c.title, created: c.created, updated: c.updated, messages: c.messages.map(function (m) { return { role: m.role, content: m.content }; }) }; }); }, active: function () { return active.id; }, isTemp: function () { return active === temp; }, newChat: newChat, save: saveChat, open: function (id) { var c = findSaved(id); if (c) switchTo(c); return !!c; }, back: function () { switchTo(temp); }, rename: function (id, v) { var c = findSaved(id); return !!c && renameSaved(c, v); }, remove: function (id) { var c = findSaved(id); return !!c && deleteSaved(c); }, clearAll: clearAllSaved, history: openHistory, storage: function () { return Store.available(); } }, issues: currentIssues, layout: Layout };
 })();
 
 </script></body></html>
