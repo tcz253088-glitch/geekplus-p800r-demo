@@ -428,6 +428,44 @@ body.ar-mode .cp-root,body.live-fs .cp-root{display:none}
 .cp-issue-btn:focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
 @media(max-width:600px){.cp-issue{flex-wrap:wrap}.cp-issue-btn{width:100%;min-height:44px}}
 @media(prefers-reduced-motion:reduce){.cp-issue-dot{animation:none}}
+/* ---- movable button, resizable / full-screen panel ---- */
+.cp-root.cp-moved{top:var(--fy);bottom:auto}
+.cp-root.cp-moved.cp-side-l{left:max(18px,env(safe-area-inset-left));right:auto}
+.cp-root.cp-moved.cp-side-l .cp-fab{margin-left:0}
+.cp-root.cp-dragging{left:var(--fx)!important;top:var(--fy)!important;right:auto!important;bottom:auto!important}
+.cp-root.cp-dragging .cp-fab{cursor:grabbing;transform:scale(1.06);box-shadow:0 18px 40px #000b,0 0 0 6px #3ee6ec33;transition:none}
+.cp-root.cp-moved:not(.cp-dragging){transition:left .18s ease,right .18s ease,top .18s ease}
+.cp-fab{touch-action:none;user-select:none;-webkit-user-select:none}
+.cp-root.cp-is-max{z-index:1000}
+.cp-hbtn{display:grid;place-items:center;width:32px;padding:0}
+.cp-hbtn[hidden]{display:none}
+.cp-hbtn svg{width:16px;height:16px;fill:currentColor}
+.cp-max .cp-i-min,.cp-max[aria-pressed="true"] .cp-i-max{display:none}
+.cp-max[aria-pressed="true"] .cp-i-min{display:block}
+.cp-hbtn:focus-visible{outline:2px solid var(--cp-accent);outline-offset:2px}
+.cp-grip{display:none}
+@media(min-width:601px){
+  .cp-panel.cp-placed{position:fixed;left:var(--cp-l);top:var(--cp-t);right:auto;bottom:auto;width:var(--cp-w);height:var(--cp-h);max-width:none;max-height:none}
+  .cp-panel.cp-placed.cp-max{left:12px;top:12px;width:calc(100vw - 24px);height:calc(100vh - 24px);border-radius:14px}
+  .cp-panel.cp-max .cp-log,.cp-panel.cp-max .cp-suggest,.cp-panel.cp-max .cp-issue,.cp-panel.cp-max .cp-voice-status,.cp-panel.cp-max .cp-form,.cp-panel.cp-max .cp-foot{padding-left:max(16px,calc((100% - 900px)/2));padding-right:max(16px,calc((100% - 900px)/2))}
+  .cp-panel.cp-max .cp-msg{font-size:15px}
+  .cp-panel.cp-placed:not(.cp-max) .cp-grip{display:block;position:absolute;width:22px;height:22px;z-index:3;touch-action:none;opacity:.55;transition:opacity .15s}
+  .cp-panel.cp-placed .cp-grip:hover,.cp-resizing .cp-grip{opacity:1}
+  .cp-grip::before{content:"";position:absolute;inset:5px;border:0 solid var(--cp-accent)}
+  .cp-panel[data-grip="tl"] .cp-grip{left:0;top:0;cursor:nwse-resize}.cp-panel[data-grip="tl"] .cp-grip::before{border-left-width:2px;border-top-width:2px;border-top-left-radius:6px}
+  .cp-panel[data-grip="tr"] .cp-grip{right:0;top:0;cursor:nesw-resize}.cp-panel[data-grip="tr"] .cp-grip::before{border-right-width:2px;border-top-width:2px;border-top-right-radius:6px}
+  .cp-panel[data-grip="bl"] .cp-grip{left:0;bottom:0;cursor:nesw-resize}.cp-panel[data-grip="bl"] .cp-grip::before{border-left-width:2px;border-bottom-width:2px;border-bottom-left-radius:6px}
+  .cp-panel[data-grip="br"] .cp-grip{right:0;bottom:0;cursor:nwse-resize}.cp-panel[data-grip="br"] .cp-grip::before{border-right-width:2px;border-bottom-width:2px;border-bottom-right-radius:6px}
+  .cp-resizing .cp-panel{transition:none;user-select:none}
+  .cp-head{cursor:default}
+}
+@media(max-width:600px){
+  .cp-hbtn{display:none!important}
+  .cp-root.cp-moved.cp-side-l{left:max(12px,env(safe-area-inset-left))}
+  .cp-root.cp-open,.cp-root.cp-open.cp-moved{left:0;top:0;right:0;bottom:0}
+  .cp-fab{min-width:50px;min-height:50px}
+}
+@media(prefers-reduced-motion:reduce){.cp-root.cp-moved:not(.cp-dragging){transition:none}}
 </style></head><body><nav class="mode-switcher" role="tablist" aria-label="Warehouse demonstration mode"><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true">Traditional vs. P800R</button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false">Warehouse Optimizer</button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false">3D Product Experience</button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false">WMS Integration Lab</button><span class="nav-sep" aria-hidden="true"></span><button id="journeyTab" class="journey-tab" type="button" aria-pressed="false" aria-controls="journeyMode"><i aria-hidden="true">▶</i>Order Journey<small>3D FILM</small></button><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
 <section id="engTour" class="eng-tour engineering" hidden aria-label="Guided engineering demonstration"><div class="eng-title-row"><span id="engTourStep" class="eng-kicker">STEP 1 / 7</span><span id="engTourTime" class="eng-tour-badge">0 / 105 s</span></div><h2 id="engTourTitle"></h2><p id="engTourText"></p><div class="eng-tour-progress"><div id="engTourProgress"></div></div><div class="eng-toolbar"><button class="btn" id="engTourPrevious">← Previous</button><button class="btn" id="engTourPause">Pause</button><button class="btn primary" id="engTourNext">Next →</button><button class="btn" id="engTourReset">Reset tour</button><button class="btn" id="engTourExit">Exit tour</button></div><p class="eng-note">Uses current customer requirements; resets the mock lab at the integration step. Previous revisits evidence without rewinding data. Reset starts a fresh walkthrough. You can skip steps; no automatic deployment or external requests occur.</p></section>
 
@@ -7289,8 +7327,8 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   };
   var lang = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
   var T = {
-    en: { title: 'Warehouse AI Copilot', sub: 'GPT-5.4 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design. I can also read the live WMS lab — ask for a status report, or click “Diagnose with AI” when a fault appears.', note: 'AI-generated · may be wrong · remembers the last 6 exchanges in this browser tab · reads a snapshot of the WMS lab, never changes it', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', issueLabel: 'WMS lab', diagBtn: 'Diagnose with AI', diagPrompt: 'Diagnose the current problem in the WMS Integration Lab. Using the live lab state, tell me: 1) what is wrong, 2) the evidence, 3) the root cause, 4) the exact steps to fix it with the lab buttons, and 5) how to verify the fix.', moreIssues: ' more', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
-    zh: { title: '仓库 AI 助手', sub: 'GPT-5.4 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。我还能读取 WMS 实验室的实时状态——可以让我出状态报告，或在出现故障时点击“用 AI 诊断”。', note: 'AI 生成内容，可能有误 · 记住本标签页最近 6 轮对话 · 只读取 WMS 实验室状态快照，不会修改模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', issueLabel: 'WMS 实验室', diagBtn: '用 AI 诊断', diagPrompt: '请诊断 WMS 集成实验室当前的问题。根据实时的实验室状态告诉我：1）出了什么问题，2）证据，3）根本原因，4）用实验室按钮修复的具体步骤，5）如何验证已经修复。', moreIssues: ' 项其他问题', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
+    en: { title: 'Warehouse AI Copilot', sub: 'GPT-5.4 mini · follows this conversation', ph: 'Ask about the demo, the P800R, warehouses…', send: 'Send', open: 'Ask the AI Copilot', close: 'Close chat', clear: 'Clear chat', cleared: 'Chat cleared. Ask a new question any time.', readyAgain: 'You can ask again now.', hello: 'Hi! I am an AI assistant for this Geek+ P800R engineering demo. Ask me in English or Chinese about the robot, goods-to-person picking, the four engineering tabs, the Order Journey 3D film, SQL/API testing or warehouse design. I can also read the live WMS lab — ask for a status report, or click “Diagnose with AI” when a fault appears.', note: 'AI-generated · may be wrong · remembers the last 6 exchanges in this browser tab · reads a snapshot of the WMS lab, never changes it', go: 'Open', thinking: 'Thinking', tabs: 'Jump to a tab', limit: 'Too many questions right now — the demo AI allows about 20 per minute for everyone. You can ask again in ', sec: 's.', net: 'Could not reach the AI service. Check your connection and try again.', timeout: 'The AI took too long to answer. Please try again.', server: 'The AI service had a problem', retry: 'Retry', long: 'Please keep questions under ' + MAX_CHARS + ' characters.', bad: 'The question was not accepted', origin: 'This AI only answers from the official demo website.', empty: 'The AI returned an empty answer. Please try again.', copy: 'Copy', copied: 'Copied ✓', maxOn: 'Full screen', maxOff: 'Exit full screen', layoutReset: 'Reset position & size', fabDrag: 'drag to move', grip: 'Drag to resize', issueLabel: 'WMS lab', diagBtn: 'Diagnose with AI', diagPrompt: 'Diagnose the current problem in the WMS Integration Lab. Using the live lab state, tell me: 1) what is wrong, 2) the evidence, 3) the root cause, 4) the exact steps to fix it with the lab buttons, and 5) how to verify the fix.', moreIssues: ' more', micStart: 'Start voice input', micStop: 'Stop listening', vlangTitle: 'Speech language — tap to switch', vlangEn: 'English (en-US)', vlangZh: 'Chinese (zh-CN)', vListening: 'Listening… speak your question', vProcessing: 'Processing speech…', vReady: 'Transcription ready — review or edit, then press Send.', vCancel: 'Cancel', vDenied: 'Microphone access was blocked. Allow the microphone for this site in your browser settings, or just type your question.', vDeniedIOS: 'Microphone or speech recognition is blocked. On iPhone: Settings › Safari › Microphone, and make sure Siri & Dictation is enabled. You can also type your question.', vNoSpeech: 'No speech was detected. Tap the microphone and try again, a little closer.', vNoMic: 'No microphone was found on this device.', vNetwork: 'The speech recognition service could not be reached. Check your connection or type your question.', vLangBad: 'This speech language is not available in this browser. Try the other language or type your question.', vFailed: 'Voice input stopped unexpectedly. Please try again or type your question.', vUnsupported: 'Voice input is not available in this browser. Type your question — on phones you can also use the microphone key on the keyboard.', vInsecure: 'Voice input needs the secure (https) website.', vCancelled: 'Voice input cancelled.', vStoppedSend: 'Listening stopped — review the text, then press Send.' },
+    zh: { title: '仓库 AI 助手', sub: 'GPT-5.4 mini · 理解上下文对话', ph: '问任何关于演示、P800R 或仓储的问题…', send: '发送', open: '打开 AI 助手', close: '关闭对话', clear: '清空对话', cleared: '对话已清空，可以开始新的提问。', readyAgain: '现在可以继续提问了。', hello: '你好！我是这个 Geek+ P800R 工程演示的 AI 助手。可以用中文或英文问我关于机器人、货到人拣选、四个工程页面、订单旅程 3D 影片、SQL/API 测试或仓库设计的问题。我还能读取 WMS 实验室的实时状态——可以让我出状态报告，或在出现故障时点击“用 AI 诊断”。', note: 'AI 生成内容，可能有误 · 记住本标签页最近 6 轮对话 · 只读取 WMS 实验室状态快照，不会修改模拟', go: '打开', thinking: '思考中', tabs: '跳转到页面', limit: '当前提问太多——演示 AI 全站每分钟约 20 次。请在 ', sec: ' 秒后再试。', net: '无法连接 AI 服务，请检查网络后重试。', timeout: 'AI 回复超时，请重试。', server: 'AI 服务出现问题', retry: '重试', long: '问题请控制在 ' + MAX_CHARS + ' 个字符以内。', bad: '问题未被接受', origin: '此 AI 只接受来自官方演示网站的请求。', empty: 'AI 返回了空回答，请重试。', copy: '复制', copied: '已复制 ✓', maxOn: '全屏', maxOff: '退出全屏', layoutReset: '重置位置和大小', fabDrag: '可拖动移动位置', grip: '拖动调整大小', issueLabel: 'WMS 实验室', diagBtn: '用 AI 诊断', diagPrompt: '请诊断 WMS 集成实验室当前的问题。根据实时的实验室状态告诉我：1）出了什么问题，2）证据，3）根本原因，4）用实验室按钮修复的具体步骤，5）如何验证已经修复。', moreIssues: ' 项其他问题', micStart: '开始语音输入', micStop: '停止聆听', vlangTitle: '语音识别语言 — 点击切换', vlangEn: '英语 (en-US)', vlangZh: '中文 (zh-CN)', vListening: '正在聆听… 请说出你的问题', vProcessing: '正在识别语音…', vReady: '识别完成 — 请检查或修改，然后点发送。', vCancel: '取消', vDenied: '麦克风权限被拒绝。请在浏览器设置中允许本网站使用麦克风，或直接输入问题。', vDeniedIOS: '麦克风或语音识别被禁止。iPhone 上请到 设置 › Safari › 麦克风，并确认已开启“Siri 与听写”。也可以直接输入问题。', vNoSpeech: '没有检测到语音。请点击麦克风再试一次，离近一点。', vNoMic: '此设备上没有找到麦克风。', vNetwork: '无法连接语音识别服务。请检查网络，或直接输入问题。', vLangBad: '此浏览器不支持当前语音语言。请切换语言或直接输入。', vFailed: '语音输入意外中断，请重试或直接输入。', vUnsupported: '此浏览器不支持语音输入。请直接输入 — 手机上也可以使用键盘上的麦克风键。', vInsecure: '语音输入需要在 https 安全网址下使用。', vCancelled: '已取消语音输入。', vStoppedSend: '已停止聆听 — 请检查文字，然后点发送。' }
   };
   var t = function (k) { return T[lang][k]; };
 
@@ -7305,6 +7343,8 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   panel.innerHTML = '' +
     '<header class="cp-head"><div class="cp-avatar" aria-hidden="true">AI</div><div class="cp-titles"><h2 id="copilotTitle"></h2><p id="copilotSub"></p></div>' +
     '<div class="cp-lang" role="group" aria-label="Language"><button type="button" data-cp-lang="en">EN</button><button type="button" data-cp-lang="zh">中文</button></div>' +
+    '<button type="button" class="cp-icon-btn cp-hbtn cp-reset-layout" id="copilotLayoutReset" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 1-7.75 10h1.6A6.5 6.5 0 1 0 7.4 7.4L10 10H4V4l2.34 2.34A7.97 7.97 0 0 1 12 4z"/></svg></button>' +
+    '<button type="button" class="cp-icon-btn cp-hbtn cp-max" id="copilotMax" aria-pressed="false"><svg class="cp-i-max" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v1.6H6.7l4 4-1.1 1.1-4-4V10H4V4zm10 0h6v6h-1.6V6.7l-4 4-1.1-1.1 4-4H14V4zM4 14h1.6v3.3l4-4 1.1 1.1-4 4H10V20H4v-6zm14.4 3.3V14H20v6h-6v-1.6h3.3l-4-4 1.1-1.1 4 4z"/></svg><svg class="cp-i-min" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h1.6v6H4.6V8.4h3.3l-4-4L5 3.3l4 4V4zm4.4 0H15v3.3l4-4 1.1 1.1-4 4h3.3V10h-6V4zM4.6 14h6v6H9v-3.3l-4 4-1.1-1.1 4-4H4.6V14zm8.8 0h6v1.6h-3.3l4 4-1.1 1.1-4-4V20h-1.6v-6z"/></svg></button>' +
     '<button type="button" class="cp-icon-btn cp-clear" id="copilotClear"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6a1 1 0 0 1 1 1V6h3.25a.75.75 0 0 1 0 1.5h-.8l-.86 11.2A2.5 2.5 0 0 1 15.1 21H8.9a2.5 2.5 0 0 1-2.49-2.3L5.55 7.5h-.8a.75.75 0 0 1 0-1.5H8V4.5a1 1 0 0 1 1-1zm.5 2.5h5V5h-5v1zm-2.44 1.5.85 11.08a1 1 0 0 0 1 .92h6.18a1 1 0 0 0 1-.92l.85-11.08H7.06zM10 10a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 10 10zm4 0a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 14 10z"/></svg></button><button type="button" class="cp-icon-btn cp-close" id="copilotClose">×</button></header>' +
     '<div class="cp-log" id="copilotLog" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>' +
     '<div class="cp-issue" id="copilotIssue" hidden role="status"><span class="cp-issue-dot" aria-hidden="true"></span><span class="cp-issue-text" id="copilotIssueText"></span><button type="button" class="cp-issue-btn" id="copilotIssueBtn" data-ai-diagnose></button></div>' +
@@ -7328,7 +7368,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     $('copilotClose').setAttribute('aria-label', t('close')); $('copilotClear').setAttribute('aria-label', t('clear')); $('copilotClear').title = t('clear');
     $('copilotNote').textContent = t('note'); fabLabel.textContent = t('open'); fab.setAttribute('aria-label', t('open'));
     var bs = panel.querySelectorAll('[data-cp-lang]'); for (var i = 0; i < bs.length; i++) bs[i].setAttribute('aria-pressed', String(bs[i].getAttribute('data-cp-lang') === lang));
-    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels(); $('copilotIssueBtn').textContent = '🤖 ' + t('diagBtn'); refreshIssues();
+    renderSuggestions(); if (window.__cpVoice) window.__cpVoice.labels(); layoutLabels(); $('copilotIssueBtn').textContent = '🤖 ' + t('diagBtn'); refreshIssues();
     var hello = log.querySelector('.cp-hello .cp-text'); if (hello) hello.textContent = t('hello');
   }
   function renderSuggestions() {
@@ -7679,11 +7719,11 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       document.documentElement.classList.add('cp-chat-open');
       requestAnimationFrame(function () { panel.classList.add('cp-visible'); });
       if (!log.children.length) restoreChat();
-      refreshIssues();
+      refreshIssues(); if (Layout) Layout.place();
       setTimeout(function () { if (!window.matchMedia('(pointer: coarse)').matches) input.focus(); }, 180);
     } else {
       voice.cancel(true);
-      panel.classList.remove('cp-visible'); root.classList.remove('cp-open'); fab.setAttribute('aria-expanded', 'false');
+      panel.classList.remove('cp-visible'); root.classList.remove('cp-open', 'cp-is-max'); fab.setAttribute('aria-expanded', 'false');
       document.documentElement.classList.remove('cp-chat-open');
       setTimeout(function () { if (!root.classList.contains('cp-open')) panel.hidden = true; }, 220);
       if (lastFocus && lastFocus.focus && panel.contains(document.activeElement)) lastFocus.focus();
@@ -7705,13 +7745,153 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     var live = $('copilotVoiceText'); if (live && !voice.active()) { $('copilotVoiceStatus').hidden = false; $('copilotVoiceStatus').className = 'cp-voice-status cp-vs-info'; live.textContent = t('cleared'); setTimeout(function () { if (!voice.active() && live.textContent === t('cleared')) $('copilotVoiceStatus').hidden = true; }, 2500); }
     try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
   }
+
+  /* ---------------- layout: movable AI button, resizable / full-screen panel ----------------
+     Per-viewer convenience only (localStorage, wrapped in try/catch). Phones keep the full-screen sheet. */
+  function layoutLabels() {
+    var mx = document.getElementById('copilotMax'); if (!mx) return;
+    var on = mx.getAttribute('aria-pressed') === 'true';
+    mx.setAttribute('aria-label', on ? t('maxOff') : t('maxOn')); mx.title = mx.getAttribute('aria-label');
+    var rs = document.getElementById('copilotLayoutReset'); rs.setAttribute('aria-label', t('layoutReset')); rs.title = t('layoutReset');
+    fab.title = t('open') + ' · ' + t('fabDrag');
+    var g = panel.querySelector('.cp-grip'); if (g) g.title = t('grip');
+  }
+  var Layout = (function () {
+    var KEY = 'geekplus_copilot_layout_v1', M = 8, PAD = 12, MIN_W = 340, MIN_H = 420, MOVE = 6;
+    var st = {}, geom = null;
+    var maxBtn = $('copilotMax'), resetBtn = $('copilotLayoutReset');
+    var grip = el('div', 'cp-grip'); grip.setAttribute('aria-hidden', 'true'); panel.appendChild(grip);
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function num(v) { return typeof v === 'number' && isFinite(v); }
+    function load() {
+      try {
+        var d = JSON.parse(window.localStorage.getItem(KEY) || 'null'), o = {};
+        if (!d || typeof d !== 'object') return {};
+        if (d.fab && (d.fab.side === 'l' || d.fab.side === 'r') && num(d.fab.y)) o.fab = { side: d.fab.side, y: clamp(d.fab.y, 0, 1) };
+        if (d.size && num(d.size.w) && num(d.size.h) && d.size.w > 0 && d.size.h > 0) o.size = { w: Math.round(d.size.w), h: Math.round(d.size.h) };
+        if (d.max === true) o.max = true;
+        return o;
+      } catch (e) { return {}; }
+    }
+    function save() {
+      try { if (st.fab || st.size || st.max) window.localStorage.setItem(KEY, JSON.stringify(st)); else window.localStorage.removeItem(KEY); } catch (e) { /* storage blocked: this page only */ }
+      resetBtn.hidden = !(st.fab || st.size || st.max);
+    }
+    function mobile() { return window.matchMedia('(max-width: 600px)').matches; }
+    function VW() { return document.documentElement.clientWidth || window.innerWidth; }
+    function VH() { return window.innerHeight; }
+    /* ---- button ---- */
+    function applyFab() {
+      root.classList.toggle('cp-moved', !!st.fab);
+      root.classList.toggle('cp-side-l', !!(st.fab && st.fab.side === 'l'));
+      if (!st.fab) { root.style.removeProperty('--fy'); return; }
+      var h = fab.offsetHeight || 54;
+      root.style.setProperty('--fy', Math.round(M + st.fab.y * Math.max(0, VH() - h - 2 * M)) + 'px');
+    }
+    var drag = null, swallowUntil = 0;   // ignore the browser's click right after a drag or a handled touch tap
+    fab.style.touchAction = 'none';
+    fab.addEventListener('pointerdown', function (e) {
+      swallowUntil = 0;   // a new press is a new gesture
+      if (e.button !== 0 || root.classList.contains('cp-open') && mobile()) return;
+      var r = fab.getBoundingClientRect();
+      drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: e.clientX - r.left, oy: e.clientY - r.top, moved: false, touch: e.pointerType === 'touch' };
+      try { fab.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    });
+    fab.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      if (!drag.moved) {
+        if (Math.abs(e.clientX - drag.sx) < MOVE && Math.abs(e.clientY - drag.sy) < MOVE) return;
+        drag.moved = true; root.classList.add('cp-dragging');
+      }
+      var r = fab.getBoundingClientRect();
+      root.style.setProperty('--fx', Math.round(clamp(e.clientX - drag.ox, M, VW() - r.width - M)) + 'px');
+      root.style.setProperty('--fy', Math.round(clamp(e.clientY - drag.oy, M, VH() - r.height - M)) + 'px');
+      e.preventDefault();
+    });
+    function endDrag(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var d = drag; drag = null;
+      try { fab.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      if (!d.moved) {
+        // Touch tap: open/close here instead of relying on the browser's synthetic click,
+        // which some mobile browsers drop right after a drag.
+        if (d.touch && e.type === 'pointerup') { swallowUntil = Date.now() + 700; setOpen(panel.hidden); }
+        return;
+      }
+      swallowUntil = Date.now() + 350;
+      var r = fab.getBoundingClientRect();
+      st.fab = { side: r.left + r.width / 2 < VW() / 2 ? 'l' : 'r', y: clamp((r.top - M) / Math.max(1, VH() - r.height - 2 * M), 0, 1) };
+      root.classList.remove('cp-dragging'); root.style.removeProperty('--fx');
+      applyFab(); save(); place();
+    }
+    fab.addEventListener('pointerup', endDrag);
+    fab.addEventListener('pointercancel', endDrag);
+    root.addEventListener('click', function (e) { if (Date.now() < swallowUntil && fab.contains(e.target)) { swallowUntil = 0; e.stopPropagation(); e.preventDefault(); } }, true);
+    fab.addEventListener('keydown', function (e) {
+      if (!e.altKey || ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) < 0) return;
+      e.preventDefault();
+      var r = fab.getBoundingClientRect(), span = Math.max(1, VH() - r.height - 2 * M);
+      if (!st.fab) st.fab = { side: r.left + r.width / 2 < VW() / 2 ? 'l' : 'r', y: clamp((r.top - M) / span, 0, 1) };
+      if (e.key === 'ArrowLeft') st.fab.side = 'l'; else if (e.key === 'ArrowRight') st.fab.side = 'r';
+      else st.fab.y = clamp(st.fab.y + (e.key === 'ArrowUp' ? -24 : 24) / span, 0, 1);
+      applyFab(); save(); place();
+    });
+    /* ---- panel ---- */
+    function setGeom(g) {
+      geom = g;
+      panel.style.setProperty('--cp-l', g.left + 'px'); panel.style.setProperty('--cp-t', g.top + 'px');
+      panel.style.setProperty('--cp-w', g.w + 'px'); panel.style.setProperty('--cp-h', g.h + 'px');
+    }
+    function place() {
+      root.classList.toggle('cp-is-max', !!st.max && !mobile() && root.classList.contains('cp-open'));
+      if (mobile()) { panel.classList.remove('cp-placed', 'cp-max'); return; }
+      var vw = VW(), vh = VH(), rr = root.getBoundingClientRect();
+      var w = st.size ? st.size.w : Math.min(420, vw - 36), h = st.size ? st.size.h : Math.min(640, vh - 110);
+      w = clamp(w, Math.min(MIN_W, vw - 2 * PAD), vw - 2 * PAD); h = clamp(h, Math.min(MIN_H, vh - 2 * PAD), vh - 2 * PAD);
+      var right = rr.left + rr.width / 2 > vw / 2, lower = rr.top + rr.height / 2 > vh / 2;
+      var left = clamp(right ? rr.right - w : rr.left, PAD, vw - w - PAD), top = clamp(lower ? rr.bottom - h : rr.top, PAD, vh - h - PAD);
+      panel.dataset.grip = (lower ? 't' : 'b') + (right ? 'l' : 'r');
+      panel.style.transformOrigin = (lower ? 'bottom ' : 'top ') + (right ? 'right' : 'left');
+      setGeom({ left: Math.round(left), top: Math.round(top), w: Math.round(w), h: Math.round(h) });
+      panel.classList.add('cp-placed'); panel.classList.toggle('cp-max', !!st.max);
+      maxBtn.setAttribute('aria-pressed', st.max ? 'true' : 'false'); layoutLabels();
+    }
+    function setMax(on) { if (on) st.max = true; else delete st.max; save(); place(); }
+    maxBtn.addEventListener('click', function () { setMax(!st.max); });
+    $('copilotLayoutReset').addEventListener('click', function () { st = {}; save(); applyFab(); place(); try { fab.blur(); maxBtn.focus(); } catch (e) { /* ignore */ } });
+    panel.querySelector('.cp-head').addEventListener('dblclick', function (e) { if (mobile() || (e.target.closest && e.target.closest('button'))) return; setMax(!st.max); });
+    var rz = null;
+    grip.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 || st.max || !geom) return;
+      e.preventDefault(); rz = { id: e.pointerId, sx: e.clientX, sy: e.clientY, g: { left: geom.left, top: geom.top, w: geom.w, h: geom.h }, c: panel.dataset.grip };
+      root.classList.add('cp-resizing');
+      try { grip.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    });
+    grip.addEventListener('pointermove', function (e) {
+      if (!rz || e.pointerId !== rz.id) return;
+      var dx = e.clientX - rz.sx, dy = e.clientY - rz.sy, g = rz.g, vw = VW(), vh = VH(), n = { left: g.left, top: g.top, w: g.w, h: g.h };
+      if (rz.c.charAt(1) === 'l') { n.w = clamp(g.w - dx, MIN_W, g.left + g.w - PAD); n.left = g.left + g.w - n.w; } else n.w = clamp(g.w + dx, MIN_W, vw - PAD - g.left);
+      if (rz.c.charAt(0) === 't') { n.h = clamp(g.h - dy, MIN_H, g.top + g.h - PAD); n.top = g.top + g.h - n.h; } else n.h = clamp(g.h + dy, MIN_H, vh - PAD - g.top);
+      setGeom({ left: Math.round(n.left), top: Math.round(n.top), w: Math.round(n.w), h: Math.round(n.h) });
+    });
+    function endRz(e) {
+      if (!rz || e.pointerId !== rz.id) return;
+      rz = null; root.classList.remove('cp-resizing');
+      st.size = { w: geom.w, h: geom.h }; save(); place();
+    }
+    grip.addEventListener('pointerup', endRz); grip.addEventListener('pointercancel', endRz);
+    var rt = 0;
+    window.addEventListener('resize', function () { cancelAnimationFrame(rt); rt = requestAnimationFrame(function () { applyFab(); if (root.classList.contains('cp-open')) place(); }); });
+    st = load(); applyFab(); save(); layoutLabels();
+    return { place: place, setMax: setMax, isMax: function () { return !!st.max && !mobile(); }, state: function () { return JSON.parse(JSON.stringify(st)); }, reset: function () { st = {}; save(); applyFab(); place(); } };
+  })();
   $('copilotClear').addEventListener('click', clearChat);
   form.addEventListener('submit', function (e) { e.preventDefault(); if (voice.active()) { voice.stop(true); return; } ask(input.value); });
   input.addEventListener('input', function () { autosize(); updateCount(); });
   input.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (voice.active()) { voice.stop(true); return; } ask(input.value); }
   });
-  panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); if (voice.active()) { voice.cancel(); $('copilotMic').focus(); return; } setOpen(false); fab.focus(); } });
+  panel.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); if (voice.active()) { voice.cancel(); $('copilotMic').focus(); return; } if (Layout && Layout.isMax()) { Layout.setMax(false); return; } setOpen(false); fab.focus(); } });
   var langBtns = panel.querySelectorAll('[data-cp-lang]');
   for (var i = 0; i < langBtns.length; i++) langBtns[i].addEventListener('click', function () { lang = this.getAttribute('data-cp-lang'); voice.setLang(lang === 'zh' ? 'zh-CN' : 'en-US'); applyLang(); $('copilotSuggest').classList.remove('cp-collapsed'); });
   // show suggestions again when the input is focused and empty
@@ -7731,7 +7911,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     if (h.length) $('copilotSuggest').classList.add('cp-collapsed');
   }
   applyLang();
-  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); }, diagnose: diagnose, issues: currentIssues };
+  window.WarehouseCopilot = { open: function () { setOpen(true); }, close: function () { setOpen(false); }, ask: function (q) { return ask(q); }, endpoint: ENDPOINT, voice: voice, memory: Memory, clear: function () { clearChat(); }, diagnose: diagnose, issues: currentIssues, layout: Layout };
 })();
 
 </script></body></html>
