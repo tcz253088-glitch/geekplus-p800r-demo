@@ -7396,7 +7396,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
   }
   function demoIso(sec) { var s = num(sec); return s === null ? null : new Date(EPOCH_MS + s * 1000).toISOString(); }
   function activeTab() {
-    if (document.documentElement.classList.contains('route-home')) return 'home';
+    if (document.documentElement.classList.contains('route-home')) return null;   // Home page: not viewing a section (contract allows null)
     var j = document.getElementById('journeyMode'); if (j && !j.hidden) return 'journey';
     for (var i = 0; i < TAB_IDS.length; i++) { var p = document.getElementById(TAB_IDS[i] + 'Mode'); if (p && !p.hidden) return TAB_IDS[i]; }
     return null;
