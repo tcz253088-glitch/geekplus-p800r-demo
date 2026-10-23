@@ -388,6 +388,120 @@ html.intro-on .cp-root{display:none!important}
 @keyframes i-word{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes i-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @media(prefers-reduced-motion:reduce){html.home-enter .home-hero>*,html.home-enter .home-card,html.home-enter .home-facts{animation:none}.home-card{transition:none}}
+/* ================= Guided demo (started only from Home) ================= */
+#engTourStart{display:none!important}
+.eng-tour{padding:14px 18px}
+.eng-tour h2{margin:6px 0 4px}
+body.presenter .eng-tour .eng-note{display:none}
+body.tour-live #engTour .eng-toolbar{margin-top:10px}
+/* film step: compact floating strip so the film stays visible */
+body.journey-mode #engTour.tour-film{display:block!important;position:fixed;left:auto;right:calc(16px + env(safe-area-inset-right));transform:none;top:auto;bottom:calc(14px + env(safe-area-inset-bottom));width:min(500px,calc(100vw - 24px));margin:0;padding:10px 14px;z-index:60;box-shadow:0 16px 50px #000c;background:linear-gradient(100deg,#143d3bf2,#183047f2);backdrop-filter:blur(6px)}
+#engTour.tour-film #engTourText,#engTour.tour-film .eng-note{display:none}
+#engTour.tour-film h2{font-size:15px;margin:4px 0 0}
+#engTour.tour-film .eng-tour-progress{margin-top:8px}
+#engTour.tour-film .eng-toolbar{margin-top:8px}
+#engTour.tour-film #engTourReset{display:none}
+/* AI step: briefly highlight every AI button */
+.tour-glow{animation:tour-glow 1.4s ease-in-out infinite;position:relative}
+@keyframes tour-glow{0%,100%{box-shadow:0 0 0 0 #b69cff00}50%{box-shadow:0 0 0 6px #b69cff66,0 0 22px #3ee6ec88}}
+@media(prefers-reduced-motion:reduce){.tour-glow{animation:none;outline:2px solid #b69cff}}
+@media(max-width:600px){body.journey-mode #engTour.tour-film{right:8px;width:calc(100vw - 16px);padding:8px 10px}#engTour.tour-film .btn{min-height:44px}}
+/* ================= Presenter view: simple and readable (Detail keeps everything) ================= */
+.presenter-only{display:none}
+body.presenter .presenter-only{display:inline}
+body.presenter .detail-only{display:none}
+.eng-status{display:none;flex-wrap:wrap;gap:8px;align-items:center}
+.eng-chip{display:inline-flex;align-items:baseline;gap:5px;padding:5px 12px;border-radius:999px;border:1px solid #2b5164;background:#0d2232;color:#9fc0d2;font-size:12px;font-weight:600;white-space:nowrap}
+.eng-chip b{color:#eafcff;font-size:14px;font-weight:800}
+body.presenter .eng-status{display:flex}
+body.presenter .eng-project-main h2,body.presenter #engSharedSummary,body.presenter .eng-disclaimer{display:none!important}
+body.presenter .eng-project{margin:8px auto}
+body.presenter .eng-project-main{padding:8px 14px;min-height:0}
+/* Traditional vs. P800R */
+body.presenter #workflowMode .top .sub,body.presenter #workflowMode .config-meta,body.presenter #workflowMode .scenario .smallnote,body.presenter #workflowMode .story{display:none!important}
+/* WMS Integration Lab: architecture captions */
+body.presenter #wmsArchitecture small{display:none!important}
+@media(max-width:600px){.eng-chip{font-size:11px;padding:4px 10px}.eng-chip b{font-size:13px}}
+/* ================= Film full screen (guided demo) ================= */
+#jrStage.jr-immersive{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;margin:0!important;border-radius:0!important;border:0!important;z-index:2500!important;aspect-ratio:auto!important}
+body.film-immersive{overflow:hidden}
+body.film-immersive .cp-root,body.film-immersive #engTour{display:none!important}
+.jr-imm-hint{display:none;position:absolute;top:12px;right:14px;z-index:7;padding:6px 12px;border-radius:999px;background:#08121ecc;border:1px solid #2c5368;color:#bfe4ee;font:600 11.5px system-ui,-apple-system,"Segoe UI",sans-serif;pointer-events:none}
+#jrStage.jr-immersive .jr-imm-hint{display:block}
+/* ================= Compact one-row navigation ================= */
+.mode-switcher.nav-compact{display:flex;flex-wrap:nowrap!important;justify-content:flex-start;align-items:center;gap:8px;padding:8px 18px;min-height:56px;position:sticky;top:0;z-index:40;backdrop-filter:blur(8px)}
+.mode-switcher.nav-compact::after{display:none!important;content:none!important}
+.nav-compact>*{flex:0 0 auto}
+.nav-compact .nav-flex{flex:1 1 auto;min-width:4px}
+.nav-compact .nav-sep{height:24px;margin:0 2px}
+.nav-dd{position:relative;min-width:0}
+.nav-compact .nav-dd-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 12px 8px 12px;border-radius:10px;border:1px solid #284459;background:#0c1a29;color:#dbeaf3;font-weight:700;font-size:13px;cursor:pointer;max-width:100%;flex:0 1 auto;transition:background .15s,border-color .15s,transform .15s,box-shadow .15s}
+.nav-compact .nav-dd-btn:hover{border-color:#3b7f8f;background:#10263a;transform:translateY(-1px);box-shadow:0 6px 18px #0006}
+.nav-compact .nav-dd-btn:focus-visible{outline:2px solid #3ee6ec;outline-offset:2px}
+.nav-dd-btn.nav-on-section{border-color:#316570;background:#123241;color:#a9f4ec}
+.nav-cur-num{font-size:10px;font-weight:800;letter-spacing:1px;color:#3ee6ec;border:1px solid #2b6070;border-radius:6px;padding:2px 6px}
+.nav-cur-num[hidden]{display:none}
+.nav-cur{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.nav-chev{width:16px;height:16px;flex:none;transition:transform .2s ease;opacity:.8}
+.nav-open>.nav-dd-btn .nav-chev{transform:rotate(180deg)}
+.nav-eye{width:16px;height:16px;flex:none;opacity:.85}
+.nav-view-btn{font-size:12px!important;color:#c8dbe7!important}
+.nav-menu{position:absolute;top:calc(100% + 8px);left:0;min-width:320px;padding:8px;border-radius:14px;border:1px solid #2a4a5e;background:linear-gradient(170deg,#0f2032f7,#09131ff7);box-shadow:0 24px 60px #000c;z-index:60;animation:nav-pop .16s ease-out}
+.nav-menu[hidden]{display:none!important}
+.nav-menu-view{left:auto;right:0;min-width:0;padding:6px}
+@keyframes nav-pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.nav-menu-tabs{display:flex;flex-direction:column;gap:2px}
+.nav-compact .nav-menu-tabs button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:9px 12px;min-height:48px;border-radius:10px;border:1px solid transparent;background:transparent;color:#cfe1ec;font-size:13px;line-height:1.3;flex:none;transition:background .15s,border-color .15s,transform .15s}
+.nav-compact .nav-menu-tabs button:hover{background:#12283c;border-color:#24485c;transform:translateX(2px)}
+.nav-compact .nav-menu-tabs button[aria-selected="true"]{background:#163544;border-color:#316570;color:#a9f4ec}
+.nav-num{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:#0f3140;border:1px solid #23596a;color:#3ee6ec;font-size:11px;font-weight:800}
+.nav-txt{display:flex;flex-direction:column;min-width:0}
+.nav-name{font-weight:800}
+.nav-hint{font-size:11px;font-weight:500;color:#7f9cb0}
+.nav-menu-sep{height:1px;background:#21394b;margin:6px 4px}
+.nav-compact .nav-menu .journey-tab{width:100%;justify-content:flex-start;margin:0;min-height:46px;transition:box-shadow .15s,transform .15s}
+.nav-compact .nav-menu .journey-tab:hover{transform:translateX(2px)}
+.nav-menu-view .view-switch{position:static!important;transform:none!important;margin:0!important;order:0!important}
+.nav-compact .home-tab{min-height:40px;padding:8px 13px;transition:background .15s,border-color .15s,transform .15s}
+.nav-compact .home-tab:hover{transform:translateY(-1px);background:#10263a;border-color:#284459}
+@media(max-width:600px){
+  .mode-switcher.nav-compact{padding:6px 8px;gap:4px}
+  .nav-compact .home-tab{padding:8px 10px;font-size:12px}
+  .nav-compact .nav-dd-btn{padding:8px 9px;font-size:12px;min-height:44px}
+  .nav-compact .nav-sep{display:none}
+  .nav-dd#navSectionsWrap{flex:1 1 auto;min-width:0}
+  #navSectionsBtn{width:100%}
+  .nav-view-btn #navViewLabel{display:none}
+  .nav-menu{position:fixed;left:8px;right:8px;top:58px;min-width:0}
+  .nav-menu-view{left:auto;right:8px}
+  .nav-compact .nav-menu-tabs button{min-height:52px}
+}
+@media(prefers-reduced-motion:reduce){.nav-menu{animation:none}.nav-compact .nav-dd-btn,.nav-compact .nav-menu-tabs button,.nav-compact .home-tab{transition:none;transform:none!important}}
+/* ================= Status in the section header (Presenter) ================= */
+.hdr-status{display:none}
+.hdr-right{display:flex;align-items:center;gap:14px;flex:none}
+body.presenter .eng-project{display:none!important}
+body.presenter .hdr-status{display:grid;grid-template-columns:repeat(2,minmax(0,auto));gap:6px;flex:none}
+.hs{display:flex;align-items:baseline;gap:6px;padding:6px 11px;border-radius:10px;border:1px solid #284a5d;background:#0c1f2e;white-space:nowrap}
+.hs b{font-size:15px;font-weight:800;color:#eafcff}
+.hs span{font-size:11px;font-weight:600;color:#8fb0c4}
+body.presenter #optimizerMode .eng-heading>.eng-pill,body.presenter #integrationMode .eng-heading>.eng-pill,body.presenter #productMode .product-tag{display:none!important}
+body.presenter #wmsArchitecture{display:none!important}
+/* tighter, still comfortable */
+body.presenter .mode-panel.wrap{padding-top:20px}
+body.presenter #workflowMode .top{margin:2px 0 16px;align-items:center}
+body.presenter .mode-panel .eng-heading{margin:4px 0 16px}
+body.presenter #productMode .product-heading{margin:4px 0 16px}
+@media(max-width:900px){body.presenter #workflowMode .top,body.presenter .mode-panel .eng-heading,body.presenter #productMode .product-heading{flex-wrap:wrap}body.presenter .hdr-status{grid-template-columns:repeat(4,auto)}}
+@media(max-width:600px){body.presenter .mode-panel.wrap{padding-top:14px}body.presenter .hdr-status{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.hdr-right{width:100%}.hs{padding:5px 9px}.hs b{font-size:13px}}
+/* ================= Smooth section entrance ================= */
+.mode-panel.sec-enter>*:not([hidden]){animation:sec-rise .38s cubic-bezier(.2,.8,.2,1) both}
+.mode-panel.sec-enter>*:nth-child(2){animation-delay:.04s}.mode-panel.sec-enter>*:nth-child(3){animation-delay:.08s}.mode-panel.sec-enter>*:nth-child(4){animation-delay:.12s}.mode-panel.sec-enter>*:nth-child(5){animation-delay:.16s}.mode-panel.sec-enter>*:nth-child(n+6){animation-delay:.2s}
+#journeyMode.sec-enter{animation:sec-fade .35s ease-out both}
+@keyframes sec-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes sec-fade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.mode-panel.sec-enter>*,#journeyMode.sec-enter{animation:none!important}}
+@media(max-width:1450px){body.presenter #workflowMode .hdr-right .brand{padding:9px 13px;font-size:12.5px}body.presenter .hs{padding:5px 9px}body.presenter .hs b{font-size:14px}}
 
 /* ---- Warehouse AI Copilot ---- */
 .cp-root{--cp-font:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;--cp-bg:#08111d;--cp-panel:#0c1726;--cp-line:#24405a;--cp-text:#e3eef7;--cp-muted:#8fa9bd;--cp-accent:#3ee6ec;--cp-violet:#b69cff;--cp-kb:0px;position:fixed;right:max(18px,env(safe-area-inset-right));bottom:calc(max(18px,env(safe-area-inset-bottom)) + var(--cp-kb));z-index:40;font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--cp-text)}
@@ -616,7 +730,7 @@ body.ar-mode .cp-root,body.live-fs .cp-root{display:none}
   .cp-hist-input{font-size:16px}
 }
 @media(prefers-reduced-motion:reduce){.cp-hist{animation:none}}
-</style><script>(function(){var d=document.documentElement,h=(location.hash||'').slice(1),deep={workflow:1,optimizer:1,product:1,integration:1,journey:1,ar:1};if(deep[h])return;d.classList.add('route-home');var seen=false,rm=false;try{seen=sessionStorage.getItem('geekplus_intro_seen_v1')==='1'}catch(e){}try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}if(!seen&&!rm)d.classList.add('intro-on')})();</script></head><body><nav class="mode-switcher" role="tablist" aria-label="Warehouse demonstration mode"><button id="homeTab" class="home-tab" type="button" aria-pressed="false" title="Home · contents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 2.8 11.1l1 1.2L5 11.3V20a1 1 0 0 0 1 1h4.5v-6h3v6H18a1 1 0 0 0 1-1v-8.7l1.2 1 1-1.2L12 3.2zm5.5 16.3h-2.5v-6h-6v6H6.5v-9.5L12 5.2l5.5 4.8v9.5z"/></svg>Home</button><span class="nav-sep" aria-hidden="true"></span><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true">Traditional vs. P800R</button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false">Warehouse Optimizer</button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false">3D Product Experience</button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false">WMS Integration Lab</button><span class="nav-sep" aria-hidden="true"></span><button id="journeyTab" class="journey-tab" type="button" aria-pressed="false" aria-controls="journeyMode"><i aria-hidden="true">▶</i>Order Journey<small>3D FILM</small></button><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
+</style><script>(function(){var d=document.documentElement,h=(location.hash||'').slice(1),deep={workflow:1,optimizer:1,product:1,integration:1,journey:1,ar:1};if(deep[h])return;d.classList.add('route-home');var seen=false,rm=false;try{seen=sessionStorage.getItem('geekplus_intro_seen_v1')==='1'}catch(e){}try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}if(!seen&&!rm)d.classList.add('intro-on')})();</script></head><body><nav class="mode-switcher nav-compact" aria-label="Main navigation"><button id="homeTab" class="home-tab" type="button" aria-pressed="false" title="Home · contents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2 2.8 11.1l1 1.2L5 11.3V20a1 1 0 0 0 1 1h4.5v-6h3v6H18a1 1 0 0 0 1-1v-8.7l1.2 1 1-1.2L12 3.2zm5.5 16.3h-2.5v-6h-6v6H6.5v-9.5L12 5.2l5.5 4.8v9.5z"/></svg>Home</button><span class="nav-sep" aria-hidden="true"></span><div class="nav-dd" id="navSectionsWrap"><button type="button" class="nav-dd-btn" id="navSectionsBtn" aria-haspopup="true" aria-expanded="false" aria-controls="navSections"><span class="nav-cur-num" id="navCurNum">01</span><span class="nav-cur" id="navCurrent">Traditional vs. P800R</span><svg class="nav-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5 12 15l5.5-5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="nav-menu" id="navSections" hidden><div class="nav-menu-tabs" role="tablist" aria-label="Warehouse demonstration mode"><button id="workflowTab" role="tab" tabindex="0" aria-controls="workflowMode" aria-selected="true"><span class="nav-num">01</span><span class="nav-txt"><span class="nav-name">Traditional vs. P800R</span><span class="nav-hint">Person-to-goods vs. goods-to-person</span></span></button><button id="optimizerTab" role="tab" tabindex="-1" aria-controls="optimizerMode" aria-selected="false"><span class="nav-num">02</span><span class="nav-txt"><span class="nav-name">Warehouse Optimizer</span><span class="nav-hint">Size robots and stations from demand</span></span></button><button id="productTab" role="tab" tabindex="-1" aria-controls="productMode" aria-selected="false"><span class="nav-num">03</span><span class="nav-txt"><span class="nav-name">3D Product Experience</span><span class="nav-hint">The P800R in 3D</span></span></button><button id="integrationTab" role="tab" tabindex="-1" aria-controls="integrationMode" aria-selected="false"><span class="nav-num">04</span><span class="nav-txt"><span class="nav-name">WMS Integration Lab</span><span class="nav-hint">Mock WMS API, faults, SQL, AI</span></span></button></div><div class="nav-menu-sep" aria-hidden="true"></div><button id="journeyTab" class="journey-tab" type="button" aria-pressed="false" aria-controls="journeyMode"><i aria-hidden="true">▶</i>Order Journey<small>3D FILM</small></button></div></div><span class="nav-flex" aria-hidden="true"></span><div class="nav-dd nav-dd-view" id="navViewWrap"><button type="button" class="nav-dd-btn nav-view-btn" id="navViewBtn" aria-haspopup="true" aria-expanded="false" aria-controls="navView"><svg class="nav-eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5c-5 0-9 4.5-10 7 1 2.5 5 7 10 7s9-4.5 10-7c-1-2.5-5-7-10-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="currentColor"/></svg><span id="navViewLabel">Presenter</span><svg class="nav-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 9.5 12 15l5.5-5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="nav-menu nav-menu-view" id="navView" hidden><div class="view-switch" id="viewSwitch" role="group" aria-label="Page view"><span class="view-switch-label">View</span><button type="button" data-view="presenter" aria-pressed="true" title="Clean view for presenting: headings, controls and results">Presenter</button><button type="button" data-view="detail" aria-pressed="false" title="Show all explanatory notes, assumptions and sources">Detail</button></div></div></div></nav><section class="eng-project engineering" aria-label="Engineering project overview"><div class="eng-project-main"><div><h2>Demo Distribution Center <span class="eng-source-only">/ fictional engineering project</span></h2><p id="engSharedSummary">Shared proposal · 6 robots · 2 picking stations · 1,200 average orders/day</p><p class="eng-disclaimer">Independent demo · mock systems &amp; illustrative assumptions · not an official Geek+ tool</p></div><button class="btn primary" id="engTourStart">▶ Guided engineering demo · 105 sec</button></div><div class="eng-project-path"><button id="engGoWorkflow"><b>01 / UNDERSTAND</b>Operational problem</button><button id="engGoOptimizer"><b>02 / DESIGN</b>Requirements, layout & business case</button><button id="engGoProduct"><b>03 / EXPLORE</b>Robot & human picking</button><button id="engGoIntegration"><b>04 / INTEGRATE</b>Orders, recovery & validation</button></div><details class="eng-connects"><summary>How the engineering work connects</summary><p><b>Solutions Engineering:</b> translate customer demand into storage, routing, station capacity and investment trade-offs. <b>Systems Engineering:</b> define interface contracts, reconcile data, diagnose failures and validate the complete workflow. This project runs locally; its mock systems and estimates are not official Geek+ software or performance claims.</p><p>The traditional comparison and original loop optimizer remain independent reference experiments. The layout-aware proposal supplies the shared fleet and station counts. The WMS lab loads them only when explicitly reset, preserving current orders. The 3D viewer illustrates a representative task without changing order or inventory state.</p></details></section>
 <div id="introSplash" class="intro" role="presentation" hidden><div class="intro-inner"><span class="intro-sr" aria-live="polite">Geek+ P800R engineering demo loading</span>
 <svg class="intro-scene" viewBox="0 0 800 400" aria-hidden="true">
 <defs><linearGradient id="ifloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e2233"/><stop offset="1" stop-color="#07111d"/></linearGradient><radialGradient id="iglow"><stop offset="0" stop-color="#3ee6ec" stop-opacity=".75"/><stop offset="1" stop-color="#3ee6ec" stop-opacity="0"/></radialGradient></defs>
@@ -699,7 +813,7 @@ body.ar-mode .cp-root,body.live-fs .cp-root{display:none}
 </section>
 
 <section id="productMode" class="wrap mode-panel product-mode" hidden role="tabpanel" aria-labelledby="productTab">
- <header class="product-heading"><div><span class="product-kicker">03 / PRODUCT EXPERIENCE</span><h1>Small footprint.<br><span>Moving the whole shelf.</span></h1><p>Explore the P800R v6.0 platform, then follow a shelf from storage to the picking station. An interactive engineering illustration inspired by Geek+ product references.</p></div><span class="product-tag">P800R v6.0 · Shelf-to-Person AMR</span></header>
+ <header class="product-heading"><div><span class="product-kicker">03 / PRODUCT EXPERIENCE</span><h1>Small footprint.<br><span>Moving the whole shelf.</span></h1><p><span class="detail-only">Explore the P800R v6.0 platform, then follow a shelf from storage to the picking station. An interactive engineering illustration inspired by Geek+ product references.</span><span class="presenter-only">Explore the P800R v6.0 platform. Inspired by Geek+ product references.</span></p></div><span class="product-tag">P800R v6.0 · Shelf-to-Person AMR</span></header>
  <div class="product-workspace">
   <div class="product-viewer-card">
    <div id="productViewer" class="product-viewer">
@@ -6146,7 +6260,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     if (fsEl()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
     else { openLive(); const r = (wrap.requestFullscreen || wrap.webkitRequestFullscreen).call(wrap); r?.catch?.(() => {}); }
   });
-  const fsChange = () => { const on = !!fsEl(); $('liveFullscreen').textContent = on ? '✕ Exit fullscreen' : '⛶ Fullscreen'; document.body.classList.toggle('live-fs', on); setTimeout(() => { fitCamera(); dirty = true; loop(); }, 150); };
+  const fsChange = () => { const f = fsEl(), on = !!f && (f === wrap || wrap.contains(f)); $('liveFullscreen').textContent = on ? '✕ Exit fullscreen' : '⛶ Fullscreen'; document.body.classList.toggle('live-fs', on); setTimeout(() => { fitCamera(); dirty = true; loop(); }, 150); };
   document.addEventListener('fullscreenchange', fsChange); document.addEventListener('webkitfullscreenchange', fsChange);
   $('liveCamera').addEventListener('click', () => { if (!V) openLive(); lastInteract = 0; fitCamera(); loop(); });
   $('integrationTab').addEventListener('click', () => { if (open) { visible = true; setTimeout(() => { dirty = true; loop(); }, 50); } });
@@ -8296,6 +8410,7 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
       root.classList.toggle('cp-is-max', !!st.max && !mobile() && root.classList.contains('cp-open'));
       if (mobile()) { panel.classList.remove('cp-placed', 'cp-max'); return; }
       var vw = VW(), vh = VH(), rr = root.getBoundingClientRect();
+      if (!rr.width || !rr.height) rr = { left: vw - 18 - 54, right: vw - 18, top: vh - 18 - 54, bottom: vh - 18, width: 54, height: 54 };   // button hidden (e.g. during fullscreen): use the default corner
       var w = st.size ? st.size.w : Math.min(420, vw - 36), h = st.size ? st.size.h : Math.min(640, vh - 110);
       w = clamp(w, Math.min(MIN_W, vw - 2 * PAD), vw - 2 * PAD); h = clamp(h, Math.min(MIN_H, vh - 2 * PAD), vh - 2 * PAD);
       var right = rr.left + rr.width / 2 > vw / 2, lower = rr.top + rr.height / 2 > vh / 2;
@@ -8445,6 +8560,372 @@ Config scope: browser memory only` : k === "config" ? JSON.stringify({ mock: !0,
     if (isHome()) d.classList.add('home-enter');
   }
   globalThis.HomePage = { show: function () { showHome('push'); }, open: function (n) { enterView(n, 'push'); }, isHome: isHome, skipIntro: endIntro };
+})();
+
+</script><script>
+/* Guided engineering demo — complete walkthrough, started only from Home.
+   Workflow → Optimizer (×2) → Product → WMS lab (×4) → Order Journey film → AI Copilot.
+   Replaces the old controller's button handlers; the old one stays inert (its state is never started). */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var WE = globalThis.WarehouseEngineering, bar = $('engTour');
+  if (!bar || !WE || !WE.wms || !WE.design) return;
+  var lab = WE.wms, design = WE.design;
+  var FILM = (globalThis.JourneyCore && globalThis.JourneyCore.DUR) || 92;
+
+  /* ---------------- helpers ---------------- */
+  var navigating = false;
+  function isHome() { return document.documentElement.classList.contains('route-home'); }
+  function go(tab) {
+    navigating = true;
+    try {
+      if (tab === 'journey') { if ($('journeyMode').hidden) $('journeyTab').click(); }
+      else if (isHome() || !$('journeyMode').hidden || $(tab + 'Tab').getAttribute('aria-selected') !== 'true') $(tab + 'Tab').click();
+    } finally { navigating = false; }
+  }
+  function scrollToEl(el) {
+    if (typeof el === 'string') el = $(el);
+    if (!el) return;
+    var off = bar.hidden || bar.classList.contains('tour-film') ? 16 : 7 + bar.getBoundingClientRect().height + 14;
+    var y = window.scrollY + el.getBoundingClientRect().top - off;
+    try { window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' }); } catch (e) { window.scrollTo(0, Math.max(0, y)); }
+  }
+  function cardOf(id) { var el = $(id); return el ? (el.closest('section.eng-card') || el) : null; }
+  function clockPlaying() { return !!(globalThis.WmsClockPlayer && globalThis.WmsClockPlayer.playing); }
+  function pauseClock() { if (clockPlaying() && !$('wmsPause').disabled) $('wmsPause').click(); }
+  function playClock(speed) {
+    if (speed) { var b = document.querySelector('[data-wms-speed="' + speed + '"]'); if (b) b.click(); }
+    if (!clockPlaying() && !$('wmsPlay').disabled) $('wmsPlay').click();
+  }
+  function film() { return globalThis.orderJourney || null; }
+  function stopAll() {
+    try { if ($('play') && $('play').textContent.indexOf('Pause') >= 0) $('play').click(); } catch (e) { /* ignore */ }
+    try { if ($('productPause') && !$('productPause').disabled) $('productPause').click(); } catch (e) { /* ignore */ }
+    try { if ($('oPlay') && $('oPlay').textContent.indexOf('Pause') >= 0) $('oPlay').click(); } catch (e) { /* ignore */ }
+    try { pauseClock(); } catch (e) { /* ignore */ }
+    try { var f = film(); if (f) f.pause(); } catch (e) { /* ignore */ }
+  }
+  /* ---- film full screen: true fullscreen when the browser allows it (recent click), otherwise an
+     immersive overlay that fills the browser window. Leaving the film step always restores the page. ---- */
+  function fsEl() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+  function immersive(on) {
+    var stage = $('jrStage'); if (!stage) return;
+    if (on && !stage.querySelector('.jr-imm-hint')) { var h = document.createElement('div'); h.className = 'jr-imm-hint'; h.textContent = '⛶ true full screen · Esc to exit'; stage.appendChild(h); }
+    stage.classList.toggle('jr-immersive', !!on); document.body.classList.toggle('film-immersive', !!on);
+  }
+  function enterFilmScreen() {
+    var stage = $('jrStage'); if (!stage || fsEl() === stage) return;
+    var req = stage.requestFullscreen || stage.webkitRequestFullscreen;
+    if (!req) { immersive(true); return; }
+    try {
+      var r = req.call(stage);
+      if (r && typeof r.then === 'function') r.then(function () { immersive(false); }, function () { if (st && STEPS[st.step].film) immersive(true); });
+      else setTimeout(function () { if (fsEl() !== stage && st && STEPS[st.step].film) immersive(true); }, 250);
+    } catch (e) { immersive(true); }
+  }
+  function leaveFilmScreen() {
+    var stage = $('jrStage'), wait = null;
+    try { if (stage && fsEl() === stage) wait = (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) { /* ignore */ }
+    immersive(false);
+    // resolve once the page is back to normal layout (fullscreen exit is asynchronous)
+    return new Promise(function (res) {
+      var t0 = performance.now();
+      (function check() { if (!fsEl() || performance.now() - t0 > 1500) requestAnimationFrame(function () { res(); }); else setTimeout(check, 30); })();
+      if (wait && wait.catch) wait.catch(function () { /* ignore */ });
+    });
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && document.body.classList.contains('film-immersive')) { e.preventDefault(); e.stopPropagation(); immersive(false); } }, true);
+  function lang() { return document.documentElement.getAttribute('data-cp-lang') === 'zh' ? 'zh' : 'en'; }
+
+  /* ---------------- storyline ---------------- */
+  var lab8done = false;
+  function finishLab() {
+    if (lab8done) return; lab8done = true;
+    pauseClock();
+    try { for (var i = 0; i < 4 && !lab.model.verify(); i++) lab.run(); } catch (e) { /* ignore */ }
+    lab.verify();
+    $('wmsTest').click();
+  }
+  var STEPS = [
+    { tab: 'workflow', sec: 14, title: 'Understand the operational problem',
+      text: 'The same 3-line order, two ways: a picker walking the aisles vs. P800R robots bringing shelves to one station. Watch where walking time disappears.',
+      show: function () { $('reset').click(); var s8 = document.querySelector('[data-speed="8"]'); if (s8) s8.click(); if ($('play').textContent.indexOf('Pause') < 0) $('play').click(); try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } },
+      resume: function () { if ($('play').textContent.indexOf('Pause') < 0) $('play').click(); } },
+    { tab: 'optimizer', sec: 12, target: 'engDiscovery', title: 'Turn customer demand into requirements',
+      text: 'Average and peak orders, order lines, shift hours, SKU mix and budget become the design inputs. They are editable discovery assumptions, not data from a real customer.' },
+    { tab: 'optimizer', sec: 16, target: 'engSolution', title: 'Design against routes and constraints',
+      text: 'The optimizer tests fleet and station options on real shortest paths and resource reservations, then applies the best proposal to the rest of the demo.',
+      enter: function () { return Promise.resolve(design.analyze()).then(function () { if (!design.state.comparison) throw new Error('No valid proposal is available. Repair the layout or budget, then press Reset tour.'); design.apply(); }); } },
+    { tab: 'product', sec: 20, target: 'productViewer', title: 'The P800R up close',
+      text: 'The robot lifts a whole shelf and rotates it so the right face meets the picker. Pick-to-light marks the bin; the operator turns to the put wall and confirms each put.',
+      enter: function () { if (!$('productLift').disabled) $('productLift').click(); },
+      show: function () { var c = $('productCamera'); if (c && !c.disabled) { c.value = 'station'; if (c.onchange) c.onchange(); } if ($('productPlay') && !$('productPlay').disabled) $('productPlay').click(); },
+      resume: function () { if ($('productPlay') && !$('productPlay').disabled) $('productPlay').click(); } },
+    { tab: 'integration', sec: 18, target: 'liveCard', title: 'Send a customer WMS order',
+      text: 'A valid mock WMS order reserves stock and creates exactly one robot task. On the live floor the robot fetches the shelf, the station picks, and the shelf returns.',
+      enter: function () { lab.reset(); lab8done = false; lab.success(); },
+      show: function () { if ($('liveStart')) $('liveStart').click(); playClock(5); },
+      resume: function () { playClock(5); } },
+    { tab: 'integration', sec: 14, target: 'liveCard', title: 'A controlled integration failure',
+      text: 'WMS location A-01 is mapped to a rack that does not exist, so the order is rejected before dispatch. Note the red alert and its "🤖 Diagnose with AI" button.',
+      enter: function () { pauseClock(); lab.inject(); },
+      show: function () { pauseClock(); if ($('liveStart')) $('liveStart').click(); } },
+    { tab: 'integration', sec: 12, target: function () { return cardOf('wmsSql'); }, title: 'Find the root cause with evidence',
+      text: 'A read-only SQL query over the live mock tables shows the failed order and its LOCATION_MAPPING error, the same evidence an engineer would pull from a production replica.',
+      enter: function () { lab.diagnose(); },
+      show: function () { var q = $('wmsQuery'); if (q) { q.value = '2'; if (q.onchange) q.onchange(); } $('wmsSqlRun').click(); } },
+    { tab: 'integration', sec: 16, target: 'liveCard', title: 'Resolve, execute and verify',
+      text: 'Correct the mapping, resubmit, and let the mock clock run. Verification needs a completed pick and consistent stock; SIT checks interfaces, UAT checks the business outcome.',
+      enter: function () { lab.resolve(); },
+      show: function () { if (!lab8done) playClock(5); },
+      at: [{ t: 11.5, fn: function () { finishLab(); scrollToEl(cardOf('wmsTestResults')); } }],
+      finish: finishLab,
+      resume: function () { if (!lab8done) playClock(5); } },
+    { tab: 'journey', sec: FILM, film: true, title: 'Order Journey — one order, dock to dispatch',
+      text: 'A 3D film following a single order through a goods-to-person warehouse: inbound, storage, robot retrieval, pick-to-light picking, packing and dispatch.',
+      show: function (first) { var f = film(); if (!f) return; if (first) f.seek(0); f.play(); enterFilmScreen(); },
+      resume: function () { var f = film(); if (f) f.play(); } },
+    { tab: 'integration', sec: 15, target: 'liveCard', title: 'Ask the AI Copilot',
+      text: 'The AI Copilot reads a live snapshot of the lab (read-only). Press Send on the suggested question, or use the 🤖 buttons on each lab card to explain a response, a query, the tests or the incident.',
+      show: function () {
+        if (globalThis.WarehouseCopilot) globalThis.WarehouseCopilot.open();
+        var inp = $('copilotInput');
+        if (inp && !inp.value.trim()) {
+          inp.value = lang() === 'zh' ? '给我一份 WMS 实验室的实时状态报告：机器人、工作站、货架和订单。' : 'Give me a live status report of the WMS lab: robots, stations, shelves and orders.';
+          inp.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        var glow = document.querySelectorAll('[data-ai-explain],[data-ai-diagnose]');
+        for (var i = 0; i < glow.length; i++) glow[i].classList.add('tour-glow');
+      } }
+  ];
+  var N = STEPS.length, TOTAL = STEPS.reduce(function (a, s) { return a + s.sec; }, 0);
+
+  /* ---------------- state machine ---------------- */
+  var st = null, raf = 0, last = 0, gen = 0, savedAuto = null;
+  function fmt(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  function render() {
+    if (!st) return;
+    var s = STEPS[st.step], before = STEPS.slice(0, st.step).reduce(function (a, x) { return a + x.sec; }, 0), done = before + Math.min(st.elapsed, s.sec);
+    $('engTourStep').textContent = 'STEP ' + (st.step + 1) + ' / ' + N;
+    $('engTourTitle').textContent = s.title;
+    $('engTourText').textContent = st.error || s.text;
+    $('engTourTime').textContent = st.done ? 'Walkthrough complete' : st.busy ? 'Preparing…' : fmt(done) + ' / ' + fmt(TOTAL) + (st.paused ? ' · paused' : '');
+    $('engTourProgress').style.width = (st.done ? 100 : Math.min(100, done / TOTAL * 100)) + '%';
+    $('engTourPrevious').disabled = st.step === 0 || st.busy;
+    $('engTourNext').disabled = st.busy;
+    $('engTourNext').textContent = st.done ? '⌂ Back to Home' : st.step === N - 1 ? 'Finish ✓' : 'Next →';
+    $('engTourPause').disabled = st.done || st.busy;
+    $('engTourPause').textContent = st.paused ? 'Resume' : 'Pause';
+    bar.classList.toggle('tour-film', !!s.film && !st.done);
+    bar.classList.toggle('tour-done', !!st.done);
+  }
+  function cancel() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+  function loop() { if (raf || !st || st.paused || st.done || st.busy || document.hidden) return; last = performance.now(); raf = requestAnimationFrame(tick); }
+  function tick(ts) {
+    raf = 0; if (!st || st.paused || st.done || st.busy) return;
+    var dt = Math.max(0, Math.min(0.25, (ts - last) / 1000)) * (globalThis.__tourSpeed || 1); last = ts;
+    var s = STEPS[st.step];
+    var filmEnded = false;
+    if (s.film) {
+      // the step follows the film itself: it ends when the film ends, whatever speed the presenter picks
+      var f = film(), ft = f ? f.t : 0;
+      if (st.filmFallback) { st.elapsed += dt; filmEnded = st.elapsed >= FILM; }
+      else if (ft > 0.05) { st.filmSeen = true; st.elapsed = ft; if (globalThis.__tourSpeed > 1 && f && ft < FILM) f.seek(Math.min(FILM, ft + dt)); filmEnded = ft >= FILM - 0.01; }
+      else { st.filmWait = (st.filmWait || 0) + dt; if (!st.filmSeen && st.filmWait > 3) { st.filmFallback = true; st.error = 'The 3D film is not available in this browser, so this step uses a 92-second timer.'; } }
+    } else st.elapsed += dt;
+    (s.at || []).forEach(function (h, i) { if (st.elapsed >= h.t && !st.fired[i]) { st.fired[i] = true; try { h.fn(); } catch (e) { /* ignore */ } } });
+    render();
+    if (s.film ? filmEnded : st.elapsed >= s.sec) {
+      var nextStep = function () { if (!st) return; if (st.step === N - 1) { finish(); return; } gotoStep(st.step + 1); };
+      if (s.film) { st.busy = true; render(); var my = gen; leaveFilmScreen().then(function () { if (my === gen && st) { st.busy = false; nextStep(); } }); } else nextStep();
+      return;
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function clearGlow() { var g = document.querySelectorAll('.tour-glow'); for (var i = 0; i < g.length; i++) g[i].classList.remove('tour-glow'); }
+  function gotoStep(x) {
+    if (!st) return Promise.resolve();
+    clearGlow();
+    var my = ++gen; cancel(); stopAll(); var left = leaveFilmScreen();
+    var from = st.step;
+    st.step = x; st.elapsed = 0; st.done = false; st.error = null; st.busy = true; st.fired = {}; st.filmSeen = false; st.filmWait = 0; st.filmFallback = false;
+    render();
+    var chain = left;
+    for (var k = 0; k <= x; k++) (function (k) {
+      chain = chain.then(function () {
+        if (my !== gen || !st) return;
+        if (!st.entered[k]) { st.entered[k] = true; if (STEPS[k].enter) return STEPS[k].enter(); }
+      }).then(function () {
+        if (my !== gen || !st) return;
+        if (k < x && !st.finished[k] && STEPS[k].finish) { st.finished[k] = true; STEPS[k].finish(); }
+      });
+    })(k);
+    return chain.then(function () {
+      if (my !== gen || !st) return;
+      var s = STEPS[x], first = !st.shown[x]; st.shown[x] = true;
+      go(s.tab);
+      if (s.show) s.show(first);
+      if (st.paused) stopAll();
+      st.busy = false; render();
+      var tg = typeof s.target === 'function' ? s.target() : s.target;
+      if (tg) setTimeout(function () { if (my === gen) scrollToEl(tg); }, 80);
+      loop();
+    }, function (err) {
+      if (my !== gen || !st) return;
+      st.error = (err && err.message) || String(err); st.paused = true; st.busy = false; stopAll(); render();
+    });
+    void from;
+  }
+  function restoreAuto() { if (savedAuto !== null && $('wmsAutoPause')) $('wmsAutoPause').checked = savedAuto; savedAuto = null; }
+  function finish() { if (!st) return; cancel(); st.done = true; st.paused = false; restoreAuto(); render(); }
+  function start() {
+    gen++; cancel(); stopAll();
+    if ($('wmsAutoPause')) { if (savedAuto === null) savedAuto = $('wmsAutoPause').checked; $('wmsAutoPause').checked = false; }
+    try { var r = $('results'); if (r && r.open) r.close(); } catch (e) { /* ignore */ }
+    st = { step: 0, elapsed: 0, paused: false, done: false, busy: false, entered: {}, finished: {}, shown: {}, fired: {}, error: null, filmSeen: false };
+    lab8done = false;
+    bar.hidden = false; document.body.classList.add('tour-live');
+    return gotoStep(0);
+  }
+  function pause() { if (!st || st.paused || st.done) return; st.paused = true; cancel(); stopAll(); render(); }
+  function resume() { if (!st || !st.paused || st.done) return; st.paused = false; var s = STEPS[st.step]; if (s.resume) s.resume(); render(); loop(); }
+  function exit() { clearGlow(); leaveFilmScreen(); gen++; cancel(); if (st && !st.done) stopAll(); st = null; restoreAuto(); bar.hidden = true; bar.classList.remove('tour-film', 'tour-done'); document.body.classList.remove('tour-live'); }
+
+  /* ---------------- wiring (overrides the old controller's handlers) ---------------- */
+  $('engTourStart').onclick = start;
+  $('engTourReset').onclick = start;
+  $('engTourPrevious').onclick = function () { if (st && !st.busy && st.step > 0) gotoStep(st.step - 1); };
+  $('engTourNext').onclick = function () {
+    if (!st || st.busy) return;
+    if (st.done) { exit(); if (globalThis.HomePage) globalThis.HomePage.show(); return; }
+    if (st.step === N - 1) { finish(); return; }
+    gotoStep(st.step + 1);
+  };
+  $('engTourPause').onclick = function () { if (!st) return; if (st.paused) resume(); else pause(); };
+  $('engTourExit').onclick = exit;
+  // the user taking over pauses the tour; going Home ends it
+  ['workflowTab', 'optimizerTab', 'productTab', 'integrationTab', 'journeyTab'].forEach(function (id) {
+    $(id).addEventListener('click', function () { if (!navigating && st && !st.done && !st.busy) pause(); }, true);
+  });
+  if ($('homeTab')) $('homeTab').addEventListener('click', function () { if (st) exit(); }, true);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) pause(); });
+  // the Home hero shows the real length
+  if ($('homeTour')) $('homeTour').textContent = '▶ Guided demo · all sections + film + AI · ≈ ' + Math.round(TOTAL / 60) + ' min';
+
+  globalThis.GuidedTour = {
+    start: start, next: function () { $('engTourNext').onclick(); }, previous: function () { $('engTourPrevious').onclick(); }, pause: pause, resume: resume, exit: exit, goto: function (x) { return gotoStep(x); },
+    state: function () { return st ? { immersive: document.body.classList.contains('film-immersive'), fullscreen: fsEl() === $('jrStage'), step: st.step, elapsed: st.elapsed, paused: st.paused, done: st.done, busy: st.busy, error: st.error, total: TOTAL, steps: N } : null; },
+    steps: STEPS.map(function (s) { return { tab: s.tab, title: s.title, sec: s.sec }; })
+  };
+})();
+
+</script><script>
+/* Presenter view: the four shared-proposal facts live in each section header as a compact 2×2 grid (live values).
+   Detail view keeps the original banner and badges. */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var sum = $('engSharedSummary');
+  if (!sum || !globalThis.WarehouseEngineering) return;
+  // legacy chip row inside the banner (banner is hidden in Presenter; kept for Detail-independent tests/compat)
+  var host = document.querySelector('.eng-project-main > div'), legacy = null;
+  if (host) { legacy = document.createElement('div'); legacy.className = 'eng-status'; legacy.id = 'engStatus'; host.insertBefore(legacy, host.firstChild); }
+  // header grids
+  var grids = [];
+  function mk(where) { var g = document.createElement('div'); g.className = 'hdr-status'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', 'Shared proposal'); grids.push(g); return g; }
+  var top = document.querySelector('#workflowMode .top'), brand = top && top.querySelector('.brand');
+  if (top) { var right = document.createElement('div'); right.className = 'hdr-right'; if (brand) right.appendChild(brand); right.appendChild(mk()); top.appendChild(right); }
+  [['#optimizerMode .eng-heading'], ['#productMode .product-heading'], ['#integrationMode .eng-heading']].forEach(function (s) { var h = document.querySelector(s[0]); if (h) h.appendChild(mk()); });
+  function tile(v, label) { var t = document.createElement('div'); t.className = 'hs'; var b = document.createElement('b'); b.textContent = v; var l = document.createElement('span'); l.textContent = label; t.appendChild(b); t.appendChild(l); return t; }
+  function chip(v, label) { var c = document.createElement('span'); c.className = 'eng-chip'; var b = document.createElement('b'); b.textContent = v; c.appendChild(b); c.appendChild(document.createTextNode(' ' + label)); return c; }
+  function update() {
+    var sh = null; try { sh = globalThis.WarehouseEngineering.getSnapshot().shared; } catch (e) { return; }
+    if (!sh || !sh.selected || !sh.customer) return;
+    var n = function (x) { return Number(x).toLocaleString('en-US'); };
+    var facts = [[n(sh.selected.robots), sh.selected.robots === 1 ? 'robot' : 'robots'], [n(sh.selected.stations), sh.selected.stations === 1 ? 'station' : 'stations'], [n(sh.customer.averageOrders), 'avg orders/day'], [n(sh.customer.peakOrders), 'peak orders/day']];
+    grids.forEach(function (g) { g.replaceChildren.apply(g, facts.map(function (f) { return tile(f[0], f[1]); })); });
+    if (legacy) legacy.replaceChildren.apply(legacy, facts.map(function (f) { return chip(f[0], f[1]); }));
+  }
+  update();
+  new MutationObserver(update).observe(sum, { childList: true, characterData: true, subtree: true });
+})();
+
+</script><script>
+/* Compact one-row navigation: a Sections menu (4 tabs + Order Journey) and a View menu (Presenter / Detail).
+   The original tab buttons keep their ids and handlers — they just live inside the menu now.
+   Also: a gentle entrance animation whenever the visible section changes. */
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var secBtn = $('navSectionsBtn'), secMenu = $('navSections'), viewBtn = $('navViewBtn'), viewMenu = $('navView');
+  if (!secBtn || !secMenu || !viewBtn || !viewMenu) return;
+  var TABS = ['workflow', 'optimizer', 'product', 'integration'];
+  var NAMES = { workflow: ['01', 'Traditional vs. P800R'], optimizer: ['02', 'Warehouse Optimizer'], product: ['03', '3D Product Experience'], integration: ['04', 'WMS Integration Lab'], journey: ['▶', 'Order Journey'], home: ['', 'Sections'] };
+
+  /* ---------- menus ---------- */
+  var open = null;
+  function setOpen(menu, btn, on) {
+    menu.hidden = !on; btn.setAttribute('aria-expanded', String(on)); btn.parentNode.classList.toggle('nav-open', on);
+    if (on) open = { menu: menu, btn: btn }; else if (open && open.menu === menu) open = null;
+  }
+  function closeAll(focusBtn) { if (!open) return; var b = open.btn; setOpen(open.menu, open.btn, false); if (focusBtn) try { b.focus(); } catch (e) { /* ignore */ } }
+  function toggle(menu, btn, focusFirst) {
+    var on = menu.hidden; closeAll(); setOpen(menu, btn, on);
+    if (on && focusFirst) {
+      var cur = menu.querySelector('[aria-selected="true"],[aria-pressed="true"]') || menu.querySelector('button');
+      if (cur) try { cur.focus({ preventScroll: true }); } catch (e) { cur.focus(); }
+    }
+  }
+  secBtn.addEventListener('click', function (e) { toggle(secMenu, secBtn, e.detail === 0); });
+  viewBtn.addEventListener('click', function (e) { toggle(viewMenu, viewBtn, e.detail === 0); });
+  [secBtn, viewBtn].forEach(function (b) {
+    b.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); var m = b === secBtn ? secMenu : viewMenu; if (m.hidden) toggle(m, b, true); } });
+  });
+  // choosing an item closes the menu (after the item's own handler ran)
+  secMenu.addEventListener('click', function (e) { if (e.target.closest('button')) setTimeout(function () { closeAll(false); }, 0); });
+  viewMenu.addEventListener('click', function (e) { if (e.target.closest('button[data-view]')) setTimeout(function () { closeAll(false); updateView(); }, 0); });
+  document.addEventListener('pointerdown', function (e) { if (open && !open.btn.parentNode.contains(e.target)) closeAll(false); }, true);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) { e.stopPropagation(); closeAll(true); } }, true);
+  window.addEventListener('popstate', function () { closeAll(false); });
+  window.addEventListener('resize', function () { closeAll(false); });
+
+  /* ---------- labels ---------- */
+  function current() {
+    if (document.documentElement.classList.contains('route-home')) return 'home';
+    if (!$('journeyMode').hidden) return 'journey';
+    for (var i = 0; i < TABS.length; i++) if (!$(TABS[i] + 'Mode').hidden) return TABS[i];
+    return 'home';
+  }
+  function updateView() {
+    var det = !document.body.classList.contains('presenter');
+    $('navViewLabel').textContent = det ? 'Detail' : 'Presenter';
+  }
+
+  /* ---------- section entrance animation ---------- */
+  var last = null, reduce = false;
+  try { reduce = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { /* ignore */ }
+  function animate(name) {
+    if (reduce) return;
+    var el = name === 'journey' ? $('journeyMode') : name === 'home' ? null : $(name + 'Mode');
+    if (!el) return;
+    el.classList.remove('sec-enter'); void el.offsetWidth; el.classList.add('sec-enter');
+    clearTimeout(el.__secT); el.__secT = setTimeout(function () { el.classList.remove('sec-enter'); }, 900);
+  }
+  function sync() {
+    var c = current(), n = NAMES[c];
+    $('navCurNum').textContent = n[0]; $('navCurNum').hidden = !n[0]; $('navCurrent').textContent = n[1];
+    secBtn.classList.toggle('nav-on-section', c !== 'home');
+    if (c !== last) { if (last !== null) animate(c); last = c; }
+  }
+  // observe every way the visible section can change (tabs, film, Home route)
+  var mo = new MutationObserver(function () { sync(); });
+  TABS.concat(['journey']).forEach(function (n) { mo.observe($(n + 'Mode'), { attributes: true, attributeFilter: ['hidden'] }); });
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  sync(); updateView();
+  new MutationObserver(updateView).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  globalThis.NavMenu = { openSections: function () { if (secMenu.hidden) toggle(secMenu, secBtn); }, openView: function () { if (viewMenu.hidden) toggle(viewMenu, viewBtn); }, close: function () { closeAll(false); }, current: current };
 })();
 
 </script></body></html>
